@@ -13,16 +13,16 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Employee()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Employee page.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Manager()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Management page.";
 
             return View();
         }
