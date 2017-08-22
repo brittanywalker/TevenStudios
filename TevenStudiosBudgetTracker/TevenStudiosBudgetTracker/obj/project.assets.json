@@ -9770,7 +9770,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Christina Bell\\.nuget\\packages\\": {}
+    "C:\\Users\\Ida\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -9778,14 +9778,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "projectUniqueName": "C:\\Users\\Ida\\Desktop\\SE761\\repo\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
       "projectName": "TevenStudiosBudgetTracker",
-      "projectPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
-      "packagesPath": "C:\\Users\\Christina Bell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
+      "projectPath": "C:\\Users\\Ida\\Desktop\\SE761\\repo\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "packagesPath": "C:\\Users\\Ida\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ida\\Desktop\\SE761\\repo\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Christina Bell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ida\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
