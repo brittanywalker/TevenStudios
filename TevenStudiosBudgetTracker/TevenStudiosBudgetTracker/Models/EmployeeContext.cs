@@ -84,4 +84,53 @@ namespace TevenStudiosBudgetTracker.Models
         }
 
     }
+
+    public class PendingRequest
+    {
+        public PendingRequestsContext context;
+        public string Date { get; set; }
+        public string Cost { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class PendingRequestsContext
+    {
+        public string ConnectionString { get; set; }
+
+        public PendingRequestsContext(string connectionString)
+        {
+            this.ConnectionString = connectionString;
+        }
+        public MySqlConnection getConnection()
+        {
+            return new MySqlConnection(ConnectionString);
+        }
+
+        public List<PendingRequest> GetAllPendingRequests(int UserID)
+        {
+            List<PendingRequest> list = new List<PendingRequest>();
+
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from PendingRequests where userID = " + UserID, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new PendingRequest()
+                        {
+                            Date = reader["DateCreated"].ToString(),
+                            Cost = reader["Cost"].ToString(),
+                            Description = reader["Description"].ToString(),
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+    }
 }
