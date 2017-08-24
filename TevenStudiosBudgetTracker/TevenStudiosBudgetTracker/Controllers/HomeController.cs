@@ -7,6 +7,7 @@ using TevenStudiosBudgetTracker.Models;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
+
     public class HomeController : Controller
     {
         public IActionResult Employee()
@@ -20,7 +21,11 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
-            return View(context.GetAllManagers());
+            List<List<Models.User>> usersAndManagers = new List<List<Models.User>>();
+            usersAndManagers.Add(context.GetAllUsers());
+            usersAndManagers.Add(context.GetAllManagers());
+
+            return View(usersAndManagers);
         }
 
         public IActionResult Manager()

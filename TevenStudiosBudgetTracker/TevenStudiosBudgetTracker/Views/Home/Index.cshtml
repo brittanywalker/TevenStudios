@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<TevenStudiosBudgetTracker.Models.User>
+@model IEnumerable<List<TevenStudiosBudgetTracker.Models.User>>
 
 @{
     ViewData["Title"] = "Admin Page";
@@ -30,7 +30,7 @@
     </tr>
 
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.ElementAt(0))
     {
         <tr>
             <td>
@@ -79,7 +79,7 @@
                     <form>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name">
+                            <input required type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email address:</label>
@@ -88,10 +88,20 @@
                         <div class="form-group">
                             <label for="manager">Manager:</label>
                             <select class="form-control" id="manager">
-                                <option>1</option> <!-- Need to get managers from the DB -->
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                                @foreach (var item in Model.ElementAt(1))
+                                {
+                                    <option value="@Html.DisplayTextFor(modelItem => item.ID)">
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <select class="form-control" id="role">
+                                <option>Employee</option>
+                                <option>Manager</option>
+                                <option>Administrator</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -99,11 +109,12 @@
                             <input type="number" class="form-control" id="budget" value="3000">
                         </div>
                         
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-default"></input>
                 </div>
             </div>
 
