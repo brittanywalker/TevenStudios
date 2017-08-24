@@ -20,7 +20,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
-            return View(context.GetAllUsers());
+            return View(context.GetAllManagers());
         }
 
         public IActionResult Manager()

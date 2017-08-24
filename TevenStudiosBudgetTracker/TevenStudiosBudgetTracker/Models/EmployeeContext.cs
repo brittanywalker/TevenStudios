@@ -23,9 +23,13 @@ namespace TevenStudiosBudgetTracker.Models
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
+    }
 
+    public class RoleType
+    {
+        public int ID { get; set; }
 
-
+        public string Type { get; set; }
     }
 
     public class UserContext
@@ -59,6 +63,48 @@ namespace TevenStudiosBudgetTracker.Models
                         if (reader.IsDBNull(manager))
                         {
                             manager = 0; 
+                        }
+                        else
+                        {
+                            manager = Convert.ToInt32(reader["ManagerId"]);
+                        }
+
+                        list.Add(new User()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+
+                            ManagerId = manager,
+
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                        });
+                        Console.WriteLine(Convert.ToInt32(reader["ID"]));
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<User> GetAllManagers()
+        {
+            List<User> list = new List<User>();
+
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where RoleId = 1 ", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var manager = reader.GetOrdinal("ManagerId");
+                        if (reader.IsDBNull(manager))
+                        {
+                            manager = 0;
                         }
                         else
                         {
