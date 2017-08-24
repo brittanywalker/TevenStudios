@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`Transactions` (
   `Amount` DOUBLE NULL,
   `StatusId` INT NULL,
   `ID` INT NOT NULL,
-  PRIMARY KEY (`UserId`, `ID`),
-  UNIQUE INDEX `User_ID_UNIQUE` (`UserId` ASC),
+  PRIMARY KEY (`ID`),
+  INDEX `User_ID_idx` (`UserId` ASC),
   INDEX `Status_ID_idx` (`StatusId` ASC),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   CONSTRAINT `User_ID`
@@ -103,9 +103,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `TevenStudios`;
-INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (0, 'Admin');
-INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (1, 'Employee');
-INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (2, 'Manager');
+INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (0, 'Admin') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
+INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (1, 'Employee') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
+INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (2, 'Manager') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
 
 COMMIT;
 
@@ -115,9 +115,23 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `TevenStudios`;
-INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (0, 'Pending');
-INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (1, 'Approved');
-INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (2, 'Denied');
+INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (0, 'Pending') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
+INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (1, 'Approved') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
+INSERT INTO `TevenStudios`.`Status_Types` (`ID`, `Type`) VALUES (2, 'Denied') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
 
 COMMIT;
 
+
+-- -----------------------------------------------------
+-- Data for table `TevenStudios`.`Transactions`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `TevenStudios`;
+-- Create initial user ID to be associated with the pending requests
+INSERT INTO `TevenStudios`.`User` (`ID`) VALUES (1) ON DUPLICATE KEY UPDATE `ID`=VALUES(`ID`);
+-- Create user's pending requests
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-25 10:00:00', 'Java Book', 100.54, 0, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-26 11:00:00', 'Java Conference', 86.99, 0, 2) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-27 12:00:00', 'Something else Java', 2.00, 0, 3) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+
+COMMIT;
