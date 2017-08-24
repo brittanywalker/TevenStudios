@@ -114,7 +114,7 @@ namespace TevenStudiosBudgetTracker.Models
 
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from PendingRequests where userID = " + UserID, conn);
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -122,8 +122,8 @@ namespace TevenStudiosBudgetTracker.Models
                     {
                         list.Add(new PendingRequest()
                         {
-                            Date = reader["DateCreated"].ToString(),
-                            Cost = reader["Cost"].ToString(),
+                            Date = reader["StartDate"].ToString(),
+                            Cost = reader["Amount"].ToString(),
                             Description = reader["Description"].ToString(),
                         });
                     }
