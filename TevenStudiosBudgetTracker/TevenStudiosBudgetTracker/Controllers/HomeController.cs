@@ -11,7 +11,9 @@ namespace TevenStudiosBudgetTracker.Controllers
     {
         public IActionResult Employee()
         {
-            return View();
+            PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
+            // TODO: Use the current user's actual ID number here
+            return View(context.GetAllPendingRequests(1));
         }
 
         public IActionResult Index()
