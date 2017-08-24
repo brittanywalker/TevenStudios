@@ -9,12 +9,12 @@ namespace TevenStudiosBudgetTracker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Employee()
         {
             return View();
         }
 
-        public IActionResult Employee()
+        public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
 

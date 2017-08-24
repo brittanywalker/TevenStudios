@@ -1,59 +1,7 @@
-﻿@model IEnumerable<TevenStudiosBudgetTracker.Models.User>
-
-@{
+﻿@{
     ViewData["Title"] = "Employee Page";
 }
 
-
-<h2> Employees</h2>
-<table class="table">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            ManagerID
-        </th>
-        <th>
-            RoleID
-        </th>
-        <th>
-            Start Budget
-        </th>
-    </tr>
-
-   
-    @foreach(var item in Model) 
-    {
-        <tr>
-            <td>
-                @Html.DisplayTextFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayTextFor(modelItem => item.ManagerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartBudget)
-            </td>
-        </tr>
-
-    } 
-
-
-
-    </table>
+<div>
+    Employee stuff...
+</div>

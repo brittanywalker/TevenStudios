@@ -1,30 +1,60 @@
 ﻿
+@model IEnumerable<TevenStudiosBudgetTracker.Models.User>
+
 @{
     ViewData["Title"] = "Admin Page";
 }
-@*<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>*@
 
-<div>
-    <h1>Staff </h1>
 
-    <div>
-        <div >
-            <table class="table table-hover table-bordered" data-toggle="table">
-                <thead>
-                    <tr>
-                        <th data-field="name">Name</th>
-                        <th data-field="email">Email</th>
-                        <th data-field="role">Role</th>
-                        <th data-field="manager">Manager</th>
-                        <th data-field="action">Action</th>
+<h2> Employees</h2>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            ManagerID
+        </th>
+        <th>
+            RoleID
+        </th>
+        <th>
+            Start Budget
+        </th>
+    </tr>
 
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
 
-    </div>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayTextFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayTextFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartBudget)
+            </td>
+        </tr>
 
-</div>
+    }
+
+
+
+</table>
