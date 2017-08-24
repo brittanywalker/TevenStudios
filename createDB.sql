@@ -77,8 +77,7 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`Transactions` (
   `Amount` DOUBLE NULL,
   `StatusId` INT NULL,
   `ID` INT NOT NULL,
-  PRIMARY KEY (`UserId`, `ID`),
-  UNIQUE INDEX `User_ID_UNIQUE` (`UserId` ASC),
+  PRIMARY KEY (`ID`),
   INDEX `Status_ID_idx` (`StatusId` ASC),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   CONSTRAINT `User_ID`

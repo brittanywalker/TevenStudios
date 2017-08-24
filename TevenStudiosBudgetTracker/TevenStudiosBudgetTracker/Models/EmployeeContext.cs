@@ -23,9 +23,6 @@ namespace TevenStudiosBudgetTracker.Models
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
-
-
-
     }
 
     public class UserContext

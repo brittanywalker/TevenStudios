@@ -11,14 +11,18 @@ namespace TevenStudiosBudgetTracker.Controllers
     {
         public IActionResult Employee()
         {
-            return View();
+            ViewData["Message"] = "Employee page.";
+
+            TransactionContext context = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+
+            return View(context.GetAllTransactions());
         }
 
         public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
 
-            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
             return View(context.GetAllUsers());
         }
