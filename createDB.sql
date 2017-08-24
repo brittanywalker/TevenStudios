@@ -20,6 +20,8 @@ USE `TevenStudios` ;
 -- -----------------------------------------------------
 -- Table `TevenStudios`.`Role_Types`
 -- -----------------------------------------------------
+DROP TABLE `TevenStudios`.`Role_Types`;
+
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`Role_Types` (
   `ID` INT NOT NULL,
   `Type` TEXT(60) NULL,
@@ -31,6 +33,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `TevenStudios`.`User`
 -- -----------------------------------------------------
+DROP TABLE `TevenStudios`.`User`;
+
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
   `ID` INT NOT NULL,
   `Name` TEXT(60) NULL,
@@ -59,6 +63,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `TevenStudios`.`Status_Types`
 -- -----------------------------------------------------
+DROP TABLE `TevenStudios`.`Status_Types`;
+
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`Status_Types` (
   `ID` INT NOT NULL,
   `Type` TEXT(60) NULL,
@@ -70,6 +76,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `TevenStudios`.`Transactions`
 -- -----------------------------------------------------
+DROP TABLE `TevenStudios`.`Transactions`;
+
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`Transactions` (
   `UserId` INT NOT NULL,
   `StartDate` DATETIME NULL,
