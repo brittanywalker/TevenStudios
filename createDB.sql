@@ -136,7 +136,8 @@ COMMIT;
 START TRANSACTION;
 USE `TevenStudios`;
 -- Create initial user ID to be associated with the pending requests
-INSERT INTO `TevenStudios`.`User` (`ID`) VALUES (1) ON DUPLICATE KEY UPDATE `ID`=VALUES(`ID`);
+INSERT INTO `TevenStudios`.`User` (`ID`, `Name`, `Email`, `StartDate`, `RoleId`, `StartBudget`) VALUES (1, 'Joe Bloggs', 'joe@gmail.com', '2017-01-25 10:00:00', 1, 150.00) ON DUPLICATE KEY UPDATE `Name`=VALUES(`Name`), `Email`=VALUES(`Email`), `StartDate`=VALUES(`StartDate`), `RoleId`=VALUES(`RoleId`), `StartBudget`=VALUES(`StartBudget`);
+
 -- Create user's pending requests
 INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-25 10:00:00', 'Java Book', 100.54, 0, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
 INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-26 11:00:00', 'Java Conference', 86.99, 0, 2) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
