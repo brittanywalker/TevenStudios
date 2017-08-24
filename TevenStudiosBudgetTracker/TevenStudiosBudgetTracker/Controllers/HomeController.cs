@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TevenStudiosBudgetTracker.Models;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Employee()
         {
             return View();
         }
 
-        public IActionResult Employee()
+        public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
 
-            return View();
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+
+            return View(context.GetAllUsers());
         }
 
         public IActionResult Manager()
