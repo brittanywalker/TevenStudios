@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<List<TevenStudiosBudgetTracker.Models.User>>
+@model TevenStudiosBudgetTracker.Models.AdminViewData
 
 @{
     ViewData["Title"] = "Admin Page";
@@ -30,7 +30,7 @@
     </tr>
 
 
-    @foreach (var item in Model.ElementAt(0))
+    @foreach (var item in Model.Users)
     {
         <tr>
             <td>
@@ -63,7 +63,7 @@
 <div class="container">
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewUser">Add New User</button>
+    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Add New User</button>
 
     <!-- Modal -->
     <div class="modal fade" id="addNewUser" role="dialog">
@@ -79,7 +79,7 @@
                     <form>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input required type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email address:</label>
@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <label for="manager">Manager:</label>
                             <select class="form-control" id="manager">
-                                @foreach (var item in Model.ElementAt(1))
+                                @foreach (var item in Model.Managers)
                                 {
                                     <option value="@Html.DisplayTextFor(modelItem => item.ID)">
                                             @Html.DisplayFor(modelItem => item.Name)

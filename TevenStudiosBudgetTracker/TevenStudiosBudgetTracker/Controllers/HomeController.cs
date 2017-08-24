@@ -21,11 +21,15 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
+            AdminViewData data = new AdminViewData();
+            data.Users = context.GetAllUsers();
+            data.Managers = context.GetAllManagers();
+
             List<List<Models.User>> usersAndManagers = new List<List<Models.User>>();
             usersAndManagers.Add(context.GetAllUsers());
             usersAndManagers.Add(context.GetAllManagers());
 
-            return View(usersAndManagers);
+            return View(data);
         }
 
         public IActionResult Manager()

@@ -130,4 +130,10 @@ namespace TevenStudiosBudgetTracker.Models
         }
 
     }
+
+    public class AdminViewData
+    {
+        public List<User> Users { get; set; }
+        public List<User> Managers { get; set; }
+    }
 }
