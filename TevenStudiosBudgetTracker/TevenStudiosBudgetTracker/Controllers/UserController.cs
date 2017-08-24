@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,32 +7,13 @@ using TevenStudiosBudgetTracker.Models;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Employee()
-        {
-            ViewData["Message"] = "Employee page.";
-
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
             return View(context.GetAllUsers());
-        }
-
-        public IActionResult Manager()
-        {
-            ViewData["Message"] = "Management page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
         }
     }
 }
