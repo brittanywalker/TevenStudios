@@ -66,5 +66,44 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
+        private double getTotalTransactionAmount(int UserId)
+        {
+            double value = 0;
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and StatusId=1", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        value += Convert.ToDouble(reader["Amount"]);
+                    }
+                }
+            }
+            return value;
+        }
+
+        public List<Transaction> getCurrentBudget()
+        {
+            int userId = 1;
+            double userTransactions = getTotalTransactionAmount(userId);
+            // calculate time from start_date
+            // calculate number of days
+            // add to value
+            // add startbudget            
+
+            List<Transaction> newList = new List<Transaction>();
+            Transaction obj = new Transaction();
+
+            double totalSpent = userTransactions;
+
+            obj.Amount = totalSpent;
+            newList.Add(obj);
+            return newList;
+        }
+
     }
 }

@@ -79,6 +79,5 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return list;
         }
-
     }
 }

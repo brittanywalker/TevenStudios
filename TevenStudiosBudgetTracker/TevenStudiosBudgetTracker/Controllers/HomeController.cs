@@ -15,7 +15,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             TransactionContext context = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
 
-            return View(context.GetAllTransactions());
+            return View(context.getCurrentBudget());
         }
 
         public IActionResult Index()
