@@ -49,19 +49,30 @@ namespace TevenStudiosBudgetTracker.Models
 
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from User where ID=2", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from User", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        var manager = reader.GetOrdinal("ManagerId");
+                        if (reader.IsDBNull(manager))
+                        {
+                            manager = 0; 
+                        }
+                        else
+                        {
+                            manager = Convert.ToInt32(reader["ManagerId"]);
+                        }
 
                         list.Add(new User()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             Name = reader["Name"].ToString(),
                             Email = reader["Email"].ToString(),
-                            ManagerId = Convert.ToInt32(reader["ManagerId"]),
+
+                            ManagerId = manager,
+
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                         });

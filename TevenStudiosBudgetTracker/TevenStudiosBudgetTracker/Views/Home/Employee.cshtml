@@ -17,6 +17,15 @@
         <th>
             Email
         </th>
+        <th>
+            ManagerID
+        </th>
+        <th>
+            RoleID
+        </th>
+        <th>
+            Start Budget
+        </th>
     </tr>
 
    
@@ -31,6 +40,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayTextFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartBudget)
             </td>
         </tr>
 
