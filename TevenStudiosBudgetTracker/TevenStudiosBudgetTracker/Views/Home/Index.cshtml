@@ -121,6 +121,9 @@
         </div>
     </div>
 
-    <h2>@ViewBag.Result</h2>
+    @if (ViewBag.Result != null)
+    {
+        <h4>@ViewBag.Result</h4>
+    }
 
 </div>
