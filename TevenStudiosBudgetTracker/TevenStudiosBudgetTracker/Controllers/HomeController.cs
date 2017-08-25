@@ -43,17 +43,30 @@ namespace TevenStudiosBudgetTracker.Controllers
         [HttpPost]
         public IActionResult GetDetails()
         {
+            // Build user model
             User umodel = new User();
             umodel.Name = HttpContext.Request.Form["name"].ToString();
             umodel.Email = HttpContext.Request.Form["email"].ToString();
             umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
+            umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
 
-            ViewBag.Result = "Good job, " + umodel.Name + "was added!";
 
+            // Get context
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+
+            //Save user to database, get result
+            int result = context.SaveUserDetails(umodel);
+            if (result > 0)
+            {
+                ViewBag.Result = umodel.Name + "was successfully added";
+            }
+            else
+            {
+                ViewBag.Result = "Something went wrong";
+            }
             // Not sure if this is correct, but need to reload data some how
             // Maybe have this as a method as might be used multiple times
-            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();

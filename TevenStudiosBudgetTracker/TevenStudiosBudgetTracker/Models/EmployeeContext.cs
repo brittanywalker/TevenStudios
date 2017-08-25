@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Http;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace TevenStudiosBudgetTracker.Models
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
+
     }
 
     public class RoleType
@@ -129,6 +131,22 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
+        public int SaveUserDetails(User user)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string startDate = "2001-09-11 08:45:00"; //TODO how will we be doing this, should this be in the UI
+                string query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
+                    "','"  + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "')";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+
+        }
     }
 
     public class AdminViewData
