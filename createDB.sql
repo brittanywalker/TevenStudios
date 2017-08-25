@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- Table `TevenStudios`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` TEXT(60) NULL,
   `Email` VARCHAR(60) NULL,
   `StartDate` DATETIME NULL,
