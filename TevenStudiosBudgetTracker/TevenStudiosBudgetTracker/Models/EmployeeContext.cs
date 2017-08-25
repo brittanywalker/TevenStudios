@@ -135,7 +135,10 @@ namespace TevenStudiosBudgetTracker.Models
         {
             using (MySqlConnection conn = getConnection())
             {
-                string startDate = "2001-09-11 08:45:00"; //TODO how will we be doing this, should this be in the UI
+                DateTime dateTimeNow = DateTime.Now;
+                string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+
+                //string startDate = "2001-09-11 08:45:00";
                 string query;
                 if (user.ManagerId.Equals(-1)) // If no manager
                 {
