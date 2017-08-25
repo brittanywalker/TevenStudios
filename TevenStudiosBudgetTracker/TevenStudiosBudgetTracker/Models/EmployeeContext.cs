@@ -136,8 +136,17 @@ namespace TevenStudiosBudgetTracker.Models
             using (MySqlConnection conn = getConnection())
             {
                 string startDate = "2001-09-11 08:45:00"; //TODO how will we be doing this, should this be in the UI
-                string query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
-                    "','"  + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "')";
+                string query;
+                if (user.ManagerId.Equals(-1)) // If no manager
+                {
+                    query = "insert into User(Name, Email, StartDate, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
+                    "','" + user.RoleId + "','" + user.StartBudget + "')";
+                }
+                else // If has a manager
+                {
+                    query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
+                    "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "')";
+                }
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();

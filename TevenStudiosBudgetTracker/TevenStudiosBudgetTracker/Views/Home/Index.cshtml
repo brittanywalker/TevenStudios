@@ -89,6 +89,7 @@
                         <div class="form-group">
                             <label for="manager">Manager:</label>
                             <select class="form-control" id="manager" name="manager">
+                                <option value="-1">None</option> 
                                 @foreach (var item in Model.Managers)
                                 {
                                 <option value="@Html.DisplayTextFor(modelItem => item.ID)">

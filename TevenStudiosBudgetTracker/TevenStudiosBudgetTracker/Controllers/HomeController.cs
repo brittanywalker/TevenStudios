@@ -59,7 +59,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             int result = context.SaveUserDetails(umodel);
             if (result > 0)
             {
-                ViewBag.Result = umodel.Name + "was successfully added";
+                ViewBag.Result = umodel.Name + " was successfully added";
             }
             else
             {
