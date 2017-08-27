@@ -1,7 +1,35 @@
-﻿@{
+﻿@model IEnumerable<TevenStudiosBudgetTracker.Models.PendingRequest>
+
+@{
     ViewData["Title"] = "Employee Page";
 }
 
-<div>
-    Employee stuff...
-</div>
+<h2> Pending Requests</h2>
+<table class="table">
+	<tr>
+		<th>
+			Date
+		</th>
+		<th>
+			Cost
+		</th>
+		<th>
+			Description
+		</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayTextFor(modelItem => item.Date)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Cost)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Description)
+			</td>
+		</tr>
+	}
+</table>
