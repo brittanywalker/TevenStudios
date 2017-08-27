@@ -58,9 +58,11 @@
                 @Html.DisplayFor(modelItem => item.StartBudget)
             </td>
             <td>
-                <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Edit User</button>
+                    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#editUser" value=@item.ID> Edit User</button>
 
-                @*@Html.ActionLink("Edit", "EditUser", new { UserID = item.ID }, null) *@
+                    @*@Html.ActionLink("Edit", "EditUser", new { UserID = item.ID }, null) *@
+
+                    <!--onclick="location.href='@Url.Action("EditUser", "Home")'"-->
 
             </td>
             <td>
@@ -71,8 +73,7 @@
     }
 
 
-
-</table>
+mm</table>
 
 
 <div class="container">
@@ -153,18 +154,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Create a New User</h4>
+                <h4 class="modal-title">Edit User</h4>
             </div>
             <form asp-controller="Home" asp-action="GetDetails" method="post">
                 <div class="modal-body">
 
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input required type="text" class="form-control" id="name" name="name">
+                        <input required type="text" class="form-control" id="name" name="name" value=@Model.Users[0].Name> 
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address:</label>
-                        <input required type="email" class="form-control" id="email" name="email">
+                        <label for="email">Email Address:</label>
+                        <input required type="email" class="form-control" id="email" name="email" value=@Model.Users[0].Email> 
                     </div>
                     <div class="form-group">
                         <label for="manager">Manager:</label>

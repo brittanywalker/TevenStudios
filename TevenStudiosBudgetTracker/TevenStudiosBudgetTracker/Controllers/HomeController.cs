@@ -91,13 +91,14 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         public IActionResult EditUser(int UserID)
         {
-            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
-            int result = context.DeleteUserSQL(UserID);
+            Console.Write("here"); 
+            //UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            //int result = context.DeleteUserSQL(UserID);
 
-            AdminViewData data = new AdminViewData();
-            data.Users = context.GetAllUsers();
-            data.Managers = context.GetAllManagers();
-            return View("Index", data);
+            //AdminViewData data = new AdminViewData();
+            //data.Users = context.GetAllUsers();
+            //data.Managers = context.GetAllManagers();
+            return View("Index");
         }
     }
 }
