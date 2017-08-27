@@ -1,13 +1,3 @@
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.deps.json
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.json
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.dev.json
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.csprojResolveAssemblyReference.cache
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.csproj.CoreCompileInputs.cache
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.AssemblyInfo.cs
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
 C:\Users\Ida\Desktop\SE761\repo\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.deps.json
 C:\Users\Ida\Desktop\SE761\repo\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.json
 C:\Users\Ida\Desktop\SE761\repo\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.dev.json
