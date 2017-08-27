@@ -51,6 +51,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartBudget)
             </td>
+			<td>
+				@Html.ActionLink("Delete", "DeleteUser", new { UserID = item.ID }, null)
+            </td>
         </tr>
 
     }
