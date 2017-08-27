@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
   CONSTRAINT `Manager_ID`
     FOREIGN KEY (`ManagerId`)
     REFERENCES `TevenStudios`.`User` (`ID`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
