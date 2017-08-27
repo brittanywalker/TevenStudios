@@ -175,6 +175,26 @@ namespace TevenStudiosBudgetTracker.Models
             }
 
         }
+
+        public int EditUserSQL(int userID, string Name, string Email, DateTime StartDate, int ManagerId, int RoleId, double StartBudget)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query;
+
+                query = "UPDATE User SET Name = " + Name + ", Email = " + Email +
+                    ", StartDate = " + StartDate + ", ManagerId = " + ManagerId + 
+                    ", RoleId = " + RoleId + ", StartBudget = " + StartBudget + 
+                    " WHERE ID = " + userID ;
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+
+        }
     }
 
     public class AdminViewData

@@ -5080,7 +5080,7 @@
       ]
     },
     "Microsoft.DotNet.PlatformAbstractions/1.1.2": {
-      "sha512": "R1BV4p6dJQHjqPSiU3Kb8otyC0pVbk3HWVMx8yi4zQ/eZyQRQ6vli1Ron2GwXVK7+g0RELs2chy+v+v8gTAnmw==",
+      "sha512": "z4CSzQKBFokkmcJgeEGC0n6RNpxHs6/kMpzFPwIh0U6zQN4/wZqK4r96IU9e7yRMTm3kFah9k4LEn3/Ecz6/5A==",
       "type": "package",
       "path": "microsoft.dotnet.platformabstractions/1.1.2",
       "files": [
@@ -5324,7 +5324,7 @@
       ]
     },
     "Microsoft.Extensions.DependencyModel/1.1.2": {
-      "sha512": "v/Y38U1tsdr8s5SLpTzbiwsugSFV+JNtm2lGb0agKDt/IwmWFbAqOR/rLr/ER1u4X5cHRv/J2dU6acUzYA0MFQ==",
+      "sha512": "k1dsqK0Xy3jqCr4+1rzKdA94ki3AmYDQm3kExtyJR2SgJyF1vcDPuDhsYw0S0OhffDTlA2RF2B6EaiFIuP6QaQ==",
       "type": "package",
       "path": "microsoft.extensions.dependencymodel/1.1.2",
       "files": [
@@ -5559,7 +5559,7 @@
       ]
     },
     "Microsoft.NETCore.App/1.1.2": {
-      "sha512": "fcN0Ob6rjY7Zu0770cA5l9wRJvj7+ltJPPdryUidejkkhao+y2AYrtezBTlP9nCSFXLmYR9BtaknORT17x8reA==",
+      "sha512": "TUPK1xhef7WcbsIkhfZOz6J7DrG5aebjVRBswPfHe90eDhfnlWHaLiI1OtMB2O78bf5d37WO6ge+9nel2keKkA==",
       "type": "package",
       "path": "microsoft.netcore.app/1.1.2",
       "files": [
@@ -5583,7 +5583,7 @@
       ]
     },
     "Microsoft.NETCore.DotNetHostPolicy/1.1.2": {
-      "sha512": "nes7MaBG1zWz44m+zR4SDiOVmpCFiY49BcJGRaIO0TqjsLZmuUQVXEGcNZFlme95dlaki9QYJr4FK5NKNlPA6Q==",
+      "sha512": "fD2UWfXXY+FgPWVqvpNo2/d7b/LHYl1/aepVimYYkVsuF4CczP8hgCJIlKiUbWF/d98xCMtz7bbuv6LkGfdfeQ==",
       "type": "package",
       "path": "microsoft.netcore.dotnethostpolicy/1.1.2",
       "files": [
@@ -11071,7 +11071,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Harry\\.nuget\\packages\\": {}
+    "C:\\Users\\Christina Bell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -11079,14 +11079,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Harry\\Documents\\GitHub\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "projectUniqueName": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
       "projectName": "TevenStudiosBudgetTracker",
-      "projectPath": "C:\\Users\\Harry\\Documents\\GitHub\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
-      "packagesPath": "C:\\Users\\Harry\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Harry\\Documents\\GitHub\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
+      "projectPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "packagesPath": "C:\\Users\\Christina Bell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Harry\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Christina Bell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11094,7 +11094,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Manual Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
