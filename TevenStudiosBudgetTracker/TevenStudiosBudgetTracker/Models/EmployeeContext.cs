@@ -159,6 +159,22 @@ namespace TevenStudiosBudgetTracker.Models
             }
 
         }
+		
+		public int DeleteUserSQL(int userID)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query;
+                
+                query = "DELETE FROM User WHERE ID = '" + userID + "'";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+
+        }
     }
 
     public class AdminViewData
