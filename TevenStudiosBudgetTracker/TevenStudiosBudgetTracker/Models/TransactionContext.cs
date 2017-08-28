@@ -74,8 +74,8 @@ namespace TevenStudiosBudgetTracker.Models
 
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and StatusId=1", conn); // TODO: add pending, therefore change to and not StatusId=denied
-
+                // find all transactions of the user that are not denied (either pending or approved)
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and not StatusId=2", conn);
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -87,35 +87,27 @@ namespace TevenStudiosBudgetTracker.Models
             return value;
         }
 
-        public double getCurrentBudget(DateTime startDate, double startBudget)
+        public double getCurrentBudget(int userId, DateTime startDate, double startBudget)
         {
-            // calculate time from start_date
-            // 1. Get Start Date
-            // 2. set datetime to startdate
+            // calculate number of days between today and the start date
+            DateTime today = DateTime.Now; // Today's date
+            double numberOfDaysDifferent = (today - startDate).TotalDays; // TODO: Cast up or down number of days
+            Console.WriteLine("Number of Days between " + today + " and " + startDate + " = " + numberOfDaysDifferent);
 
-            // calculate number of days
-            // 1. Get today's date
-            DateTime today = DateTime.Now;
-            // 2. find number of days between start_date & today
-
-            double numberOfDaysDifferent = (today - startDate).TotalDays //StartDate - today
-
-            // add to value
-            // 1. calculate accrued budget = number of days in year
+            // 1. calculate accrued budget = $3000 / number of days in year * the number of days in the year that have passed
             double currentBudget = numberOfDaysDifferent * (3000 / 365);
-                // NOTE: might have been added over a year ago?
-                // NOTE: leap year?
+            Console.WriteLine("Current Budget = " + currentBudget);
+                // NOTE: might have been added over a year ago & leap year
             
-            // 2. get current amount spent
+            // Get current amount spent by looping through the transactions
             double userTransactions = getTotalTransactionAmount(userId);
-            // 3. get start budget
+            Console.WriteLine("User has spent = " + userTransactions);
 
-            // Calculate remaining value
+            // Calculate remaining value = the start budget + the current budget - all approved or pending spendings
             double remainingValue = startBudget + currentBudget - userTransactions;
+            Console.WriteLine("User has remaining budget of " + remainingValue);
 
-            double totalSpent = userTransactions;
-
-            return totalSpent;
+            return remainingValue;
         }
 
     }
