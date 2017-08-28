@@ -57,11 +57,12 @@ namespace TevenStudiosBudgetTracker.Models
             return value; // returns the value of all expenditures added
         }
 
+        // returns the value of the current budget using the current user's ID, Start Date and Start Budget
         public double getCurrentBudget(int userId, DateTime startDate, double startBudget)
         {
             // calculate number of days between today and the start date
             DateTime today = DateTime.Now; // Today's date
-            double numberOfDaysDifferent = (today - startDate).TotalDays; // TODO: Cast up or down number of days
+            int numberOfDaysDifferent = (int) (today - startDate).TotalDays; // total days is cast down from their start date
             Console.WriteLine("Number of Days between " + today + " and " + startDate + " = " + numberOfDaysDifferent);
 
             // 1. calculate accrued budget = $3000 / number of days in year * the number of days in the year that have passed
