@@ -21,7 +21,6 @@ namespace TevenStudiosBudgetTracker.Models
         public Double Amount { get; set; }
 
         public int StatusId { get; set; }
-        
     }
 
     public class TransactionContext
@@ -37,36 +36,7 @@ namespace TevenStudiosBudgetTracker.Models
             return new MySqlConnection(ConnectionString); 
         }
 
-        public List<Transaction> GetAllTransactions()
-        {
-            List<Transaction> list = new List<Transaction>();
-
-            using (MySqlConnection conn = getConnection())
-
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions", conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        
-                        list.Add(new Transaction()
-                        {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            UserId = Convert.ToInt32(reader["UserId"]),
-                            StatusId = Convert.ToInt32(reader["StatusId"]),
-                            StartDate = Convert.ToDateTime(reader["StartDate"]),
-                            Description = reader["Description"].ToString(),
-                            Amount = Convert.ToDouble(reader["Amount"])
-                        });
-                    }
-                }
-            }
-            return list;
-        }
-
+        // Returns all transactions approved or pending to the user specified
         private double getTotalTransactionAmount(int UserId)
         {
             double value = 0;
@@ -78,13 +48,13 @@ namespace TevenStudiosBudgetTracker.Models
                 MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and not StatusId=2", conn);
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (reader.Read()) // loops through all the values
                     {
-                        value += Convert.ToDouble(reader["Amount"]);
+                        value += Convert.ToDouble(reader["Amount"]); // adds each expenditure to the value
                     }
                 }
             }
-            return value;
+            return value; // returns the value of all expenditures added
         }
 
         public double getCurrentBudget(int userId, DateTime startDate, double startBudget)
