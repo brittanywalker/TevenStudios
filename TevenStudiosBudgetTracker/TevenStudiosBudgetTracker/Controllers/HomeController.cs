@@ -15,12 +15,15 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Employee page.";
 
-            TransactionContext context = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            User user = userContext.GetUser(CurrentUserID);
+            double budget = transactionContext.getCurrentBudget(user.StartDate,user.StartBudget);
             // return View(context.getCurrentBudget());
-            PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
+
+            PendingRequestsContext pendingContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
             // TODO: Use the current user's actual ID number here
-            return View(context.GetAllPendingRequests(CurrentUserID));
+            return View(pendingContext.GetAllPendingRequests(CurrentUserID));
         }
 
         public IActionResult Index()

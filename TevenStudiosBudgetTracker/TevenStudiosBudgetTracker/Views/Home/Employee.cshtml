@@ -1,5 +1,4 @@
-﻿<!--@model IEnumerable<TevenStudiosBudgetTracker.Models.Transaction>-->
-﻿@model IEnumerable<TevenStudiosBudgetTracker.Models.PendingRequest>
+﻿﻿@model IEnumerable<TevenStudiosBudgetTracker.Models.PendingRequest>
 
 @{
     ViewData["Title"] = "Employee Page";
@@ -26,23 +25,23 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayTextFor(modelItem => item.ID)
+                Html.DisplayTextFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayTextFor(modelItem => item.Amount)
+                Html.DisplayTextFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatusId)
+                Html.DisplayFor(modelItem => item.StatusId)
             </td>
         </tr>
     }-->

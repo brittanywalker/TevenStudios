@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Description { get; set; }
 
-        //public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public Double Amount { get; set; }
 
@@ -57,6 +57,7 @@ namespace TevenStudiosBudgetTracker.Models
                             ID = Convert.ToInt32(reader["ID"]),
                             UserId = Convert.ToInt32(reader["UserId"]),
                             StatusId = Convert.ToInt32(reader["StatusId"]),
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
                             Description = reader["Description"].ToString(),
                             Amount = Convert.ToDouble(reader["Amount"])
                         });
@@ -73,7 +74,7 @@ namespace TevenStudiosBudgetTracker.Models
 
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and StatusId=1", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId="+ UserId+" and StatusId=1", conn); // TODO: add pending, therefore change to and not StatusId=denied
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -86,23 +87,35 @@ namespace TevenStudiosBudgetTracker.Models
             return value;
         }
 
-        public List<Transaction> getCurrentBudget()
+        public double getCurrentBudget(DateTime startDate, double startBudget)
         {
-            int userId = 1;
-            double userTransactions = getTotalTransactionAmount(userId);
             // calculate time from start_date
-            // calculate number of days
-            // add to value
-            // add startbudget            
+            // 1. Get Start Date
+            // 2. set datetime to startdate
 
-            List<Transaction> newList = new List<Transaction>();
-            Transaction obj = new Transaction();
+            // calculate number of days
+            // 1. Get today's date
+            DateTime today = DateTime.Now;
+            // 2. find number of days between start_date & today
+
+            double numberOfDaysDifferent = (today - startDate).TotalDays //StartDate - today
+
+            // add to value
+            // 1. calculate accrued budget = number of days in year
+            double currentBudget = numberOfDaysDifferent * (3000 / 365);
+                // NOTE: might have been added over a year ago?
+                // NOTE: leap year?
+            
+            // 2. get current amount spent
+            double userTransactions = getTotalTransactionAmount(userId);
+            // 3. get start budget
+
+            // Calculate remaining value
+            double remainingValue = startBudget + currentBudget - userTransactions;
 
             double totalSpent = userTransactions;
 
-            obj.Amount = totalSpent;
-            newList.Add(obj);
-            return newList;
+            return totalSpent;
         }
 
     }

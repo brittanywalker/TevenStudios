@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Email { get; set; }
 
-        //public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public int ManagerId { get; set; }
 
@@ -67,9 +67,8 @@ namespace TevenStudiosBudgetTracker.Models
                             ID = Convert.ToInt32(reader["ID"]),
                             Name = reader["Name"].ToString(),
                             Email = reader["Email"].ToString(),
-
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
                             ManagerId = manager,
-
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                         });
@@ -78,6 +77,32 @@ namespace TevenStudiosBudgetTracker.Models
                 }
             }
             return list;
+        }
+
+        public User GetUser(int id)
+        {
+            User user = new User();
+
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.ID = Convert.ToInt32(reader["ID"]);
+                        user.Name = reader["Name"].ToString();
+                        user.Email = reader["Email"].ToString();
+                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
+                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
+                    }
+                }
+            }
+            return user;
         }
     }
 
