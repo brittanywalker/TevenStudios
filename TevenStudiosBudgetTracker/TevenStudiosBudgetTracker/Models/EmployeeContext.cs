@@ -176,16 +176,25 @@ namespace TevenStudiosBudgetTracker.Models
 
         }
 
-        public int EditUserSQL(int userID, string Name, string Email, DateTime StartDate, int ManagerId, int RoleId, double StartBudget)
+        public int EditUserSQL(User user)
         {
             using (MySqlConnection conn = getConnection())
             {
-                string query;
+                string query; 
 
-                query = "UPDATE User SET Name = " + Name + ", Email = " + Email +
-                    ", StartDate = " + StartDate + ", ManagerId = " + ManagerId + 
-                    ", RoleId = " + RoleId + ", StartBudget = " + StartBudget + 
-                    " WHERE ID = " + userID ;
+                if (user.ManagerId.Equals(-1)) // If no manager
+                {
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
+                else // If has a manager
+                {
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', ManagerId = '" + user.ManagerId +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
@@ -200,6 +209,7 @@ namespace TevenStudiosBudgetTracker.Models
     public class AdminViewData
     {
         public List<User> Users { get; set; }
+        public int CurrentUserIndex;
         public List<User> Managers { get; set; }
     }
 

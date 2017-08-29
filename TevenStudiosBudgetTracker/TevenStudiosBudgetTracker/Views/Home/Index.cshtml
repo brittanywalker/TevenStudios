@@ -1,5 +1,4 @@
-﻿
-@model TevenStudiosBudgetTracker.Models.AdminViewData
+﻿@model TevenStudiosBudgetTracker.Models.AdminViewData
 
 @{
     ViewData["Title"] = "Admin Page";
@@ -36,44 +35,40 @@
     </tr>
 
 
-    @foreach (var item in Model.Users)
+    @for (int i=0; i<Model.Users.Count; i++)
     {
         <tr>
             <td>
-                @Html.DisplayTextFor(modelItem => item.ID)
+                @Html.DisplayTextFor(modelItem => Model.Users[i].ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => Model.Users[i].Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => Model.Users[i].Email)
             </td>
             <td>
-                @Html.DisplayTextFor(modelItem => item.ManagerId)
+                @Html.DisplayTextFor(modelItem => Model.Users[i].ManagerId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
+                @Html.DisplayFor(modelItem => Model.Users[i].RoleId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartBudget)
+                @Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
             </td>
             <td>
-                    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#editUser" value=@item.ID> Edit User</button>
-
-                    @*@Html.ActionLink("Edit", "EditUser", new { UserID = item.ID }, null) *@
-
-                    <!--onclick="location.href='@Url.Action("EditUser", "Home")'"-->
-
+                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@i)"> Edit User</button>
+                @*data-toggle="modal" data-target="#editUser"*@
             </td>
             <td>
-                @Html.ActionLink("Delete", "DeleteUser", new { UserID = item.ID }, null)
+                @Html.ActionLink("Delete", "DeleteUser", new { UserID = Model.Users[i].ID }, null)
             </td>
         </tr>
 
     }
 
 
-mm</table>
+</table>
 
 
 <div class="container">
@@ -141,66 +136,92 @@ mm</table>
     {
         <h4>@ViewBag.Result</h4>
     }
-
 </div>
 
+<div class="container">
 
+    <button id="hiddenEditBtn" type="button" class="btn btn-info" style="visibility:hidden" data-toggle="modal" data-target="#editUser"></button>
 
-<!-- Modal -->
-<div class="modal fade" id="editUser" role="dialog">
-    <div class="modal-dialog">
+    <!-- Modal -->
+    <div class="modal fade" id="editUser" role="dialog">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit User</h4>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit User</h4>
+                </div>
+                <form asp-controller="Home" asp-action="EditUser" method="post">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input required type="text" class="form-control" id="editName" name="name"> 
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input required type="email" class="form-control" id="editEmail" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="manager">Manager:</label>
+                            <select class="form-control" id="editManager" name="manager">
+                                <option value="-1">None</option>
+                                @foreach (var item in Model.Managers)
+                                {
+                                    <option value="@Html.DisplayTextFor(modelItem => item.ID)">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <select class="form-control" id="editRole" name="role">
+                                <option value="0">Employee</option>
+                                <option value="1">Manager</option>
+                                <option value="2">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Starting Budget ($):</label>
+                            <input required type="number" class="form-control" id="editBudget" name="budget" value="3000">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input id="submitEditUser" type="submit" class="btn btn-default">
+                    </div>
+                </form>
             </div>
-            <form asp-controller="Home" asp-action="GetDetails" method="post">
-                <div class="modal-body">
 
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input required type="text" class="form-control" id="name" name="name" value=@Model.Users[0].Name> 
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address:</label>
-                        <input required type="email" class="form-control" id="email" name="email" value=@Model.Users[0].Email> 
-                    </div>
-                    <div class="form-group">
-                        <label for="manager">Manager:</label>
-                        <select class="form-control" id="manager" name="manager">
-                            <option value="-1">None</option>
-                            @foreach (var item in Model.Managers)
-                            {
-                                <option value="@Html.DisplayTextFor(modelItem => item.ID)">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="role">Role:</label>
-                        <select class="form-control" id="role" name="role">
-                            <option value="0">Employee</option>
-                            <option value="1">Manager</option>
-                            <option value="2">Administrator</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Starting Budget ($):</label>
-                        <input required type="number" class="form-control" id="budget" name="budget" value="3000">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-default">
-                </div>
-            </form>
         </div>
-
     </div>
+
+    <script>
+        function populateModal(userIndex) {
+
+            $.post('Home/SetCurrentUserIndex/?UserIndex=' + userIndex,
+                function (returnedData) {
+                    //window.location.href = "http://localhost:50457/";
+                    console.log("returned data: " + returnedData.toString());
+                    console.log("index: " + @Model.CurrentUserIndex);
+                    if (returnedData != null) {
+                        document.getElementById("editName").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Name");
+                        document.getElementById("editEmail").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Email");
+                        document.getElementById("editManager").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].ManagerId");
+                        document.getElementById("hiddenEditBtn").click();
+                    }
+                });
+
+        }
+    </script>
 </div>
+
+
+
+
+
 
 
 
