@@ -7,7 +7,7 @@
 @*
     @section Scripts
     {
-        <script src="@Url.Content("~/Scripts/adminDeleteUser.js")"></script>
+        <script src="@Url.Content("~/Scripts/xyz.js")"></script>
     }
 *@
 
@@ -63,8 +63,7 @@
                 @Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
             </td>
             <td>
-                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@i)"> Edit User</button>
-                @*data-toggle="modal" data-target="#editUser"*@
+                <p>Edit user button</p>
             </td>
             <td>
                 <button type="button" class="btn btn-info btn-lg right-float-button deleteButton"
@@ -81,156 +80,6 @@
         $("#confirmDelete").val(userId);
     });
 </script>
-
-
-<div class="container">
-
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Add New User</button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="addNewUser" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create a New User</h4>
-                </div>
-                <form asp-controller="Home" asp-action="GetDetails" method="post">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input required type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email address:</label>
-                            <input required type="email" class="form-control" id="email" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="manager">Manager:</label>
-                            <select class="form-control" id="manager" name="manager">
-                                <option value="-1">None</option> 
-                                @foreach (var item in Model.Managers)
-                                {
-                                <option value="@Html.DisplayTextFor(modelItem => item.ID)">
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Role:</label>
-                            <select class="form-control" id="role" name="role">
-                                <option value="0">Employee</option>
-                                <option value="1">Manager</option>
-                                <option value="2">Administrator</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Starting Budget ($):</label>
-                            <input required type="number" class="form-control" id="budget" name="budget" value="3000">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-default">
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-    @if (ViewBag.Result != null)
-    {
-        <h4>@ViewBag.Result</h4>
-    }
-</div>
-
-<div class="container">
-
-    <button id="hiddenEditBtn" type="button" class="btn btn-info" style="visibility:hidden" data-toggle="modal" data-target="#editUser"></button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="editUser" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Edit User</h4>
-                </div>
-                <form asp-controller="Home" asp-action="EditUser" method="post">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input required type="text" class="form-control" id="editName" name="name"> 
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address:</label>
-                            <input required type="email" class="form-control" id="editEmail" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="manager">Manager:</label>
-                            <select class="form-control" id="editManager" name="manager">
-                                <option value="-1">None</option>
-                                @foreach (var item in Model.Managers)
-                                {
-                                    <option value="@Html.DisplayTextFor(modelItem => item.ID)">
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Role:</label>
-                            <select class="form-control" id="editRole" name="role">
-                                <option value="0">Employee</option>
-                                <option value="1">Manager</option>
-                                <option value="2">Administrator</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Starting Budget ($):</label>
-                            <input required type="number" class="form-control" id="editBudget" name="budget" value="3000">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <input id="submitEditUser" type="submit" class="btn btn-default">
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        function populateModal(userIndex) {
-
-            $.post('Home/SetCurrentUserIndex/?UserIndex=' + userIndex,
-                function (returnedData) {
-                    //window.location.href = "http://localhost:50457/";
-                    console.log("returned data: " + returnedData.toString());
-                    console.log("index: " + @Model.CurrentUserIndex);
-                    if (returnedData != null) {
-                        document.getElementById("editName").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Name");
-                        document.getElementById("editEmail").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Email");
-                        document.getElementById("editManager").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].ManagerId");
-                        document.getElementById("hiddenEditBtn").click();
-                    }
-                });
-
-        }
-    </script>
-</div>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="deleteUser" role="alert">

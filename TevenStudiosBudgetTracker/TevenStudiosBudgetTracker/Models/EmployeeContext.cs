@@ -130,35 +130,6 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return list;
         }
-
-        public int SaveUserDetails(User user)
-        {
-            using (MySqlConnection conn = getConnection())
-            {
-                DateTime dateTimeNow = DateTime.Now;
-                string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
-
-                //string startDate = "2001-09-11 08:45:00";
-                string query;
-                if (user.ManagerId.Equals(-1)) // If no manager
-                {
-                    query = "insert into User(Name, Email, StartDate, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
-                    "','" + user.RoleId + "','" + user.StartBudget + "')";
-                }
-                else // If has a manager
-                {
-                    query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +
-                    "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "')";
-                }
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                return i;
-            }
-
-        }
 		
 		public int DeleteUserSQL(int userID)
         {
@@ -167,35 +138,6 @@ namespace TevenStudiosBudgetTracker.Models
                 string query;
                 
                 query = "DELETE FROM User WHERE ID = '" + userID + "'";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                return i;
-            }
-
-        }
-
-        public int EditUserSQL(User user)
-        {
-            using (MySqlConnection conn = getConnection())
-            {
-                string query; 
-
-                if (user.ManagerId.Equals(-1)) // If no manager
-                {
-                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
-                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "' WHERE ID = '" + user.ID + "'";
-                }
-                else // If has a manager
-                {
-                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
-                    "', ManagerId = '" + user.ManagerId +
-                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "' WHERE ID = '" + user.ID + "'";
-                }
-
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
