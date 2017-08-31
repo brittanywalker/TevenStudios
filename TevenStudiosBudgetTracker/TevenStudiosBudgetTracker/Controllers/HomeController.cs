@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TevenStudiosBudgetTracker.Models;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
@@ -82,23 +83,62 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             int result = context.DeleteUserSQL(UserID);
+            if (result > 0)
+            {
+                ViewBag.Result = "Successfully deleted";
+            }
+            else
+            {
+                ViewBag.Result = "Something went wrong";
+            }
 
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-            return View("Index",data);
+            return View("Index", data);
         }
 
         public IActionResult EditUser(int UserID)
         {
-            Console.Write("here"); 
-            //UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
-            //int result = context.DeleteUserSQL(UserID);
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
-            //AdminViewData data = new AdminViewData();
-            //data.Users = context.GetAllUsers();
-            //data.Managers = context.GetAllManagers();
-            return View("Index");
+            // Build user model
+            User umodel = new User();
+            umodel.ID = UserID;
+            umodel.Name = HttpContext.Request.Form["name"].ToString();
+            umodel.Email = HttpContext.Request.Form["email"].ToString();
+            umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
+            umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
+            umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
+
+            int result = context.EditUserSQL(umodel);
+            if (result > 0)
+            {
+                ViewBag.Result = umodel.Name + " was successfully edited";
+            }
+            else
+            {
+                ViewBag.Result = "Something went wrong";
+            }
+
+            AdminViewData data = new AdminViewData();
+            data.Users = context.GetAllUsers();
+            data.Managers = context.GetAllManagers();
+            return View("Index", data);
+        }
+
+        public ActionResult SetCurrentUserIndex(int UserIndex)
+        {
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            AdminViewData data = new AdminViewData();
+            data.Users = context.GetAllUsers();
+            data.Managers = context.GetAllManagers();
+            data.CurrentUserIndex = UserIndex;
+            Console.WriteLine("data user index set to: " + data.CurrentUserIndex);
+            ViewBag.CurrentIndex = UserIndex;
+            return View("Index", data);
+            //var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Controller");
+            //return Json(new { Url = redirectUrl });
         }
     }
 }
