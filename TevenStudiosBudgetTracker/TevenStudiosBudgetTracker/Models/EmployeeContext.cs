@@ -23,6 +23,8 @@ namespace TevenStudiosBudgetTracker.Models
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
+
+        public double AnnualBudget { get; set; }
     }
 
     public class UserContext
@@ -71,6 +73,7 @@ namespace TevenStudiosBudgetTracker.Models
                             ManagerId = manager,
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                            AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                         });
                         Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
@@ -99,6 +102,7 @@ namespace TevenStudiosBudgetTracker.Models
                         user.StartDate = Convert.ToDateTime(reader["StartDate"]);
                         user.RoleId = Convert.ToInt32(reader["RoleId"]);
                         user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
+                        user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
                     }
                 }
             }
@@ -143,7 +147,7 @@ namespace TevenStudiosBudgetTracker.Models
                     {
                         list.Add(new PendingRequest()
                         {
-                            Date = reader["StartDate"].ToString(),
+                            Date = reader["Date"].ToString(),
                             Cost = reader["Amount"].ToString(),
                             Description = reader["Description"].ToString(),
                         });

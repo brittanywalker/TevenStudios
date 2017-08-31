@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
   `ManagerId` INT NULL,
   `RoleId` INT NULL,
   `StartBudget` DOUBLE NULL,
+  `AnnualBudget` DOUBLE NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `id_UNIQUE` (`ID` ASC),
   INDEX `Role_ID_idx` (`RoleId` ASC),
@@ -80,7 +81,7 @@ DROP TABLE `TevenStudios`.`Transactions`;
 
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`Transactions` (
   `UserId` INT NOT NULL,
-  `StartDate` DATETIME NULL,
+  `Date` DATETIME NULL,
   `Description` LONGTEXT NULL,
   `Amount` DOUBLE NULL,
   `StatusId` INT NULL,
@@ -111,7 +112,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `TevenStudios`;
-INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (0, 'Admin') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
+INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (0, 'Administrator') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
 INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (1, 'Employee') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
 INSERT INTO `TevenStudios`.`Role_Types` (`ID`, `Type`) VALUES (2, 'Manager') ON DUPLICATE KEY UPDATE `Type`=VALUES(`Type`);
 
@@ -136,11 +137,11 @@ COMMIT;
 START TRANSACTION;
 USE `TevenStudios`;
 -- Create initial user ID to be associated with the pending requests
-INSERT INTO `TevenStudios`.`User` (`ID`, `Name`, `Email`, `StartDate`, `RoleId`, `StartBudget`) VALUES (1, 'Joe Bloggs', 'joe@gmail.com', '2017-01-25 10:00:00', 1, 150.00) ON DUPLICATE KEY UPDATE `Name`=VALUES(`Name`), `Email`=VALUES(`Email`), `StartDate`=VALUES(`StartDate`), `RoleId`=VALUES(`RoleId`), `StartBudget`=VALUES(`StartBudget`);
+INSERT INTO `TevenStudios`.`User` (`ID`, `Name`, `Email`, `StartDate`, `RoleId`, `StartBudget`, `AnnualBudget`) VALUES (1, 'Joe Bloggs', 'joe@gmail.com', '2017-01-25 10:00:00', 1, 150.00, 3000.00) ON DUPLICATE KEY UPDATE `Name`=VALUES(`Name`), `Email`=VALUES(`Email`), `StartDate`=VALUES(`StartDate`), `RoleId`=VALUES(`RoleId`), `StartBudget`=VALUES(`StartBudget`), `AnnualBudget`=VALUES(`AnnualBudget`);
 
 -- Create user's pending requests
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-25 10:00:00', 'Java Book', 100.54, 0, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-26 11:00:00', 'Java Conference', 86.99, 0, 2) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `StartDate`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-27 12:00:00', 'Something else Java', 2.00, 0, 3) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `StartDate`=VALUES(`StartDate`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-25 10:00:00', 'Java Book', 100.54, 0, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-26 11:00:00', 'Java Conference', 86.99, 0, 2) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-27 12:00:00', 'Something else Java', 2.00, 0, 3) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
 
 COMMIT;

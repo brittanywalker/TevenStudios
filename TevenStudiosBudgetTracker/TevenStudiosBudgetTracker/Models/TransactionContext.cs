@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Description { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime Date { get; set; }
 
         public Double Amount { get; set; }
 
@@ -58,7 +58,7 @@ namespace TevenStudiosBudgetTracker.Models
         }
 
         // returns the value of the current budget using the current user's ID, Start Date and Start Budget
-        public double getCurrentBudget(int userId, DateTime startDate, double startBudget)
+        public double getCurrentBudget(int userId, DateTime startDate, double startBudget, double maxBudget)
         {
             // calculate number of days between today and the start date
             DateTime today = DateTime.Now; // Today's date
@@ -66,9 +66,8 @@ namespace TevenStudiosBudgetTracker.Models
             Console.WriteLine("Number of Days between " + today + " and " + startDate + " = " + numberOfDaysDifferent);
 
             // 1. calculate accrued budget = $3000 / number of days in year * the number of days in the year that have passed
-            double currentBudget = numberOfDaysDifferent * (3000 / 365);
+            double currentBudget = numberOfDaysDifferent * (maxBudget / 365);
             Console.WriteLine("Current Budget = " + currentBudget);
-                // NOTE: might have been added over a year ago & leap year
             
             // Get current amount spent by looping through the transactions
             double userTransactions = getTotalTransactionAmount(userId);
@@ -76,8 +75,13 @@ namespace TevenStudiosBudgetTracker.Models
 
             // Calculate remaining value = the start budget + the current budget - all approved or pending spendings
             double remainingValue = startBudget + currentBudget - userTransactions;
-            Console.WriteLine("User has remaining budget of " + remainingValue);
 
+            if (remainingValue >= maxBudget) // capped at the maximum budget
+            {
+                remainingValue = maxBudget;
+            }
+
+            Console.WriteLine("User has remaining budget of " + remainingValue);
             return remainingValue;
         }
 
