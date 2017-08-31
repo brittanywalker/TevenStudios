@@ -110,6 +110,7 @@
                     data: { UserID: userId },
                 }).done(function () {
                     $('#deleteUser').modal('toggle');
+                    window.location = "/Home/Index";
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
