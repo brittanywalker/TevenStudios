@@ -13,16 +13,23 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         public IActionResult Employee()
         {
-            PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
+            ViewData["Message"] = "Employee page.";
+
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            User user = userContext.GetUser(CurrentUserID);
+            double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget);
+
+            PendingRequestsContext pendingContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
             // TODO: Use the current user's actual ID number here
-            return View(context.GetAllPendingRequests(CurrentUserID));
+            return View(pendingContext.GetAllPendingRequests(CurrentUserID));
         }
 
         public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
 
-            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
             return View(context.GetAllUsers());
         }

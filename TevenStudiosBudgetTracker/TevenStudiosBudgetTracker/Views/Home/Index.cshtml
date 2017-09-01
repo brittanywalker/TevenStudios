@@ -19,6 +19,9 @@
             Email
         </th>
         <th>
+            Date
+        </th>
+        <th>
             ManagerID
         </th>
         <th>
@@ -43,6 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
+                @Html.DisplayTextFor(modelItem => item.StartDate)
+            </td>
+            <td>
                 @Html.DisplayTextFor(modelItem => item.ManagerId)
             </td>
             <td>
@@ -54,7 +60,5 @@
         </tr>
 
     }
-
-
 
 </table>
