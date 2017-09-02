@@ -17,14 +17,13 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Email { get; set; }
 
-        //public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public int ManagerId { get; set; }
 
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
-
     }
 
     public class RoleType
@@ -52,7 +51,6 @@ namespace TevenStudiosBudgetTracker.Models
             List<User> list = new List<User>();
 
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from User", conn);
@@ -76,9 +74,8 @@ namespace TevenStudiosBudgetTracker.Models
                             ID = Convert.ToInt32(reader["ID"]),
                             Name = reader["Name"].ToString(),
                             Email = reader["Email"].ToString(),
-
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
                             ManagerId = manager,
-
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                         });
@@ -92,11 +89,10 @@ namespace TevenStudiosBudgetTracker.Models
         public List<User> GetAllManagers()
         {
             List<User> list = new List<User>();
-
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
+
                 MySqlCommand cmd = new MySqlCommand("select * from User where RoleId = 1 ", conn);
 
                 using (var reader = cmd.ExecuteReader())
@@ -144,7 +140,6 @@ namespace TevenStudiosBudgetTracker.Models
                 conn.Close();
                 return i;
             }
-
         }
     }
 
@@ -181,7 +176,6 @@ namespace TevenStudiosBudgetTracker.Models
             List<PendingRequest> list = new List<PendingRequest>();
 
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
@@ -201,6 +195,5 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return list;
         }
-
     }
 }
