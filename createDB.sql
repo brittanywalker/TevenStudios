@@ -36,7 +36,7 @@ ENGINE = InnoDB;
 DROP TABLE `TevenStudios`.`User`;
 
 CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` TEXT(60) NULL,
   `Email` VARCHAR(60) NULL,
   `StartDate` DATETIME NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
   CONSTRAINT `Manager_ID`
     FOREIGN KEY (`ManagerId`)
     REFERENCES `TevenStudios`.`User` (`ID`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
