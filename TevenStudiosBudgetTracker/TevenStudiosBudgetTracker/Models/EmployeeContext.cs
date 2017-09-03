@@ -24,6 +24,8 @@ namespace TevenStudiosBudgetTracker.Models
         public int RoleId { get; set; }
 
         public double StartBudget { get; set; }
+
+        public double AnnualBudget { get; set; }
     }
 
     public class RoleType
@@ -39,11 +41,11 @@ namespace TevenStudiosBudgetTracker.Models
 
         public UserContext(string connectionString)
         {
-            this.ConnectionString = connectionString; 
+            this.ConnectionString = connectionString;
         }
         public MySqlConnection getConnection()
         {
-            return new MySqlConnection(ConnectionString); 
+            return new MySqlConnection(ConnectionString);
         }
 
         public List<User> GetAllUsers()
@@ -62,7 +64,7 @@ namespace TevenStudiosBudgetTracker.Models
                         var manager = reader.GetOrdinal("ManagerId");
                         if (reader.IsDBNull(manager))
                         {
-                            manager = 0; 
+                            manager = 0;
                         }
                         else
                         {
@@ -78,12 +80,40 @@ namespace TevenStudiosBudgetTracker.Models
                             ManagerId = manager,
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                            AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                         });
                         Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
                 }
             }
             return list;
+        }
+
+        public User GetUser(int id)
+        {
+            User user = new User();
+
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.ID = Convert.ToInt32(reader["ID"]);
+                        user.Name = reader["Name"].ToString();
+                        user.Email = reader["Email"].ToString();
+                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
+                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
+                        user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
+                    }
+                }
+            }
+            return user;
         }
 
         public List<User> GetAllManagers()
@@ -126,13 +156,13 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return list;
         }
-		
+
 		public int DeleteUserSQL(int userID)
         {
             using (MySqlConnection conn = getConnection())
             {
                 string query;
-                
+
                 query = "DELETE FROM User WHERE ID = '" + userID + "'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
@@ -186,7 +216,7 @@ namespace TevenStudiosBudgetTracker.Models
                     {
                         list.Add(new PendingRequest()
                         {
-                            Date = reader["StartDate"].ToString(),
+                            Date = reader["Date"].ToString(),
                             Cost = reader["Amount"].ToString(),
                             Description = reader["Description"].ToString(),
                         });

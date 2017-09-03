@@ -20,7 +20,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             User user = userContext.GetUser(CurrentUserID);
-            double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget);
+            double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
 
             PendingRequestsContext pendingContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
             // TODO: Use the current user's actual ID number here
