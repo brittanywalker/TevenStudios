@@ -9,5 +9,11 @@ TevenStudiosBudgetTracker/.vs/TevenStudiosBudgetTracker/v15/sqlite3/storage.ide
 TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/obj/Debug/netcoreapp1.1/TevenStudiosBudgetTracker.csproj.CoreCompileInputs.cache
 *.json
 TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/TevenStudiosBudgetTracker.csproj.user
-database.mwb
+TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/wwwroot/lib/*
+TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/obj/*
 *.suo
+*.user
+database.mwb
+
+TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/obj/Debug/netcoreapp1.1/TevenStudiosBudgetTracker.csprojResolveAssemblyReference.cache
+TevenStudiosBudgetTracker/TevenStudiosBudgetTracker/appsettings.json

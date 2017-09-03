@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Http;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,13 @@ namespace TevenStudiosBudgetTracker.Models
         public double StartBudget { get; set; }
     }
 
+    public class RoleType
+    {
+        public int ID { get; set; }
+
+        public string Type { get; set; }
+    }
+
     public class UserContext
     {
         public string ConnectionString { get; set; }
@@ -43,7 +51,6 @@ namespace TevenStudiosBudgetTracker.Models
             List<User> list = new List<User>();
 
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from User", conn);
@@ -79,31 +86,68 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
-        public User GetUser(int id)
+        public List<User> GetAllManagers()
         {
-            User user = new User();
-
+            List<User> list = new List<User>();
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
+
+                MySqlCommand cmd = new MySqlCommand("select * from User where RoleId = 1 ", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        user.ID = Convert.ToInt32(reader["ID"]);
-                        user.Name = reader["Name"].ToString();
-                        user.Email = reader["Email"].ToString();
-                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
-                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
-                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
+                        var manager = reader.GetOrdinal("ManagerId");
+                        if (reader.IsDBNull(manager))
+                        {
+                            manager = 0;
+                        }
+                        else
+                        {
+                            manager = Convert.ToInt32(reader["ManagerId"]);
+                        }
+
+                        list.Add(new User()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+
+                            ManagerId = manager,
+
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                        });
+                        Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
                 }
             }
-            return user;
+            return list;
         }
+		
+		public int DeleteUserSQL(int userID)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query;
+                
+                query = "DELETE FROM User WHERE ID = '" + userID + "'";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
+    }
+
+    public class AdminViewData
+    {
+        public List<User> Users { get; set; }
+        public int CurrentUserIndex;
+        public List<User> Managers { get; set; }
     }
 
     public class PendingRequest
@@ -132,7 +176,6 @@ namespace TevenStudiosBudgetTracker.Models
             List<PendingRequest> list = new List<PendingRequest>();
 
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
@@ -152,6 +195,5 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return list;
         }
-
     }
 }
