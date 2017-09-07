@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TevenStudiosBudgetTracker.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Collections;
+using System.Dynamic;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
@@ -17,14 +19,18 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Employee page.";
 
+            dynamic mymodel = new ExpandoObject();
+
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
+            mymodel.Budget = budget;
 
-            PendingRequestsContext pendingContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
+            PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
             // TODO: Use the current user's actual ID number here
-            return View(pendingContext.GetAllPendingRequests(CurrentUserID));
+            return View(mymodel);
         }
 
         public IActionResult Index()

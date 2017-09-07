@@ -82,7 +82,7 @@ namespace TevenStudiosBudgetTracker.Models
             }
 
             Console.WriteLine("User has remaining budget of " + remainingValue);
-            return remainingValue;
+            return Math.Round(remainingValue, 2); ; // return value rounded to 2dp
         }
 
     }
