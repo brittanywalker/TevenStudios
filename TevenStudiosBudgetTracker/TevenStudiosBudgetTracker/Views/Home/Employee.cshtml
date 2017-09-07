@@ -1,8 +1,11 @@
-﻿﻿@model IEnumerable<TevenStudiosBudgetTracker.Models.PendingRequest>
+﻿﻿@model dynamic  
 
 @{
     ViewData["Title"] = "Employee Page";
 }
+
+<h2> Current Balance</h2>
+<h2> $@Model.Budget </h2>
 
 <h2> Pending Requests</h2>
 <table class="table">
@@ -18,17 +21,17 @@
 		</th>
 	</tr>
 
-	@foreach (var item in Model)
-	{
+	@foreach (var pendingRequest in Model.PendingRequests)
+    {
 		<tr>
 			<td>
-				@Html.DisplayTextFor(modelItem => item.Date)
+				@pendingRequest.Date
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Cost)
+				@pendingRequest.Cost
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.Description)
+				@pendingRequest.Description
 			</td>
 		</tr>
 	}
