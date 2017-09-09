@@ -82,7 +82,6 @@ namespace TevenStudiosBudgetTracker.Models
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                         });
-                        Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
                 }
             }
@@ -204,13 +203,55 @@ namespace TevenStudiosBudgetTracker.Models
             }
 
         }
+
+        public User retrieveUserDetails(int UserID)
+        {
+            User currentUser;
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + UserID, conn);
+
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                var manager = reader.GetOrdinal("ManagerId");
+                if (reader.IsDBNull(manager))
+                {
+                    manager = 0;
+                }
+                else
+                {
+                    manager = Convert.ToInt32(reader["ManagerId"]);
+                }
+
+                currentUser = new User()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    Name = reader["Name"].ToString(),
+                    Email = reader["Email"].ToString(),
+
+                    ManagerId = manager,
+
+                    RoleId = Convert.ToInt32(reader["RoleId"]),
+                    StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                };
+
+                conn.Close();
+            }
+            return currentUser;
+        }
     }
+
+   
 
     public class AdminViewData
     {
         public List<User> Users { get; set; }
         public int CurrentUserIndex;
         public List<User> Managers { get; set; }
+        public User currentEditUser { get; set; }
+   
     }
 
     public class PendingRequest

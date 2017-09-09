@@ -101,8 +101,8 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult EditUser(int UserID)
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
-
-            // Build user model
+            
+            //// Build user model
             User umodel = new User();
             umodel.ID = UserID;
             umodel.Name = HttpContext.Request.Form["name"].ToString();
@@ -112,6 +112,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
 
             int result = context.EditUserSQL(umodel);
+
             if (result > 0)
             {
                 ViewBag.Result = umodel.Name + " was successfully edited";
@@ -124,7 +125,18 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
+
             return View("Index", data);
+        }
+
+        public IActionResult GetCurrentUserData(int UserID)
+        {
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User currentUser = context.retrieveUserDetails(UserID);
+
+            Console.WriteLine("user name: " + currentUser.Name);
+
+            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget});
         }
 
         public ActionResult SetCurrentUserIndex(int UserIndex)
@@ -135,10 +147,17 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Managers = context.GetAllManagers();
             data.CurrentUserIndex = UserIndex;
             Console.WriteLine("data user index set to: " + data.CurrentUserIndex);
-            ViewBag.CurrentIndex = UserIndex;
+
+            User umodel = new User();
+            umodel.Name = data.Users[UserIndex].Name;
+            umodel.Email = data.Users[UserIndex].Email;
+            umodel.ManagerId = data.Users[UserIndex].ManagerId;
+            umodel.RoleId = data.Users[UserIndex].RoleId;
+            umodel.StartBudget = data.Users[UserIndex].StartBudget;
+
+            data.currentEditUser = umodel;
+
             return View("Index", data);
-            //var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Controller");
-            //return Json(new { Url = redirectUrl });
         }
     }
 }

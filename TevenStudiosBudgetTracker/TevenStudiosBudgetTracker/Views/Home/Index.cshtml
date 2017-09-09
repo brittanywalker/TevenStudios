@@ -57,7 +57,7 @@
                 @Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
             </td>
             <td>
-                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@i)"> Edit User</button>
+                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
                 @*data-toggle="modal" data-target="#editUser"*@
             </td>
             <td>
@@ -184,8 +184,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Starting Budget ($):</label>
-                            <input required type="number" class="form-control" id="editBudget" name="budget" value="3000">
+                            <label for="name">Current Budget ($):</label>
+                            <input required type="number" class="form-control" id="editBudget" name="budget">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -199,17 +199,21 @@
     </div>
 
     <script>
-        function populateModal(userIndex) {
+        function populateModal(UserID) {
 
-            $.post('Home/SetCurrentUserIndex/?UserIndex=' + userIndex,
+            $.post('Home/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
-                    //window.location.href = "http://localhost:50457/";
-                    console.log("returned data: " + returnedData.toString());
-                    console.log("index: " + @Model.CurrentUserIndex);
-                    if (returnedData != null) {
-                        document.getElementById("editName").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Name");
-                        document.getElementById("editEmail").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].Email");
-                        document.getElementById("editManager").setAttribute("value", "@Model.Users[Model.CurrentUserIndex].ManagerId");
+                    if (returnedData) {
+                        
+                        userString = JSON.stringify(returnedData);
+                        userObject = JSON.parse(userString);
+                        console.log("user object: " + userString);
+                        document.getElementById("editName").setAttribute("value", userObject["name"]);
+                        document.getElementById("editEmail").setAttribute("value", userObject["email"]);
+                        $("#editManager").val(userObject["managerId"]);
+                        $("#editRole").val(userObject["roleId"]);
+                        document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
+
                         document.getElementById("hiddenEditBtn").click();
                     }
                 });
