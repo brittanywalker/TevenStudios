@@ -101,30 +101,45 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult EditUser(int UserID)
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User currentUser = context.retrieveUserDetails(UserID);
 
-            // Build user model
-            User umodel = new User();
-            umodel.ID = UserID;
-            umodel.Name = HttpContext.Request.Form["name"].ToString();
-            umodel.Email = HttpContext.Request.Form["email"].ToString();
-            umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
-            umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
-            umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
+            Console.WriteLine("user name: " + currentUser.Name);
 
-            int result = context.EditUserSQL(umodel);
-            if (result > 0)
-            {
-                ViewBag.Result = umodel.Name + " was successfully edited";
-            }
-            else
-            {
-                ViewBag.Result = "Something went wrong";
-            }
+            //// Build user model
+            //User umodel = new User();
+            //umodel.ID = UserID;
+            //umodel.Name = HttpContext.Request.Form["name"].ToString();
+            //umodel.Email = HttpContext.Request.Form["email"].ToString();
+            //umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
+            //umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
+            //umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
 
-            AdminViewData data = new AdminViewData();
-            data.Users = context.GetAllUsers();
-            data.Managers = context.GetAllManagers();
-            return View("Index", data);
+            //int result = context.EditUserSQL(umodel);
+            //if (result > 0)
+            //{
+            //    ViewBag.Result = umodel.Name + " was successfully edited";
+            //}
+            //else
+            //{
+            //    ViewBag.Result = "Something went wrong";
+            //}
+
+            //AdminViewData data = new AdminViewData();
+            //data.Users = context.GetAllUsers();
+            //data.Managers = context.GetAllManagers();
+
+
+            return Json(new { Name = currentUser.Name});
+        }
+
+        public IActionResult GetCurrentUserData(int UserID)
+        {
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User currentUser = context.retrieveUserDetails(UserID);
+
+            Console.WriteLine("user name: " + currentUser.Name);
+
+            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget});
         }
 
         public ActionResult SetCurrentUserIndex(int UserIndex)
@@ -135,10 +150,17 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Managers = context.GetAllManagers();
             data.CurrentUserIndex = UserIndex;
             Console.WriteLine("data user index set to: " + data.CurrentUserIndex);
-            ViewBag.CurrentIndex = UserIndex;
+
+            User umodel = new User();
+            umodel.Name = data.Users[UserIndex].Name;
+            umodel.Email = data.Users[UserIndex].Email;
+            umodel.ManagerId = data.Users[UserIndex].ManagerId;
+            umodel.RoleId = data.Users[UserIndex].RoleId;
+            umodel.StartBudget = data.Users[UserIndex].StartBudget;
+
+            data.currentEditUser = umodel;
+
             return View("Index", data);
-            //var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Controller");
-            //return Json(new { Url = redirectUrl });
         }
     }
 }
