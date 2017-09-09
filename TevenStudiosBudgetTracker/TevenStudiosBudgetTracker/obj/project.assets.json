@@ -11071,7 +11071,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PB TECH\\.nuget\\packages\\": {}
+    "C:\\Users\\Christina Bell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -11079,14 +11079,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\PB TECH\\Desktop\\Elizabeth\\Temp Uni\\761\\Project\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "projectUniqueName": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
       "projectName": "TevenStudiosBudgetTracker",
-      "projectPath": "C:\\Users\\PB TECH\\Desktop\\Elizabeth\\Temp Uni\\761\\Project\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
-      "packagesPath": "C:\\Users\\PB TECH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PB TECH\\Desktop\\Elizabeth\\Temp Uni\\761\\Project\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
+      "projectPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker.csproj",
+      "packagesPath": "C:\\Users\\Christina Bell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Christina Bell\\Documents\\UNI2017\\2017Semester2\\761\\Project\\Code\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\PB TECH\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Christina Bell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11164,13 +11164,5 @@
         ]
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\PB TECH\\Desktop\\Elizabeth\\Temp Uni\\761\\Project\\TevenStudios\\TevenStudiosBudgetTracker\\TevenStudiosBudgetTracker\\obj\\TevenStudiosBudgetTracker.csproj.nuget.cache : Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
-    }
-  ]
+  }
 }

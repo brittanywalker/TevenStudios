@@ -82,7 +82,6 @@ namespace TevenStudiosBudgetTracker.Models
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                             AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                         });
-                        Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
                 }
             }
@@ -157,7 +156,36 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
-		public int DeleteUserSQL(int userID)
+        public int SaveUserDetails(User user)
+         {		
+             using (MySqlConnection conn = getConnection())		
+             {		
+                 DateTime dateTimeNow = DateTime.Now;		
+                 string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");		
+ 		
+                 //string startDate = "2001-09-11 08:45:00";		
+                 string query;		
+                 if (user.ManagerId.Equals(-1)) // If no manager		
+                 {		
+                     query = "insert into User(Name, Email, StartDate, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";		
+                 }		
+                 else // If has a manager		
+                 {		
+                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";
+                }		
+ 		
+                 MySqlCommand cmd = new MySqlCommand(query, conn);		
+                 conn.Open();		
+                 int i = cmd.ExecuteNonQuery();		
+                 conn.Close();		
+                 return i;		
+             }		
+ 		
+         }
+
+        public int DeleteUserSQL(int userID)
         {
             using (MySqlConnection conn = getConnection())
             {
@@ -171,59 +199,130 @@ namespace TevenStudiosBudgetTracker.Models
                 return i;
             }
         }
-    }
 
-    public class AdminViewData
-    {
-        public List<User> Users { get; set; }
-        public int CurrentUserIndex;
-        public List<User> Managers { get; set; }
-    }
-
-    public class PendingRequest
-    {
-        public PendingRequestsContext context;
-        public string Date { get; set; }
-        public string Cost { get; set; }
-        public string Description { get; set; }
-    }
-
-    public class PendingRequestsContext
-    {
-        public string ConnectionString { get; set; }
-
-        public PendingRequestsContext(string connectionString)
+        public User retrieveUserDetails(int UserID)
         {
-            this.ConnectionString = connectionString;
-        }
-        public MySqlConnection getConnection()
-        {
-            return new MySqlConnection(ConnectionString);
-        }
-
-        public List<PendingRequest> GetAllPendingRequests(int UserID)
-        {
-            List<PendingRequest> list = new List<PendingRequest>();
+            User currentUser;
 
             using (MySqlConnection conn = getConnection())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + UserID, conn);
 
-                using (var reader = cmd.ExecuteReader())
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                var manager = reader.GetOrdinal("ManagerId");
+                if (reader.IsDBNull(manager))
                 {
-                    while (reader.Read())
+                    manager = 0;
+                }
+                else
+                {
+                    manager = Convert.ToInt32(reader["ManagerId"]);
+                }
+
+                currentUser = new User()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    Name = reader["Name"].ToString(),
+                    Email = reader["Email"].ToString(),
+
+                    ManagerId = manager,
+
+                    RoleId = Convert.ToInt32(reader["RoleId"]),
+                    StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                };
+
+                conn.Close();
+            }
+            return currentUser;
+        }
+
+        public int EditUserSQL(User user)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query;
+
+                if (user.ManagerId.Equals(-1)) // If no manager
+                {
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
+                else // If has a manager
+                {
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', ManagerId = '" + user.ManagerId +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
+
+                Console.WriteLine("query: " + query);
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
+
+    }
+
+        public class AdminViewData
+        {
+            public List<User> Users { get; set; }
+            public int CurrentUserIndex;
+            public List<User> Managers { get; set; }
+            public User currentEditUser { get; set; }
+
+        }
+
+        public class PendingRequest
+        {
+            public PendingRequestsContext context;
+            public string Date { get; set; }
+            public string Cost { get; set; }
+            public string Description { get; set; }
+        }
+
+        public class PendingRequestsContext
+        {
+            public string ConnectionString { get; set; }
+
+            public PendingRequestsContext(string connectionString)
+            {
+                this.ConnectionString = connectionString;
+            }
+            public MySqlConnection getConnection()
+            {
+                return new MySqlConnection(ConnectionString);
+            }
+
+            public List<PendingRequest> GetAllPendingRequests(int UserID)
+            {
+                List<PendingRequest> list = new List<PendingRequest>();
+
+                using (MySqlConnection conn = getConnection())
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        list.Add(new PendingRequest()
+                        while (reader.Read())
                         {
-                            Date = reader["Date"].ToString(),
-                            Cost = reader["Amount"].ToString(),
-                            Description = reader["Description"].ToString(),
-                        });
+                            list.Add(new PendingRequest()
+                            {
+                                Date = reader["Date"].ToString(),
+                                Cost = reader["Amount"].ToString(),
+                                Description = reader["Description"].ToString(),
+                            });
+                        }
                     }
                 }
+                return list;
             }
-            return list;
         }
     }
-}
