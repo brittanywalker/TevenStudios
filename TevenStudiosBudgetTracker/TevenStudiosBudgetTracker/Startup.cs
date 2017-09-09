@@ -31,6 +31,7 @@ namespace TevenStudiosBudgetTracker
             // Add framework services.
             services.AddMvc();
             services.Add(new ServiceDescriptor(typeof(UserContext), new UserContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.Add(new ServiceDescriptor(typeof(TransactionContext), new TransactionContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.Add(new ServiceDescriptor(typeof(PendingRequestsContext), new PendingRequestsContext(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
