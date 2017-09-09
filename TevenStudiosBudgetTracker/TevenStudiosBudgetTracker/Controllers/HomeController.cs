@@ -46,6 +46,19 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View(data);
         }
 
+        public IActionResult Admin()
+        {
+            ViewData["Message"] = "Employee page.";
+
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+
+            AdminViewData data = new AdminViewData();
+            data.Users = context.GetAllUsers();
+            data.Managers = context.GetAllManagers();
+
+            return View(data);
+        }
+
         public IActionResult Manager()
         {
             ViewData["Message"] = "Management page.";
