@@ -1,11 +1,20 @@
-﻿@{
+﻿<head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+
+@{
     ViewData["Title"] = "Login Page";
 }
 
 <h2> Login</h2>
 
 <div class="container">
-    E-mail:
-    <input type="email" name="email"><br>
-    <button type="button" class="btn btn-info btn-lg right-float-button">Login</button>
+    <div> 
+        E-mail:
+        <input type="email" name="email">
+        <button type="button" class="btn btn-info btn-lg left-float-button">Login</button>
+    </div>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
