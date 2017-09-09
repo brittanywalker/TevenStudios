@@ -156,7 +156,7 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
-		public int DeleteUserSQL(int userID)
+        public int DeleteUserSQL(int userID)
         {
             using (MySqlConnection conn = getConnection())
             {
@@ -208,63 +208,91 @@ namespace TevenStudiosBudgetTracker.Models
             }
             return currentUser;
         }
-    }
 
-   
-
-    public class AdminViewData
-    {
-        public List<User> Users { get; set; }
-        public int CurrentUserIndex;
-        public List<User> Managers { get; set; }
-        public User currentEditUser { get; set; }
-   
-    }
-
-    public class PendingRequest
-    {
-        public PendingRequestsContext context;
-        public string Date { get; set; }
-        public string Cost { get; set; }
-        public string Description { get; set; }
-    }
-
-    public class PendingRequestsContext
-    {
-        public string ConnectionString { get; set; }
-
-        public PendingRequestsContext(string connectionString)
+        public int EditUserSQL(User user)
         {
-            this.ConnectionString = connectionString;
-        }
-        public MySqlConnection getConnection()
-        {
-            return new MySqlConnection(ConnectionString);
-        }
-
-        public List<PendingRequest> GetAllPendingRequests(int UserID)
-        {
-            List<PendingRequest> list = new List<PendingRequest>();
-
             using (MySqlConnection conn = getConnection())
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
+                string query;
 
-                using (var reader = cmd.ExecuteReader())
+                if (user.ManagerId.Equals(-1)) // If no manager
                 {
-                    while (reader.Read())
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
+                else // If has a manager
+                {
+                    query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
+                    "', ManagerId = '" + user.ManagerId +
+                    "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                    "' WHERE ID = '" + user.ID + "'";
+                }
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
+
+
+
+        public class AdminViewData
+        {
+            public List<User> Users { get; set; }
+            public int CurrentUserIndex;
+            public List<User> Managers { get; set; }
+            public User currentEditUser { get; set; }
+
+        }
+
+        public class PendingRequest
+        {
+            public PendingRequestsContext context;
+            public string Date { get; set; }
+            public string Cost { get; set; }
+            public string Description { get; set; }
+        }
+
+        public class PendingRequestsContext
+        {
+            public string ConnectionString { get; set; }
+
+            public PendingRequestsContext(string connectionString)
+            {
+                this.ConnectionString = connectionString;
+            }
+            public MySqlConnection getConnection()
+            {
+                return new MySqlConnection(ConnectionString);
+            }
+
+            public List<PendingRequest> GetAllPendingRequests(int UserID)
+            {
+                List<PendingRequest> list = new List<PendingRequest>();
+
+                using (MySqlConnection conn = getConnection())
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId = 0", conn);
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        list.Add(new PendingRequest()
+                        while (reader.Read())
                         {
-                            Date = reader["Date"].ToString(),
-                            Cost = reader["Amount"].ToString(),
-                            Description = reader["Description"].ToString(),
-                        });
+                            list.Add(new PendingRequest()
+                            {
+                                Date = reader["Date"].ToString(),
+                                Cost = reader["Amount"].ToString(),
+                                Description = reader["Description"].ToString(),
+                            });
+                        }
                     }
                 }
+                return list;
             }
-            return list;
         }
     }
 }
