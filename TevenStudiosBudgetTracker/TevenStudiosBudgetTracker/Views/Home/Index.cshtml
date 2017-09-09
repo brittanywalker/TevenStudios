@@ -71,6 +71,9 @@
                 @Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
+            </td>
+            <td>
                 <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
             </td>
             <td>
