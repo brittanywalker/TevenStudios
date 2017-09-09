@@ -262,8 +262,9 @@
 
     <script>
         function populateModal(UserID) {
+            console.log("populate modal function");
 
-            $.post('Home/GetCurrentUserData/?UserID=' + UserID,
+            $.post('/Home/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
                         

@@ -172,7 +172,7 @@ namespace TevenStudiosBudgetTracker.Models
                  }		
                  else // If has a manager		
                  {		
-                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
                      "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";
                 }		
  		
