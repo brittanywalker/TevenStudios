@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`Transactions` (
   `Description` LONGTEXT NULL,
   `Amount` DOUBLE NULL,
   `StatusId` INT NULL,
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`),
   INDEX `User_ID_idx` (`UserId` ASC),
   INDEX `Status_ID_idx` (`StatusId` ASC),

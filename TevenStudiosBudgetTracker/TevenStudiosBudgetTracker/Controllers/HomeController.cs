@@ -58,8 +58,8 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View();
         }
 
-        [HttpPost]		
-       public IActionResult GetDetails()
+        [HttpPost]		 
+       public IActionResult GetDetails()   //Harry pls rename this to something more intuitive :P xoxo 
         {	            
              // Build user model		
              User umodel = new User();		
@@ -91,7 +91,8 @@ namespace TevenStudiosBudgetTracker.Controllers
            return View("Index", data);		
          }
 
-		public IActionResult DeleteUser(int UserID)
+
+        public IActionResult DeleteUser(int UserID)
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             int result = context.DeleteUserSQL(UserID);
@@ -178,6 +179,46 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.currentEditUser = umodel;
 
             return View("Index", data);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitRequest()   //Harry pls rename this to something more intuitive :P xoxo 
+        {
+            // Build user model		
+            PendingRequest newRequest = new PendingRequest();
+            newRequest.Description = HttpContext.Request.Form["description"].ToString();
+            newRequest.Cost = HttpContext.Request.Form["requestCost"].ToString();
+            DateTime dateTimeNow = DateTime.Now;
+            newRequest.Date = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Get context		
+            PendingRequestsContext pendingRequestContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
+
+            //Save user to database, get result		
+            int result = pendingRequestContext.SubmitPendingRequest(newRequest);
+            if (result > 0)
+            {
+                ViewBag.Result = " Request was successfully submitted";
+            }
+            else
+            {
+                ViewBag.Result = "Something went wrong";
+            }
+
+            ViewData["Message"] = "Employee page.";
+
+            dynamic mymodel = new ExpandoObject();
+
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            User user = userContext.GetUser(CurrentUserID);
+            double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
+            mymodel.Budget = budget;
+
+            PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+
+            return View("Employee", mymodel);
         }
     }
 }

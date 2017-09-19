@@ -41,7 +41,7 @@
 <div class="container">
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest">Submit Request</button>
+    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest">New Request</button>
 
     <!-- Modal -->
     <div class="modal fade" id="submitRequest" role="dialog">
@@ -53,7 +53,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Submit a new Request</h4>
                 </div>
-                <form asp-controller="Home" asp-action="GetDetails" method="post">
+                <form asp-controller="Home" asp-action="SubmitRequest" method="post">
                     <div class="modal-body">
 
                         <div class="form-group">
