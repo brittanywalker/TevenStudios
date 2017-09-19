@@ -324,5 +324,28 @@ namespace TevenStudiosBudgetTracker.Models
                 }
                 return list;
             }
+
+            public int SubmitPendingRequest(PendingRequest newRequest)
+            {
+            using (MySqlConnection conn = getConnection())
+            {
+                DateTime dateTimeNow = DateTime.Now;
+                string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+
+                //string startDate = "2001-09-11 08:45:00";		
+                string query;
+                
+                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + 1 + "','" + newRequest.Date + "','" + newRequest.Description +
+                "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
+                
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+
         }
+    }
     }
