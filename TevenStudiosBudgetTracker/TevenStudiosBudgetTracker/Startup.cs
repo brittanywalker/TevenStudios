@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TevenStudiosBudgetTracker.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace TevenStudiosBudgetTracker
 {
@@ -40,6 +41,7 @@ namespace TevenStudiosBudgetTracker
             services.Add(new ServiceDescriptor(typeof(UserContext), new UserContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.Add(new ServiceDescriptor(typeof(TransactionContext), new TransactionContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.Add(new ServiceDescriptor(typeof(PendingRequestsContext), new PendingRequestsContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +63,13 @@ namespace TevenStudiosBudgetTracker
             app.UseStaticFiles();
 
             //app.UseIdentity();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                LoginPath = "/",
+                AuthenticationScheme = "Cookies",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseGoogleAuthentication(new GoogleOptions()
             {
