@@ -33,33 +33,33 @@ namespace TevenStudiosBudgetTracker.Controllers
                 HttpContext.Session.SetString(SessionKeyName, result.Name);
                 HttpContext.Session.SetString(SessionKeyEmail, result.Email);
             }
+            else
+            {
+                return this.Json(new { success = false, message = "Failed login, please try again" });
+            }
 
-
-            System.Diagnostics.Debug.WriteLine("THISI IS AIHS DOIAHSIOD HADSJO");
-
-            //Harry use this to redirect to another action to serve the right page
             return RedirectToAction("LoginSuccessful"); 
         }
 
         //This action Harry
-        public String LoginSuccessful()
+        public JsonResult LoginSuccessful()
         {
             string Name = HttpContext.Session.GetString(SessionKeyName);
             int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
 
             if (Roleid == 0)
             {
-                return "Admin";
+                return this.Json(new { success = true, redirect = "Admin" });
             }
             else if (Roleid == 1)
             {
-                return "Employee";
+                return this.Json(new { success = true, redirect = "Employee" });
             }
             else if (Roleid == 2)
             {
-                return "Manager";
+                return this.Json(new { success = true, redirect = "Manager" });
             }
-            return "Index";
+             return this.Json(new { success = true, redirect = "Index" }); 
         }
 
         public IActionResult Employee()
