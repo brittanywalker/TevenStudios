@@ -12,8 +12,13 @@
 
 <div class="container">
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
+    <h3 id="erorr-signin"></h3>
     <script type="text/javascript">
+
+        window.onbeforeunload = function (e) {
+            gapi.auth2.getAuthInstance().signOut();
+        };
+
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
 
@@ -21,7 +26,21 @@
                 url: '/Home/GoogleLogin',
                 data: { 'UserEmail': profile.getEmail() },
                 success: function (data) {
-                    window.location.href = "Home/" + data;
+                    if (data.success) {
+                        window.location.href = "Home/" + data.redirect;
+                    }
+                    else
+                    { 
+                        document.getElementById("erorr-signin").innerHTML = data.message;
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            console.log('User signed out.');
+                        });
+                    }
+                    
+                },
+                error: function (data) {
+                    //document.getElementById("erorr-signin").innerHTML = data.message;
                 }
             })
 
