@@ -28,7 +28,10 @@ namespace TevenStudiosBudgetTracker.Controllers
             User result = context.GetUserByEmail(userEmail);
             if (result.Name != null)
             {
-                
+                HttpContext.Session.SetInt32(SessionKeyId, result.ID);
+                HttpContext.Session.SetInt32(SessionKeyRoleId, result.RoleId);
+                HttpContext.Session.SetString(SessionKeyName, result.Name);
+                HttpContext.Session.SetString(SessionKeyEmail, result.Email);
             }
             else
             {
