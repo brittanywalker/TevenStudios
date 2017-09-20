@@ -58,7 +58,6 @@ namespace TevenStudiosBudgetTracker
 
             app.UseStaticFiles();
 
-            //app.UseIdentity();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 LoginPath = "/",
