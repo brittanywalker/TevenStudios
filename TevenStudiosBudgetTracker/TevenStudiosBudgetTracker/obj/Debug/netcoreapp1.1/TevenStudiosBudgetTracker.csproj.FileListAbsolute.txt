@@ -41,3 +41,14 @@ C:\Users\Elizabeth\Documents\Uni\Part 4\Sem 2\761\Teven Studios\Project\TevenStu
 C:\Users\Elizabeth\Documents\Uni\Part 4\Sem 2\761\Teven Studios\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
 C:\Users\Elizabeth\Documents\Uni\Part 4\Sem 2\761\Teven Studios\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
 C:\Users\Elizabeth\Documents\Uni\Part 4\Sem 2\761\Teven Studios\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.deps.json
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.json
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.runtimeconfig.dev.json
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.csprojResolveAssemblyReference.cache
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.csproj.CoreCompileInputs.cache
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.AssemblyInfoInputs.cache
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.AssemblyInfo.cs
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
