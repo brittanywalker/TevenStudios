@@ -88,6 +88,34 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
+        public User GetUserByEmail(string email)
+        {
+            User user = new User();
+
+            using (MySqlConnection conn = getConnection())
+
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where Email='" + email + "'", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.ID = Convert.ToInt32(reader["ID"]);
+                        user.Name = reader["Name"].ToString();
+                        user.Email = reader["Email"].ToString();
+                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
+                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
+                        user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
+                    }
+                }
+            }
+            return user;
+        }
+
+        //Potential duplicate with retrieveUserDetails
         public User GetUser(int id)
         {
             User user = new User();

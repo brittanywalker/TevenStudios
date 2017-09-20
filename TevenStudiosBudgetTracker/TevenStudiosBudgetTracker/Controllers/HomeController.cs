@@ -7,6 +7,7 @@ using TevenStudiosBudgetTracker.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Collections;
 using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
@@ -14,6 +15,40 @@ namespace TevenStudiosBudgetTracker.Controllers
     public class HomeController : Controller
     {
         public int CurrentUserID = 1;
+        //Set Session names
+        const string SessionKeyId = "_ID";
+        const string SessionKeyRoleId = "_RoleId";
+        const string SessionKeyName = "_Name";
+        const string SessionKeyEmail = "_Email";
+
+        public IActionResult GoogleLogin(string userEmail)
+        {
+
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User result = context.GetUserByEmail(userEmail);
+            if (result.Name != null)
+            {
+                HttpContext.Session.SetInt32(SessionKeyId, result.ID);
+                HttpContext.Session.SetInt32(SessionKeyRoleId, result.RoleId);
+                HttpContext.Session.SetString(SessionKeyName, result.Name);
+                HttpContext.Session.SetString(SessionKeyEmail, result.Email);
+            }
+            else
+            {
+                //User is not in the system, decide how you want to handle it. Hannah
+            }
+
+            //Harry use this to redirect to another action to serve the right page
+            return RedirectToAction("LoginSuccessful"); 
+        }
+
+        //This action Harry
+        public void LoginSuccessful()
+        {
+            string Name = HttpContext.Session.GetString(SessionKeyName);
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+            System.Diagnostics.Debug.WriteLine("This is the roleID " + Roleid + " for " + Name);
+        }
 
         public IActionResult Employee()
         {
