@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="636051315170-4svott714ete1jl8f8vtou7hrf484rdf.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TevenStudiosBudgetTracker</title>
@@ -58,7 +62,18 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Admin">Admin</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Employee">Employee</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Manager">Manager</a></li>
+                </ul>)
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="signOut();">Logout</a></li>
                 </ul>
+                <script>
+                    function signOut() {
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            console.log('User signed out.');
+                        });
+                    }
+                </script>
             </div>
         </div>
     </nav>
