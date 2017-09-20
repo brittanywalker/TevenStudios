@@ -7,6 +7,7 @@ using TevenStudiosBudgetTracker.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Collections;
 using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
@@ -16,8 +17,16 @@ namespace TevenStudiosBudgetTracker.Controllers
         public int CurrentUserID = 1;
         //Set Session names
         const string SessionKeyName = "_Name";
+        const string SessionKeyEmail = "_Email";
         const string SessionKeyYearsMember = "_YearsMember";
         const string SessionKeyDate = "_Date";
+
+        public void Login(string userEmail)
+        {
+            HttpContext.Session.SetString(SessionKeyEmail, userEmail);
+            System.Diagnostics.Debug.WriteLine(userEmail);
+            Console.WriteLine(userEmail); 
+        }
 
         public IActionResult Employee()
         {
