@@ -8,7 +8,6 @@ To run the Teven Studios Budget Tracker, you will need to have Visual Studio, AS
 * [MySQL Community for Windows](https://dev.mysql.com/downloads/windows/installer/)
 * [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 * [ASP .NET Core](https://www.microsoft.com/net/core#windowscmd) <br />
-
 Once the download has been completed you will need to make sure that the server is running. This can be done by starting the service. If you are unsure, go to your desktop service manager and find MySQL server. You will be able to start and stop the server from here as well.
 
 
