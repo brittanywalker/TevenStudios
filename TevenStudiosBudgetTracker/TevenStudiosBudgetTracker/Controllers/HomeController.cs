@@ -14,6 +14,10 @@ namespace TevenStudiosBudgetTracker.Controllers
     public class HomeController : Controller
     {
         public int CurrentUserID = 1;
+        //Set Session names
+        const string SessionKeyName = "_Name";
+        const string SessionKeyYearsMember = "_YearsMember";
+        const string SessionKeyDate = "_Date";
 
         public IActionResult Employee()
         {

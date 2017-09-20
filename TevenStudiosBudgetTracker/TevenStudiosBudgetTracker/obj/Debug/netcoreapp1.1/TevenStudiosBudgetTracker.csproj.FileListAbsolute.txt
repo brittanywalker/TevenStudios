@@ -52,3 +52,4 @@ C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetT
 C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.AssemblyInfo.cs
 C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
 C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
+C:\Users\Angad\Documents\Uni\SoftEng761\Project\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs

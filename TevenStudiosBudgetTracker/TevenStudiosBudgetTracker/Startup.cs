@@ -38,6 +38,16 @@ namespace TevenStudiosBudgetTracker
             services.Add(new ServiceDescriptor(typeof(TransactionContext), new TransactionContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.Add(new ServiceDescriptor(typeof(PendingRequestsContext), new PendingRequestsContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.CookieHttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +81,10 @@ namespace TevenStudiosBudgetTracker
                 ClientId = Configuration["Authentication:Google:ClientId"],
                 ClientSecret = Configuration["Authentication:Google:ClientSecret"]
             });
-            
+
+            //Use the Session storage.
+            app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
