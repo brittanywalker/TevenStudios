@@ -33,21 +33,34 @@ namespace TevenStudiosBudgetTracker.Controllers
                 HttpContext.Session.SetString(SessionKeyName, result.Name);
                 HttpContext.Session.SetString(SessionKeyEmail, result.Email);
             }
-            else
-            {
-                //User is not in the system, decide how you want to handle it. Hannah
-            }
+
+
+            System.Diagnostics.Debug.WriteLine("THISI IS AIHS DOIAHSIOD HADSJO");
 
             //Harry use this to redirect to another action to serve the right page
             return RedirectToAction("LoginSuccessful"); 
         }
 
         //This action Harry
-        public void LoginSuccessful()
+        public ActionResult LoginSuccessful()
         {
             string Name = HttpContext.Session.GetString(SessionKeyName);
             int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
             System.Diagnostics.Debug.WriteLine("This is the roleID " + Roleid + " for " + Name);
+
+            if (Roleid == 0)
+            {
+                return RedirectToAction("Admin");
+            }
+            else if (Roleid == 1)
+            {
+                return RedirectToAction("Employee");
+            }
+            else if (Roleid == 2)
+            {
+                return RedirectToAction("Manager");
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Employee()
