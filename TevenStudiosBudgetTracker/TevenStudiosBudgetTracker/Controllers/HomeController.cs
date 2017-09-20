@@ -16,17 +16,29 @@ namespace TevenStudiosBudgetTracker.Controllers
     {
         public int CurrentUserID = 1;
         //Set Session names
+        const string SessionKeyId = "_ID";
+        const string SessionKeyRoleId = "_RoleId";
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
-        const string SessionKeyYearsMember = "_YearsMember";
-        const string SessionKeyDate = "_Date";
 
-        public void Login(string userEmail)
+        public IActionResult GoogleLogin(string userEmail)
         {
-            HttpContext.Session.SetString(SessionKeyEmail, userEmail);
-            System.Diagnostics.Debug.WriteLine(userEmail);
-            Console.WriteLine(userEmail); 
+
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User result = context.GetUserByEmail(userEmail);
+            if (result.Name != null)
+            {
+                
+            }
+            else
+            {
+                //User is not in the system, decide how you want to handle it. Hannah
+            }
+
+            //Harry use this to redirect to another action to serve the right page
+            return RedirectToAction("LoginSuccessful"); 
         }
+
 
         public IActionResult Employee()
         {
