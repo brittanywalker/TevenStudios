@@ -148,7 +148,7 @@ namespace TevenStudiosBudgetTracker.Controllers
            data.Users = context.GetAllUsers();		
            data.Managers = context.GetAllManagers();		
  		
-           return View("Index", data);		
+           return View("Admin", data);		
          }
 
 
@@ -168,7 +168,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult EditUser()
@@ -207,7 +207,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult GetCurrentUserData(int UserID)
@@ -238,7 +238,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             data.currentEditUser = umodel;
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         [HttpPost]
