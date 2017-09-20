@@ -42,6 +42,13 @@ namespace TevenStudiosBudgetTracker.Controllers
             return RedirectToAction("LoginSuccessful"); 
         }
 
+        //This action Harry
+        public void LoginSuccessful()
+        {
+            string Name = HttpContext.Session.GetString(SessionKeyName);
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+            System.Diagnostics.Debug.WriteLine("This is the roleID " + Roleid + " for " + Name);
+        }
 
         public IActionResult Employee()
         {
