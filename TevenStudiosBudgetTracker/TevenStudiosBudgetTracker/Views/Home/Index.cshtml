@@ -19,7 +19,10 @@
 
             $.ajax({
                 url: '/Home/GoogleLogin',
-                data: {'UserEmail': profile.getEmail() },
+                data: { 'UserEmail': profile.getEmail() },
+                success: function (data) {
+                    window.location.href = "Home/" + data;
+                }
             })
 
         }

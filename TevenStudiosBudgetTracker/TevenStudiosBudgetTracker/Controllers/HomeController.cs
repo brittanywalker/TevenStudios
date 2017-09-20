@@ -42,25 +42,24 @@ namespace TevenStudiosBudgetTracker.Controllers
         }
 
         //This action Harry
-        public ActionResult LoginSuccessful()
+        public String LoginSuccessful()
         {
             string Name = HttpContext.Session.GetString(SessionKeyName);
             int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
-            System.Diagnostics.Debug.WriteLine("This is the roleID " + Roleid + " for " + Name);
 
             if (Roleid == 0)
             {
-                return RedirectToAction("Admin");
+                return "Admin";
             }
             else if (Roleid == 1)
             {
-                return RedirectToAction("Employee");
+                return "Employee";
             }
             else if (Roleid == 2)
             {
-                return RedirectToAction("Manager");
+                return "Manager";
             }
-            return RedirectToAction("Index");
+            return "Index";
         }
 
         public IActionResult Employee()
