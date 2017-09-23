@@ -338,7 +338,13 @@ namespace TevenStudiosBudgetTracker.Models
 
         }
 
-        public class PendingRequest
+        public class ManagerViewData
+        {
+            public List<User> Employees { get; set; }
+            public User Manager { get; set; }
+        }
+
+    public class PendingRequest
         {
             public PendingRequestsContext context;
             public string Date { get; set; }
