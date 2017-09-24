@@ -259,6 +259,7 @@ namespace TevenStudiosBudgetTracker.Models
 
                     RoleId = Convert.ToInt32(reader["RoleId"]),
                     StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"])
                 };
 
                 conn.Close();

@@ -148,7 +148,7 @@ namespace TevenStudiosBudgetTracker.Controllers
            data.Users = context.GetAllUsers();		
            data.Managers = context.GetAllManagers();		
  		
-           return View("Index", data);		
+           return View("Admin", data);		
          }
 
 
@@ -168,7 +168,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult EditUser()
@@ -191,6 +191,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             umodel.Email = HttpContext.Request.Form["editEmail"].ToString();
             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["editRole"].ToString());
             umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["editBudget"].ToString());
+            umodel.AnnualBudget = Int32.Parse(HttpContext.Request.Form["editAnnualBudget"].ToString());
 
             int result = context.EditUserSQL(umodel);
 
@@ -207,7 +208,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult GetCurrentUserData(int UserID)
@@ -217,7 +218,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             Console.WriteLine("user name: " + currentUser.Name);
 
-            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget});
+            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget, AnnualBudget = currentUser.AnnualBudget});
         }
 
         public ActionResult SetCurrentUserIndex(int UserIndex)
@@ -235,10 +236,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             umodel.ManagerId = data.Users[UserIndex].ManagerId;
             umodel.RoleId = data.Users[UserIndex].RoleId;
             umodel.StartBudget = data.Users[UserIndex].StartBudget;
+            umodel.AnnualBudget = data.Users[UserIndex].AnnualBudget;
 
             data.currentEditUser = umodel;
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         [HttpPost]

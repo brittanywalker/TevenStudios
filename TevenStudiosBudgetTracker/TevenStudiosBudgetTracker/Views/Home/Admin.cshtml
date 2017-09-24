@@ -74,10 +74,11 @@
                 @Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
             </td>
             <td>
-                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
+                <button id="editButton" type="button" class="btn btn-info" 
+                        onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
             </td>
             <td>
-                <button type="button" class="btn btn-info btn-lg right-float-button deleteButton"
+                <button id="deleteButton" type="button" class="btn btn-info"
                         data-id ="@Model.Users[i].ID" data-toggle="modal" data-target="#deleteUser">Delete User</button>
             </td>
         </tr>
@@ -156,7 +157,7 @@
 </div>
 
 <script type="text/javascript">
-    $(document).on("click", ".deleteButton", function () {
+    $(document).on("click", "#deleteButton", function () {
         var userId = $(this).data('id');
         $("#confirmDelete").val(userId);
     });
@@ -191,7 +192,7 @@
                     data: { UserID: userId },
                 }).done(function () {
                     $('#deleteUser').modal('toggle');
-                    window.location = "/Home/Index";
+                    window.location = "/Home/Admin";
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
@@ -247,8 +248,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Current Budget ($):</label>
+                            <label for="name">Start Budget ($):</label>
                             <input required type="number" class="form-control" id="editBudget" name="editBudget">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Annual Budget ($):</label>
+                            <input required type="number" class="form-control" id="editAnnualBudget" name="editAnnualBudget">
                         </div>
                         <div style="visibility:hidden">
                             <input required type="text" class="form-control" id="editID" name="editID">
@@ -265,8 +270,6 @@
 
     <script>
         function populateModal(UserID) {
-            console.log("populate modal function");
-
             $.post('/Home/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
@@ -278,9 +281,9 @@
                         document.getElementById("editEmail").setAttribute("value", userObject["email"]);
                         $("#editManager").val(userObject["managerId"]);
                         $("#editRole").val(userObject["roleId"]);
-                        console.log("user id: " + userObject["id"]);
                         $("#editID").val(userObject["id"]);
                         document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
+                        document.getElementById("editAnnualBudget").setAttribute("value", userObject["annualBudget"]);
 
                         document.getElementById("hiddenEditBtn").click();
                     } else {
