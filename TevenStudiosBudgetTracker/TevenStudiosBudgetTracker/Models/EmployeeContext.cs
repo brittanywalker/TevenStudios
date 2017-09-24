@@ -176,7 +176,7 @@ namespace TevenStudiosBudgetTracker.Models
 
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
-                            //LIBBY HERE
+                            AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                         });
                         Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }

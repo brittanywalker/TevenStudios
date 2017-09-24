@@ -82,20 +82,14 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Employee page.";
+            ViewData["Message"] = "Home page.";
 
-            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-
-            AdminViewData data = new AdminViewData();
-            data.Users = context.GetAllUsers();
-            data.Managers = context.GetAllManagers();
-
-            return View(data);
+            return View();
         }
 
         public IActionResult Admin()
         {
-            ViewData["Message"] = "Employee page.";
+            ViewData["Message"] = "Admin page.";
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
