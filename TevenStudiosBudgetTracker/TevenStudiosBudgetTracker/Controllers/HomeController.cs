@@ -14,7 +14,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
     public class HomeController : Controller
     {
-        public int CurrentUserID = 1;
         //Set Session names
         const string SessionKeyId = "_ID";
         const string SessionKeyRoleId = "_RoleId";
@@ -68,15 +67,21 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             dynamic mymodel = new ExpandoObject();
 
+            // set user and transaction contexts
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+
+            // gets the current user's details
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
+
+            // get and set the UI's budget
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
 
+            // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
-            // TODO: Use the current user's actual ID number here
+            mymodel.PendingRequests = context.GetAllPendingRequests(user.ID);
+
             return View(mymodel);
         }
 
@@ -255,7 +260,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             PendingRequestsContext pendingRequestContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
 
             //Save user to database, get result		
-            int result = pendingRequestContext.SubmitPendingRequest(newRequest);
+            int result = pendingRequestContext.SubmitPendingRequest(newRequest, (int)HttpContext.Session.GetInt32(SessionKeyId));
             if (result > 0)
             {
                 ViewBag.Result = " Request was successfully submitted";
@@ -271,12 +276,12 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+            mymodel.PendingRequests = context.GetAllPendingRequests(user.ID);
 
             return View("Employee", mymodel);
         }

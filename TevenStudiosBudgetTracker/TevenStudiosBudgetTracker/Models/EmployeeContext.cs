@@ -314,7 +314,6 @@ namespace TevenStudiosBudgetTracker.Models
             public int CurrentUserIndex;
             public List<User> Managers { get; set; }
             public User currentEditUser { get; set; }
-
         }
 
         public class PendingRequest
@@ -363,7 +362,7 @@ namespace TevenStudiosBudgetTracker.Models
                 return list;
             }
 
-            public int SubmitPendingRequest(PendingRequest newRequest)
+            public int SubmitPendingRequest(PendingRequest newRequest, int userId)
             {
             using (MySqlConnection conn = getConnection())
             {
@@ -373,7 +372,7 @@ namespace TevenStudiosBudgetTracker.Models
                 //string startDate = "2001-09-11 08:45:00";		
                 string query;
                 
-                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + 1 + "','" + newRequest.Date + "','" + newRequest.Description +
+                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + userId + "','" + newRequest.Date + "','" + newRequest.Description +
                 "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
                 
 
