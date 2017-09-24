@@ -90,7 +90,7 @@
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Add New User</button>
 
-    <!-- Modal -->
+    <!-- Add User Modal -->
     <div class="modal fade" id="addNewUser" role="dialog">
         <div class="modal-dialog">
 
@@ -157,13 +157,15 @@
 </div>
 
 <script type="text/javascript">
+    // function called when delete user button is clicked to send user id
+    // to the delete user modal for deletion of that user
     $(document).on("click", "#deleteButton", function () {
         var userId = $(this).data('id');
         $("#confirmDelete").val(userId);
     });
 </script>
 
-<!-- Modal -->
+<!-- Delete User Modal -->
 <div class="modal fade" id="deleteUser" role="alert">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -186,6 +188,8 @@
         $(document).on("click", "#confirmDelete", function () {
             var userId = document.getElementById("confirmDelete").value;
 
+            // userId = -1 if the userId was not sent to the modal correctly
+            // otherwise makes call to delete user from database
             if (userId != -1) {
                 $.ajax({
                     url: '/Home/DeleteUser',
@@ -203,7 +207,7 @@
 </div>
 
 <div class="container">
-    <!-- Modal -->
+    <!-- Edit User Modal -->
     <div class="modal fade" id="editUser" role="dialog">
         <div class="modal-dialog">
 
