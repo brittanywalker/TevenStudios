@@ -104,7 +104,13 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
-            return View();
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            ManagerViewData data = new ManagerViewData();
+            User user = context.GetUser(CurrentUserID);
+            data.Employees = context.GetEmployeesForManager(user.ID);
+            data.Manager = user;
+
+            return View(data);
         }
 
         public IActionResult Error()

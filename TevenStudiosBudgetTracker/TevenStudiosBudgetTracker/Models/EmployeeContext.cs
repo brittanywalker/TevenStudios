@@ -88,6 +88,37 @@ namespace TevenStudiosBudgetTracker.Models
             return list;
         }
 
+        public List<User> GetEmployeesForManager(int managerId)
+        {
+            List<User> list = new List<User>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where ManagerId = @id", conn);
+                cmd.Parameters.AddWithValue("@id", managerId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new User()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
+                            ManagerId = Convert.ToInt32(reader["ManagerId"]),
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                            AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
         public User GetUserByEmail(string email)
         {
             User user = new User();
@@ -309,7 +340,13 @@ namespace TevenStudiosBudgetTracker.Models
 
         }
 
-        public class PendingRequest
+        public class ManagerViewData
+        {
+            public List<User> Employees { get; set; }
+            public User Manager { get; set; }
+        }
+
+    public class PendingRequest
         {
             public PendingRequestsContext context;
             public string Date { get; set; }

@@ -1,9 +1,68 @@
-﻿@{
+﻿@model TevenStudiosBudgetTracker.Models.ManagerViewData
+
+<style>
+	.item:hover {
+		background-color: azure;
+	}
+
+	.EmployeeListContainer {
+		display: flex;
+	}
+
+	.showinfo {
+		flex: 1;
+		margin-right: 10px;
+	}
+</style>
+
+@{
     ViewData["Title"] = "Manager Page";
 }
-<h2>@ViewData["Title"].</h2>
+<h1>@Model.Manager.Name</h1>
 
-<div>
-    Manager stuff... 
+<h2>Employees</h2>
+
+<div class="EmployeeListContainer">
+	<div class="showinfo">
+		<table class="table">
+			<tr>
+				<th>
+					ID
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Email
+				</th>
+			</tr>
+
+			@for (int i = 0; i < Model.Employees.Count; i++)
+			{
+				<tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+					<td>
+						@Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Employees[i].Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Employees[i].Email)
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
+
+	<div class="showinfo">
+		Employee info
+	</div>
+
+	<script>
+		function showSelectedUserInfo(UserID) {
+			console.log("show selected user info");
+		}
+	</script>
 
 </div>
+
