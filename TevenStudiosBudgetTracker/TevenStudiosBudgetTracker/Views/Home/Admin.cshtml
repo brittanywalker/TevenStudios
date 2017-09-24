@@ -203,9 +203,6 @@
 </div>
 
 <div class="container">
-
-    <button id="hiddenEditBtn" type="button" class="btn btn-info" style="visibility:hidden" data-toggle="modal" data-target="#editUser"></button>
-
     <!-- Modal -->
     <div class="modal fade" id="editUser" role="dialog">
         <div class="modal-dialog">
@@ -285,10 +282,10 @@
                         document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
                         document.getElementById("editAnnualBudget").setAttribute("value", userObject["annualBudget"]);
 
-                        document.getElementById("hiddenEditBtn").click();
+                        $('#editUser').modal('toggle');
                     } else {
                         alert("Sorry, there was an error processing your request. Please try again.");
-                        $('#deleteUser').modal('toggle');
+                        $('#editUser').modal('toggle');
                     }
                 });
             }
