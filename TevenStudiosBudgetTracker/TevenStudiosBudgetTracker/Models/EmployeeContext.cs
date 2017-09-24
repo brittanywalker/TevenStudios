@@ -207,6 +207,7 @@ namespace TevenStudiosBudgetTracker.Models
 
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                            AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                         });
                         Console.WriteLine(Convert.ToInt32(reader["ID"]));
                     }
@@ -290,6 +291,7 @@ namespace TevenStudiosBudgetTracker.Models
 
                     RoleId = Convert.ToInt32(reader["RoleId"]),
                     StartBudget = Convert.ToDouble(reader["StartBudget"]),
+                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"])
                 };
 
                 conn.Close();
@@ -307,14 +309,14 @@ namespace TevenStudiosBudgetTracker.Models
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
                 }
                 else // If has a manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', ManagerId = '" + user.ManagerId +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
                 }
 
                 Console.WriteLine("query: " + query);
