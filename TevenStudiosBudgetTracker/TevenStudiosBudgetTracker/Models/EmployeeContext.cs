@@ -26,6 +26,10 @@ namespace TevenStudiosBudgetTracker.Models
         public double StartBudget { get; set; }
 
         public double AnnualBudget { get; set; }
+
+        public double ChangeAnnualBudget { get; set; }
+
+        public DateTime ChangeAnnualBudgetDate { get; set; }
     }
 
     public class RoleType
@@ -81,6 +85,8 @@ namespace TevenStudiosBudgetTracker.Models
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                             AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
+                            ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]),
+                            ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]),
                         });
                     }
                 }
@@ -109,6 +115,8 @@ namespace TevenStudiosBudgetTracker.Models
                         user.RoleId = Convert.ToInt32(reader["RoleId"]);
                         user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
                         user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
+                        user.ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]);
+                        user.ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]);
                     }
                 }
             }
@@ -137,6 +145,8 @@ namespace TevenStudiosBudgetTracker.Models
                         user.RoleId = Convert.ToInt32(reader["RoleId"]);
                         user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
                         user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
+                        user.ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]);
+                        user.ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]);
                     }
                 }
             }
@@ -195,13 +205,13 @@ namespace TevenStudiosBudgetTracker.Models
                  string query;		
                  if (user.ManagerId.Equals(-1)) // If no manager		
                  {		
-                     query = "insert into User(Name, Email, StartDate, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
-                     "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";		
+                     query = "insert into User(Name, Email, StartDate, RoleId, StartBudget, AnnualBudget, ChangeAnnualBudget, ChangeAnnualBudgetDate) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "','0.00','" + startDate + "')";		
                  }		
                  else // If has a manager		
                  {		
-                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
-                     "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";
+                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget, ChangeAnnualBudget, ChangeAnnualBudgetDate) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "','0.00','" + startDate + "')";
                 }		
  		
                  MySqlCommand cmd = new MySqlCommand(query, conn);		
