@@ -87,20 +87,14 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Employee page.";
+            ViewData["Message"] = "Home page.";
 
-            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-
-            AdminViewData data = new AdminViewData();
-            data.Users = context.GetAllUsers();
-            data.Managers = context.GetAllManagers();
-
-            return View(data);
+            return View();
         }
 
         public IActionResult Admin()
         {
-            ViewData["Message"] = "Employee page.";
+            ViewData["Message"] = "Admin page.";
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
@@ -115,7 +109,13 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
-            return View();
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            ManagerViewData data = new ManagerViewData();
+            User user = context.GetUser(CurrentUserID);
+            data.Employees = context.GetEmployeesForManager(user.ID);
+            data.Manager = user;
+
+            return View(data);
         }
 
         public IActionResult Error()
@@ -153,7 +153,7 @@ namespace TevenStudiosBudgetTracker.Controllers
            data.Users = context.GetAllUsers();		
            data.Managers = context.GetAllManagers();		
  		
-           return View("Index", data);		
+           return View("Admin", data);		
          }
 
 
@@ -173,7 +173,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult EditUser()
@@ -196,6 +196,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             umodel.Email = HttpContext.Request.Form["editEmail"].ToString();
             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["editRole"].ToString());
             umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["editBudget"].ToString());
+            umodel.AnnualBudget = Int32.Parse(HttpContext.Request.Form["editAnnualBudget"].ToString());
 
             int result = context.EditUserSQL(umodel);
 
@@ -212,7 +213,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         public IActionResult GetCurrentUserData(int UserID)
@@ -222,7 +223,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             Console.WriteLine("user name: " + currentUser.Name);
 
-            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget});
+            return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget, AnnualBudget = currentUser.AnnualBudget});
         }
 
         public ActionResult SetCurrentUserIndex(int UserIndex)
@@ -240,10 +241,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             umodel.ManagerId = data.Users[UserIndex].ManagerId;
             umodel.RoleId = data.Users[UserIndex].RoleId;
             umodel.StartBudget = data.Users[UserIndex].StartBudget;
+            umodel.AnnualBudget = data.Users[UserIndex].AnnualBudget;
 
             data.currentEditUser = umodel;
 
-            return View("Index", data);
+            return View("Admin", data);
         }
 
         [HttpPost]
