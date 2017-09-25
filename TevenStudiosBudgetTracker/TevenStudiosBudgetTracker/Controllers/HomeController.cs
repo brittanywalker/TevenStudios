@@ -72,7 +72,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
             // gets the current user's details
-            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
+            User user = userContext.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             // get and set the UI's budget
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
@@ -111,7 +111,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
+            User user = context.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.Manager = user;
 
@@ -278,7 +278,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
+            User user = userContext.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
 

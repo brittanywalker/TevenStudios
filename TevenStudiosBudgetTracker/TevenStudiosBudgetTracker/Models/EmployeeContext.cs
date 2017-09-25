@@ -154,36 +154,6 @@ namespace TevenStudiosBudgetTracker.Models
             return user;
         }
 
-        //Potential duplicate with retrieveUserDetails
-        public User GetUser(int id)
-        {
-            User user = new User();
-
-            using (MySqlConnection conn = getConnection())
-
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.ID = Convert.ToInt32(reader["ID"]);
-                        user.Name = reader["Name"].ToString();
-                        user.Email = reader["Email"].ToString();
-                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
-                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
-                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
-                        user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
-                        user.ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]);
-                        user.ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]);
-                    }
-                }
-            }
-            return user;
-        }
-
         public List<User> GetAllManagers()
         {
             List<User> list = new List<User>();
@@ -296,13 +266,13 @@ namespace TevenStudiosBudgetTracker.Models
                     ID = Convert.ToInt32(reader["ID"]),
                     Name = reader["Name"].ToString(),
                     Email = reader["Email"].ToString(),
-
                     ManagerId = manager,
-
                     RoleId = Convert.ToInt32(reader["RoleId"]),
                     StartBudget = Convert.ToDouble(reader["StartBudget"]),
-                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"])
-                };
+                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
+                    ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]),
+                    ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"])
+            };
 
                 conn.Close();
             }
@@ -315,18 +285,28 @@ namespace TevenStudiosBudgetTracker.Models
             {
                 string query;
 
+                DateTime today = DateTime.Now; // current time
+                User userDetails = retrieveUserDetails(user.ID); // gets all the user's details (inc. Change Annual Budget & Date)
+                int numberOfDaysDifferent = (int)(today - userDetails.ChangeAnnualBudgetDate).TotalDays; // days between today & last budget change
+                double currentBudget = numberOfDaysDifferent * (userDetails.AnnualBudget / 365); // value of days * accrued budget
+                double changeBudget = userDetails.ChangeAnnualBudget + currentBudget; // add this value to the current saved since last change
+
                 if (user.ManagerId.Equals(-1)) // If no manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget + 
+                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + today + 
+                    "' WHERE ID = '" + user.ID + "'";
                 }
                 else // If has a manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', ManagerId = '" + user.ManagerId +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget +
+                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + today +
+                    "' WHERE ID = '" + user.ID + "'";
                 }
 
                 Console.WriteLine("query: " + query);
