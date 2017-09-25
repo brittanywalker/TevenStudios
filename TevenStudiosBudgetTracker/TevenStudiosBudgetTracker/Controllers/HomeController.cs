@@ -34,9 +34,6 @@ namespace TevenStudiosBudgetTracker.Controllers
                 HttpContext.Session.SetString(SessionKeyEmail, result.Email);
             }
 
-
-            System.Diagnostics.Debug.WriteLine("THISI IS AIHS DOIAHSIOD HADSJO");
-
             //Harry use this to redirect to another action to serve the right page
             return RedirectToAction("LoginSuccessful"); 
         }
@@ -73,6 +70,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
+            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
@@ -242,7 +240,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitRequest()   //Harry pls rename this to something more intuitive :P xoxo 
+        public IActionResult SubmitRequest()  
         {
             // Build user model		
             PendingRequest newRequest = new PendingRequest();
@@ -274,6 +272,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
+            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
