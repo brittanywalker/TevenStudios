@@ -60,7 +60,18 @@
 
 	<script>
 		function showSelectedUserInfo(UserID) {
-			console.log("show selected user info");
+            // userId = -1 if the userId was not sent to the modal correctly
+            // otherwise makes call to get user info from database
+            if (userId != -1) {
+                $.ajax({
+                    url: '/Home/GetSelectedInfo',
+                    data: { UserID: UserId },
+                }).done(function () {
+                    window.location = "/Home/Manager";
+                });
+            } else {
+                alert("Sorry, there was an error processing your request. Please try again.");
+            }
 		}
 	</script>
 
