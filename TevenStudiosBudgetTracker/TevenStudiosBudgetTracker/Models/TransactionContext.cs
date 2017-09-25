@@ -21,6 +21,8 @@ namespace TevenStudiosBudgetTracker.Models
         public Double Amount { get; set; }
 
         public int StatusId { get; set; }
+
+        public String Status { get; set; }
     }
 
     public class TransactionContext
@@ -39,6 +41,21 @@ namespace TevenStudiosBudgetTracker.Models
         public List<Transaction> GetAllPastRequests(int UserID)
         {
             List<Transaction> list = new List<Transaction>();
+            Dictionary<Int32, String> statusText = new Dictionary<Int32, String>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Status_Types", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        statusText.Add(Convert.ToInt32(reader["ID"]), reader["Type"].ToString());
+                    }
+                }
+            }
 
             using (MySqlConnection conn = getConnection())
             {
@@ -54,6 +71,8 @@ namespace TevenStudiosBudgetTracker.Models
                             Date = reader["Date"].ToString(),
                             Amount = Convert.ToDouble(reader["Amount"]),
                             Description = reader["Description"].ToString(),
+                            StatusId = Convert.ToInt32(reader["StatusId"]),
+                            Status = statusText[Convert.ToInt32(reader["StatusId"])],
                         });
                     }
                 }
