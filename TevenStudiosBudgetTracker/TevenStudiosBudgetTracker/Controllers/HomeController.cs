@@ -111,7 +111,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(CurrentUserID);
+            User user = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.Manager = user;
 
