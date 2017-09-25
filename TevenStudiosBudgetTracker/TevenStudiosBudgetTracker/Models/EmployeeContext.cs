@@ -272,10 +272,11 @@ namespace TevenStudiosBudgetTracker.Models
                     AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
                     ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]),
                     ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"])
-            };
+                };
 
                 conn.Close();
             }
+
             return currentUser;
         }
 
@@ -286,6 +287,7 @@ namespace TevenStudiosBudgetTracker.Models
                 string query;
 
                 DateTime today = DateTime.Now; // current time
+                string todayString = today.ToString("yyyy-MM-dd HH:mm:ss");
                 User userDetails = retrieveUserDetails(user.ID); // gets all the user's details (inc. Change Annual Budget & Date)
                 int numberOfDaysDifferent = (int)(today - userDetails.ChangeAnnualBudgetDate).TotalDays; // days between today & last budget change
                 double currentBudget = numberOfDaysDifferent * (userDetails.AnnualBudget / 365); // value of days * accrued budget
@@ -296,7 +298,7 @@ namespace TevenStudiosBudgetTracker.Models
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                     "', AnnualBudget = '" + user.AnnualBudget + 
-                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + today + 
+                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
                     "' WHERE ID = '" + user.ID + "'";
                 }
                 else // If has a manager
@@ -305,7 +307,7 @@ namespace TevenStudiosBudgetTracker.Models
                     "', ManagerId = '" + user.ManagerId +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                     "', AnnualBudget = '" + user.AnnualBudget +
-                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + today +
+                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + todayString +
                     "' WHERE ID = '" + user.ID + "'";
                 }
 
@@ -318,7 +320,6 @@ namespace TevenStudiosBudgetTracker.Models
                 return i;
             }
         }
-
     }
 
         public class AdminViewData

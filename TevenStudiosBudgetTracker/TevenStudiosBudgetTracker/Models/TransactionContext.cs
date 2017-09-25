@@ -58,7 +58,7 @@ namespace TevenStudiosBudgetTracker.Models
         }
 
         // returns the value of the current budget using the current user's ID, Start Date and Start Budget
-        public double getCurrentBudget(int userId, DateTime startDate, double startBudget, double maxBudget)
+        public double getCurrentBudget(int userId, DateTime startDate, double startBudget, double maxBudget, double changeAnnualBudget)
         {
             // calculate number of days between today and the start date
             DateTime today = DateTime.Now; // Today's date
