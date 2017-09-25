@@ -330,11 +330,14 @@ namespace TevenStudiosBudgetTracker.Models
             public User currentEditUser { get; set; }
         }
 
-        public class ManagerViewData
-        {
-            public List<User> Employees { get; set; }
-            public User Manager { get; set; }
-        }
+    public class ManagerViewData
+    {
+        public List<User> Employees { get; set; }
+        public User Manager { get; set; }
+        public User SelectedEmployee { get; set; }
+        public List<PendingRequest> PendingRequests { get; set; }
+        public List<Transaction> PastRequests { get; set; }
+    }
 
     public class PendingRequest
         {

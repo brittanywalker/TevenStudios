@@ -34,7 +34,7 @@
 				@pendingRequest.Description
 			</td>
 		</tr>
-	}
+    }
 </table>
 
 
@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                             <label for="name">Amount ($):</label>
-                            <input required type="number" class="form-control" id="requestCost" name="requestCost" value="0" min="0" max="3000">
+                            <input required type="number" class="form-control" id="requestCost" name="requestCost" value="0" min="0" max="@Model.MaxBudgetRequest">
                         </div>
 
                         <div class="form-group">
@@ -81,4 +81,5 @@
     {
         <h4>@ViewBag.Result</h4>
     }
+
 </div>

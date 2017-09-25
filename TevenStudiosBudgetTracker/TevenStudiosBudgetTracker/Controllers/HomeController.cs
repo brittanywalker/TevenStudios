@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,17 +71,23 @@ namespace TevenStudiosBudgetTracker.Controllers
             // set user and transaction contexts
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-
+			
             // gets the current user's details
             User user = userContext.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             // get and set the UI's budget
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
+			
+			// max budget
+			mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(user.ID);
+			
+			// past requests
+			mymodel.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View(mymodel);
         }
@@ -286,6 +293,29 @@ namespace TevenStudiosBudgetTracker.Controllers
             mymodel.PendingRequests = context.GetAllPendingRequests(user.ID);
 
             return View("Employee", mymodel);
+        }
+
+        public IActionResult GetSelectedInfo(int UserID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            //gets manager and employee info
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            ManagerViewData data = new ManagerViewData();
+            User user = context.GetUser(UserID);
+            data.Employees = context.GetEmployeesForManager(user.ID);
+            data.Manager = user;
+            data.SelectedEmployee = context.GetUser(UserID);
+
+            //gets employee's pending requests
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            data.PendingRequests = Pendingcontext.GetAllPendingRequests(UserID);
+
+            //gets employee's past requests
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            data.PastRequests = transactionContext.GetAllPastRequests(UserID);
+
+            return View("Manager", data);
         }
     }
 }

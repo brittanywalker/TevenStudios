@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Description { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public Double Amount { get; set; }
 
@@ -34,6 +34,35 @@ namespace TevenStudiosBudgetTracker.Models
         public MySqlConnection getConnection()
         {
             return new MySqlConnection(ConnectionString); 
+        }
+
+        // Return all transactions for a user that were either approved or denied (not pending)
+        public List<Transaction> GetAllPastRequests(int UserID)
+        {
+            List<Transaction> list = new List<Transaction>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                // Find all transactions that are approved or denied
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId != 0", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Loop through all past requests
+                    while (reader.Read())
+                    {
+                        // Add all data to do with this past transaction
+                        list.Add(new Transaction()
+                        {
+                            Date = reader["Date"].ToString(),
+                            Amount = Convert.ToDouble(reader["Amount"]),
+                            Description = reader["Description"].ToString(),
+                        });
+                    }
+                }
+            }
+            return list;
         }
 
         // Returns all transactions approved or pending to the user specified
