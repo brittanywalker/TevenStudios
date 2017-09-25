@@ -60,7 +60,7 @@ namespace TevenStudiosBudgetTracker.Models
             using (MySqlConnection conn = getConnection())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId != 0", conn);
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId <> 0", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {

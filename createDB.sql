@@ -145,9 +145,9 @@ INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amo
 INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-27 12:00:00', 'Something else Java', 2.00, 0, 3) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
 
 -- Create user's past requests
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-25 10:00:00', 'Still more Java', 120.00, 1, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-26 11:00:00', 'Coffee with friends', 15.59, 2, 2) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
-INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-27 12:00:00', 'Bus ticket for Java conference', 3.80, 1, 3) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-25 10:00:00', 'Still more Java', 120.00, 1, 4) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-26 11:00:00', 'Coffee with friends', 15.59, 2, 5) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
+INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-09-27 12:00:00', 'Bus ticket for Java conference', 3.80, 1, 6) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);
 
 
 COMMIT;
