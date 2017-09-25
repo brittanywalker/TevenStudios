@@ -69,6 +69,8 @@ namespace TevenStudiosBudgetTracker.Controllers
             dynamic mymodel = new ExpandoObject();
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            mymodel.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
@@ -76,7 +78,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
-            // TODO: Use the current user's actual ID number here
+            
             return View(mymodel);
         }
 
