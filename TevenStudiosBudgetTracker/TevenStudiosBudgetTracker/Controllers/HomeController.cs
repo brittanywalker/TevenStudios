@@ -284,5 +284,25 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             return View("Employee", mymodel);
         }
+
+        public IActionResult GetSelectedInfo(int UserID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            ManagerViewData data = new ManagerViewData();
+            User user = context.GetUser(CurrentUserID);
+            data.Employees = context.GetEmployeesForManager(user.ID);
+            data.Manager = user;
+            data.SelectedEmployee = context.GetUser(UserID);
+
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            data.PendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
+
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            data.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+
+            return View("Manager", data);
+        }
     }
 }
