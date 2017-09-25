@@ -74,10 +74,11 @@
                 @Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
             </td>
             <td>
-                <button id="editButton" type="button" class="btn btn-info" onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
+                <button id="editButton" type="button" class="btn btn-info" 
+                        onclick="populateModal(@Model.Users[i].ID)"> Edit User</button>
             </td>
             <td>
-                <button type="button" class="btn btn-info btn-lg right-float-button deleteButton"
+                <button id="deleteButton" type="button" class="btn btn-info"
                         data-id ="@Model.Users[i].ID" data-toggle="modal" data-target="#deleteUser">Delete User</button>
             </td>
         </tr>
@@ -89,7 +90,7 @@
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Add New User</button>
 
-    <!-- Modal -->
+    <!-- Add User Modal -->
     <div class="modal fade" id="addNewUser" role="dialog">
         <div class="modal-dialog">
 
@@ -156,13 +157,15 @@
 </div>
 
 <script type="text/javascript">
-    $(document).on("click", ".deleteButton", function () {
+    // function called when delete user button is clicked to send user id
+    // to the delete user modal for deletion of that user
+    $(document).on("click", "#deleteButton", function () {
         var userId = $(this).data('id');
         $("#confirmDelete").val(userId);
     });
 </script>
 
-<!-- Modal -->
+<!-- Delete User Modal -->
 <div class="modal fade" id="deleteUser" role="alert">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -185,13 +188,15 @@
         $(document).on("click", "#confirmDelete", function () {
             var userId = document.getElementById("confirmDelete").value;
 
+            // userId = -1 if the userId was not sent to the modal correctly
+            // otherwise makes call to delete user from database
             if (userId != -1) {
                 $.ajax({
                     url: '/Home/DeleteUser',
                     data: { UserID: userId },
                 }).done(function () {
                     $('#deleteUser').modal('toggle');
-                    window.location = "/Home/Index";
+                    window.location = "/Home/Admin";
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
@@ -202,10 +207,7 @@
 </div>
 
 <div class="container">
-
-    <button id="hiddenEditBtn" type="button" class="btn btn-info" style="visibility:hidden" data-toggle="modal" data-target="#editUser"></button>
-
-    <!-- Modal -->
+    <!-- Edit User Modal -->
     <div class="modal fade" id="editUser" role="dialog">
         <div class="modal-dialog">
 
@@ -241,14 +243,18 @@
                         <div class="form-group">
                             <label for="role">Role:</label>
                             <select class="form-control" id="editRole" name="editRole">
-                                <option value="0">Employee</option>
-                                <option value="1">Manager</option>
-                                <option value="2">Administrator</option>
+                                <option value="0">Administrator</option>
+                                <option value="1">Employee</option>
+                                <option value="2">Manager</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Current Budget ($):</label>
+                            <label for="name">Start Budget ($):</label>
                             <input required type="number" class="form-control" id="editBudget" name="editBudget">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Annual Budget ($):</label>
+                            <input required type="number" class="form-control" id="editAnnualBudget" name="editAnnualBudget">
                         </div>
                         <div style="visibility:hidden">
                             <input required type="text" class="form-control" id="editID" name="editID">
@@ -265,8 +271,6 @@
 
     <script>
         function populateModal(UserID) {
-            console.log("populate modal function");
-
             $.post('/Home/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
@@ -278,14 +282,14 @@
                         document.getElementById("editEmail").setAttribute("value", userObject["email"]);
                         $("#editManager").val(userObject["managerId"]);
                         $("#editRole").val(userObject["roleId"]);
-                        console.log("user id: " + userObject["id"]);
                         $("#editID").val(userObject["id"]);
                         document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
+                        document.getElementById("editAnnualBudget").setAttribute("value", userObject["annualBudget"]);
 
-                        document.getElementById("hiddenEditBtn").click();
+                        $('#editUser').modal('toggle');
                     } else {
                         alert("Sorry, there was an error processing your request. Please try again.");
-                        $('#deleteUser').modal('toggle');
+                        $('#editUser').modal('toggle');
                     }
                 });
             }
