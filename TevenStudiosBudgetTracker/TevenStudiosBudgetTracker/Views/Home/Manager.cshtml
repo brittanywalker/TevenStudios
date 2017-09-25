@@ -61,7 +61,7 @@
 	<script>
 		function showSelectedUserInfo(UserID) {
             // userId = -1 if the userId was not sent to the modal correctly
-            // otherwise makes call to delete user from database
+            // otherwise makes call to get user info from database
             if (userId != -1) {
                 $.ajax({
                     url: '/Home/GetSelectedInfo',

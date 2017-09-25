@@ -289,6 +289,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
+            //gets manager and employee info
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
             User user = context.GetUser(CurrentUserID);
@@ -296,9 +297,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Manager = user;
             data.SelectedEmployee = context.GetUser(UserID);
 
+            //gets employee's pending requests
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             data.PendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
 
+            //gets employee's past requests
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             data.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
 
