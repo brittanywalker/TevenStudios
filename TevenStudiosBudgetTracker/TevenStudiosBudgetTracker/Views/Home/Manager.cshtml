@@ -55,11 +55,11 @@
 	</div>
 
 	<div class="showinfo">
-        <div id="employee-info-name">
-            <h1>Name</h1>
+        <div>
+            <h1 id="employee-info-name"></h1>
         </div>
-        <div id="employee-current-balance">
-            <h2>$$$ available</h2>
+        <div>
+            <h1 id="employee-current-balance"></h1>
         </div>
         <div id="employee-pending-requests">
             <h2>Pending Requests </h2>
@@ -97,15 +97,21 @@
 	</div>
 
 	<script>
-		function showSelectedUserInfo(UserID) {
+        function showSelectedUserInfo(UserID) {
             // userId = -1 if the userId was not sent to the modal correctly
             // otherwise makes call to get user info from database
-            if (userId != -1) {
+            if (UserID != -1) {
                 $.ajax({
                     url: '/Home/GetSelectedInfo',
-                    data: { UserID: UserId },
-                }).done(function () {
-                    window.location = "/Home/Manager";
+                    data: { UserID: UserID },
+                }).done(function (returnData) {
+                    
+                    $("#employee-info-name").text(returnData["selectedEmployee"]['name']);
+                    $("#employee-current-balance").text(returnData["currentBudget"]);
+
+                    console.log(returnData["pendingRequests"]); 
+                    console.log(returnData["pastRequests"]); 
+
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
