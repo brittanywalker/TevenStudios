@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -302,10 +301,10 @@ namespace TevenStudiosBudgetTracker.Controllers
             //gets manager and employee info
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(UserID);
+            User user = context.retrieveUserDetails(UserID);
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.Manager = user;
-            data.SelectedEmployee = context.GetUser(UserID);
+            data.SelectedEmployee = context.retrieveUserDetails(UserID);
 
             //gets employee's pending requests
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
