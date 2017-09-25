@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Models
 
         public string Description { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public Double Amount { get; set; }
 
@@ -34,6 +34,31 @@ namespace TevenStudiosBudgetTracker.Models
         public MySqlConnection getConnection()
         {
             return new MySqlConnection(ConnectionString); 
+        }
+
+        public List<Transaction> GetAllPastRequests(int UserID)
+        {
+            List<Transaction> list = new List<Transaction>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId != 0", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Transaction()
+                        {
+                            Date = reader["Date"].ToString(),
+                            Amount = Convert.ToDouble(reader["Amount"]),
+                            Description = reader["Description"].ToString(),
+                        });
+                    }
+                }
+            }
+            return list;
         }
 
         // Returns all transactions approved or pending to the user specified
