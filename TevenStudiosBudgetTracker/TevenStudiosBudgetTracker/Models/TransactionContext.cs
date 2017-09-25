@@ -36,6 +36,7 @@ namespace TevenStudiosBudgetTracker.Models
             return new MySqlConnection(ConnectionString); 
         }
 
+        // Return all transactions for a user that were either approved or denied (not pending)
         public List<Transaction> GetAllPastRequests(int UserID)
         {
             List<Transaction> list = new List<Transaction>();
@@ -43,12 +44,15 @@ namespace TevenStudiosBudgetTracker.Models
             using (MySqlConnection conn = getConnection())
             {
                 conn.Open();
+                // Find all transactions that are approved or denied
                 MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + UserID + " and StatusId != 0", conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
+                    // Loop through all past requests
                     while (reader.Read())
                     {
+                        // Add all data to do with this past transaction
                         list.Add(new Transaction()
                         {
                             Date = reader["Date"].ToString(),
