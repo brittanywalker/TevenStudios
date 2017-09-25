@@ -38,7 +38,7 @@ namespace TevenStudiosBudgetTracker.Controllers
                 return this.Json(new { success = false, message = "Failed login, please try again" });
             }
 
-            return RedirectToAction("LoginSuccessful"); 
+            return RedirectToAction("LoginSuccessful");
         }
 
         //This action Harry
@@ -59,7 +59,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             {
                 return this.Json(new { success = true, redirect = "Manager" });
             }
-             return this.Json(new { success = true, redirect = "Index" }); 
+             return this.Json(new { success = true, redirect = "Index" });
         }
 
         public IActionResult Employee()
@@ -75,10 +75,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
+            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
-            
+
             return View(mymodel);
         }
 
@@ -120,37 +121,37 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View();
         }
 
-        [HttpPost]		 
-       public IActionResult GetDetails()   //Harry pls rename this to something more intuitive :P xoxo 
-        {	            
-             // Build user model		
-             User umodel = new User();		
-             umodel.Name = HttpContext.Request.Form["name"].ToString();		
-             umodel.Email = HttpContext.Request.Form["email"].ToString();		
-             umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());		
-             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());		
+        [HttpPost]
+       public IActionResult GetDetails()   //Harry pls rename this to something more intuitive :P xoxo
+        {
+             // Build user model
+             User umodel = new User();
+             umodel.Name = HttpContext.Request.Form["name"].ToString();
+             umodel.Email = HttpContext.Request.Form["email"].ToString();
+             umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
+             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
              umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
              umodel.AnnualBudget = Int32.Parse(HttpContext.Request.Form["annualBudget"].ToString());
- 		
-             // Get context		
-             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;		
- 		
-             //Save user to database, get result		
-             int result = context.SaveUserDetails(umodel);		
-             if (result > 0)		
-             {		
-                 ViewBag.Result = umodel.Name + " was successfully added";		
-             }		
-             else {		
-                 ViewBag.Result = "Something went wrong";		
-             }		
-             // Not sure if this is correct, but need to reload data some how		
-             // Maybe have this as a method as might be used multiple times		
-           AdminViewData data = new AdminViewData();		
-           data.Users = context.GetAllUsers();		
-           data.Managers = context.GetAllManagers();		
- 		
-           return View("Admin", data);		
+
+             // Get context
+             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+
+             //Save user to database, get result
+             int result = context.SaveUserDetails(umodel);
+             if (result > 0)
+             {
+                 ViewBag.Result = umodel.Name + " was successfully added";
+             }
+             else {
+                 ViewBag.Result = "Something went wrong";
+             }
+             // Not sure if this is correct, but need to reload data some how
+             // Maybe have this as a method as might be used multiple times
+           AdminViewData data = new AdminViewData();
+           data.Users = context.GetAllUsers();
+           data.Managers = context.GetAllManagers();
+
+           return View("Admin", data);
          }
 
 
@@ -246,19 +247,19 @@ namespace TevenStudiosBudgetTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitRequest()   //Harry pls rename this to something more intuitive :P xoxo 
+        public IActionResult SubmitRequest()
         {
-            // Build user model		
+            // Build user model
             PendingRequest newRequest = new PendingRequest();
             newRequest.Description = HttpContext.Request.Form["description"].ToString();
             newRequest.Cost = HttpContext.Request.Form["requestCost"].ToString();
             DateTime dateTimeNow = DateTime.Now;
             newRequest.Date = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
 
-            // Get context		
+            // Get context
             PendingRequestsContext pendingRequestContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
 
-            //Save user to database, get result		
+            //Save user to database, get result
             int result = pendingRequestContext.SubmitPendingRequest(newRequest);
             if (result > 0)
             {
@@ -278,11 +279,35 @@ namespace TevenStudiosBudgetTracker.Controllers
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
+            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
 
             return View("Employee", mymodel);
+        }
+
+        public IActionResult GetSelectedInfo(int UserID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            //gets manager and employee info
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            ManagerViewData data = new ManagerViewData();
+            User user = context.GetUser(CurrentUserID);
+            data.Employees = context.GetEmployeesForManager(user.ID);
+            data.Manager = user;
+            data.SelectedEmployee = context.GetUser(UserID);
+
+            //gets employee's pending requests
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            data.PendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
+
+            //gets employee's past requests
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            data.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+
+            return View("Manager", data);
         }
     }
 }
