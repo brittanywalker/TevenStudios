@@ -133,11 +133,13 @@
                     $("#past_request_table tbody tr").remove()
                     var html = '<tbody>';
 
+                    console.log(returnData["pastRequests"]); 
+
                     for (item in returnData["pastRequests"]) {
                         html += '<tr><td>'
                             + returnData["pastRequests"][item].date
                             + '</td><td class="">'
-                            + returnData["pastRequests"][item].cost
+                            + returnData["pastRequests"][item].amount
                             + '</td><td class="">'
                             + returnData["pastRequests"][item].description
                             + '</td></tr>';
