@@ -74,7 +74,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             //Check if they are a Manager or an Employee, if not, send them to the forbidden page.
             int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
-            System.Diagnostics.Debug.WriteLine("ROLEID = " + Roleid);
 
             if ((Roleid != 1) && (Roleid != 2))
             {
