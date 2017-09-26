@@ -152,7 +152,6 @@ namespace TevenStudiosBudgetTracker.Models
             User user = new User();
 
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
@@ -222,8 +221,7 @@ namespace TevenStudiosBudgetTracker.Models
              {		
                  DateTime dateTimeNow = DateTime.Now;		
                  string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");		
- 		
-                 //string startDate = "2001-09-11 08:45:00";		
+
                  string query;		
                  if (user.ManagerId.Equals(-1)) // If no manager		
                  {		
@@ -241,8 +239,7 @@ namespace TevenStudiosBudgetTracker.Models
                  int i = cmd.ExecuteNonQuery();		
                  conn.Close();		
                  return i;		
-             }		
- 		
+             }
          }
 
         public int DeleteUserSQL(int userID)
@@ -319,8 +316,6 @@ namespace TevenStudiosBudgetTracker.Models
                     "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
                 }
 
-                Console.WriteLine("query: " + query);
-
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -331,14 +326,14 @@ namespace TevenStudiosBudgetTracker.Models
 
     }
 
-        public class AdminViewData
-        {
-            public List<User> Users { get; set; }
-            public int CurrentUserIndex;
-            public List<User> Managers { get; set; }
-            public User currentEditUser { get; set; }
+    public class AdminViewData
+    {
+        public List<User> Users { get; set; }
+        public int CurrentUserIndex;
+        public List<User> Managers { get; set; }
+        public User currentEditUser { get; set; }
 
-        }
+    }
 
     public class ManagerViewData
     {
@@ -350,12 +345,12 @@ namespace TevenStudiosBudgetTracker.Models
     }
 
     public class PendingRequest
-        {
-            public PendingRequestsContext context;
-            public string Date { get; set; }
-            public string Cost { get; set; }
-            public string Description { get; set; }
-        }
+    {
+        public PendingRequestsContext context;
+        public string Date { get; set; }
+        public string Cost { get; set; }
+        public string Description { get; set; }
+    }
 
         public class PendingRequestsContext
         {
@@ -397,25 +392,21 @@ namespace TevenStudiosBudgetTracker.Models
 
             public int SubmitPendingRequest(PendingRequest newRequest, int userId)
             {
-            using (MySqlConnection conn = getConnection())
-            {
-                DateTime dateTimeNow = DateTime.Now;
-                string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+                using (MySqlConnection conn = getConnection())
+                {
+                    DateTime dateTimeNow = DateTime.Now;
+                    string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
 
-                //string startDate = "2001-09-11 08:45:00";		
-                string query;
+                    string query;
+                    query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + userId + "','" + newRequest.Date + "','" + newRequest.Description +
+                    "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later
                 
-                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + userId + "','" + newRequest.Date + "','" + newRequest.Description +
-                "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
-                
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                return i;
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    conn.Open();
+                    int i = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return i;
+                }
             }
-
         }
-    }
     }
