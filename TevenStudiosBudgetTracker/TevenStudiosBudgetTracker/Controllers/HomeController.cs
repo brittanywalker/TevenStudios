@@ -14,7 +14,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
     public class HomeController : Controller
     {
-        public int CurrentUserID = 1;
         //Set Session names
         const string SessionKeyId = "_ID";
         const string SessionKeyRoleId = "_RoleId";
@@ -69,16 +68,16 @@ namespace TevenStudiosBudgetTracker.Controllers
             dynamic mymodel = new ExpandoObject();
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-            mymodel.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+            mymodel.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
             mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+            mymodel.PendingRequests = context.GetAllPendingRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View(mymodel);
         }
@@ -109,7 +108,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(CurrentUserID);
+            User user = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.Manager = user;
 
@@ -260,7 +259,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             PendingRequestsContext pendingRequestContext = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.PendingRequestsContext)) as PendingRequestsContext;
 
             //Save user to database, get result
-            int result = pendingRequestContext.SubmitPendingRequest(newRequest);
+            int result = pendingRequestContext.SubmitPendingRequest(newRequest, (int)HttpContext.Session.GetInt32(SessionKeyId));
             if (result > 0)
             {
                 ViewBag.Result = " Request was successfully submitted";
@@ -276,13 +275,13 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
             mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+            mymodel.PendingRequests = context.GetAllPendingRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View("Employee", mymodel);
         }
@@ -294,18 +293,18 @@ namespace TevenStudiosBudgetTracker.Controllers
             //gets manager and employee info
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(CurrentUserID);
+            User user = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.Manager = user;
             data.SelectedEmployee = context.GetUser(UserID);
 
             //gets employee's pending requests
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            data.PendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
+            data.PendingRequests = Pendingcontext.GetAllPendingRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             //gets employee's past requests
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-            data.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+            data.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View("Manager", data);
         }
