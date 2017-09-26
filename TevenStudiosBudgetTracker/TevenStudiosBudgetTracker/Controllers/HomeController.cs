@@ -282,14 +282,26 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             dynamic mymodel = new ExpandoObject();
 
+            // set user and transaction contexts
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+
+            // gets the current user's details
             User user = userContext.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
+
+            // get and set the UI's budget
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
 
+            // max budget
+            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+
+            // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             mymodel.PendingRequests = context.GetAllPendingRequests(user.ID);
+
+            // past requests
+            mymodel.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View("Employee", mymodel);
         }
