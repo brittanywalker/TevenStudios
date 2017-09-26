@@ -219,8 +219,6 @@ namespace TevenStudiosBudgetTracker.Controllers
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             User currentUser = context.retrieveUserDetails(UserID);
 
-            Console.WriteLine("user name: " + currentUser.Name);
-
             return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget, AnnualBudget = currentUser.AnnualBudget});
         }
 
@@ -287,27 +285,27 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View("Employee", mymodel);
         }
 
+        // This function gets information about a selected user to be displayed on the right hand side of the manager screen
         public IActionResult GetSelectedInfo(int UserID)
         {
             ViewData["Message"] = "Management page.";
 
-            //gets manager and employee info
+            // gets manager and employee info
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(CurrentUserID);
-            data.Employees = context.GetEmployeesForManager(user.ID);
-            data.Manager = user;
-            data.SelectedEmployee = context.GetUser(UserID);
+            User selectedEmployee = context.GetUser(UserID);
 
-            //gets employee's pending requests
+            // gets employee's pending requests
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            data.PendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
+            var pendingRequests = Pendingcontext.GetAllPendingRequests(UserID);
 
-            //gets employee's past requests
+            // gets employee's past requests
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-            data.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+            var pastRequests = transactionContext.GetAllPastRequests(UserID);
 
-            return View("Manager", data);
+            // gets the employees current budget 
+            double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.StartDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget);
+
+            return Json(new {id=UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests}); 
         }
     }
 }
