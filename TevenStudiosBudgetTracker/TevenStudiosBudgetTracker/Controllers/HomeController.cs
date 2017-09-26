@@ -100,6 +100,13 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Admin page.";
 
+            //Check if they are an admin, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+
+            if (Roleid != 0)
+            {
+                return StatusCode(403);
+            }
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
@@ -114,6 +121,14 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
+
+            //Check if they are a Manager, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+
+            if (Roleid != 2)
+            {
+                return StatusCode(403);
+            }
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
