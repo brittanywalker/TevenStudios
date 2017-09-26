@@ -291,20 +291,19 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             //gets manager and employee info
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = context.GetUser(CurrentUserID);
             User selectedEmployee = context.GetUser(UserID);
 
             //gets employee's pending requests
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            var pendingRequests = Pendingcontext.GetAllPendingRequests(CurrentUserID);
+            var pendingRequests = Pendingcontext.GetAllPendingRequests(UserID);
 
             //gets employee's past requests
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-            var pastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+            var pastRequests = transactionContext.GetAllPastRequests(UserID);
 
-            double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
+            double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.StartDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget);
 
-            return Json(new { selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests}); 
+            return Json(new {id=UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests}); 
         }
     }
 }
