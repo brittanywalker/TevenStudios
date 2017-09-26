@@ -298,7 +298,7 @@ namespace TevenStudiosBudgetTracker.Models
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                     "', AnnualBudget = '" + user.AnnualBudget + 
-                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
+                    "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
                     "' WHERE ID = '" + user.ID + "'";
                 }
                 else // If has a manager
@@ -307,7 +307,7 @@ namespace TevenStudiosBudgetTracker.Models
                     "', ManagerId = '" + user.ManagerId +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                     "', AnnualBudget = '" + user.AnnualBudget +
-                    "', ChangeAnnualBudget = '" + currentBudget + "', ChangeAnnualBudgetDate = '" + todayString +
+                    "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString +
                     "' WHERE ID = '" + user.ID + "'";
                 }
 
