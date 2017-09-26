@@ -54,55 +54,32 @@
 		</table>
 	</div>
 
+    <!-- Div to contain information about the selected user (right side of manager page)-->
 	<div class="showinfo">
+        <!-- div to display employee name-->
         <div>
             <h1 id="employee_info_name" style="text-align:center"></h1>
         </div>
+
+        <!-- div to display employee current balance-->
         <div>
             <h1 id="employee_current_balance" style="text-align:center"></h1>
         </div>
         <br />
+
+        <!-- div to display employee pending requests table-->
         <div id="employee_pending_requests">
-            <h2>Pending Requests </h2>
-            <table id="pending_request_table" class="table table-hover table-bordered" >
-                <thead>
-                <tr>
-                    <th data-field="Date" >
-                        Date
-                    </th>
-                    <th data-field="Cost">
-                        Cost
-                    </th>
-                    <th data-field="Description">
-                        Description
-                    </th>
-                </tr>
-                    </thead>
-            </table>
         </div>
         <br />
+
+        <!-- div to display employee past requests table-->
         <div id="employee_past_requests">
-            <h2>Past Requests </h2>
-            <table id="past_request_table" class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th data-field="Date">
-                            Date
-                        </th>
-                        <th data-field="Cost">
-                            Cost
-                        </th>
-                        <th data-field="Description">
-                            Description
-                        </th>
-                    </tr>
-                    </thead>
-            </table>
         </div> 
 		
 	</div>
 
 	<script>
+        //This function updates the HTML div for the employee info depending which employee is selected
         function showSelectedUserInfo(UserID) {
             // userId = -1 if the userId was not sent to the modal correctly
             // otherwise makes call to get user info from database
@@ -112,15 +89,32 @@
                     data: { UserID: UserID },
                 }).done(function (returnData) {
 
-                    console.log(returnData); 
-                    
+                    // Set the name and current balance div for the employee 
                     $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
                     $("#employee_current_balance").text("$" + returnData["currentBudget"] + " available");
 
-                    // Pending request table population 
-                    $("#pending_request_table tbody tr").remove()
-                    var html = '<tbody>';
 
+                    //-------------- Pending request table population --------------------
+
+                    // Set the headings of the table 
+                    var html = '<h2>Pending Requests </h2> \
+                        <table id="pending_request_table" class="table table-hover table-bordered" > \
+                            <thead> \
+                            <tr>\
+                                <th data-field="Date" >\
+                                    Date\
+                                </th>\
+                                <th data-field="Cost">\
+                                    Cost\
+                                </th>\
+                                <th data-field="Description">\
+                                    Description\
+                                </th>\
+                            </tr>\
+                                </thead>\
+                        <tbody>';
+
+                    // add each pending request to the table 
                     for (item in returnData["pendingRequests"]) {
                         html += '<tr><td>'
                             + returnData["pendingRequests"][item].date
@@ -130,13 +124,32 @@
                             + returnData["pendingRequests"][item].description
                             + '</td></tr>';
                     }
-                    html += "</tbody>"
-                    $('#pending_request_table').append(html);
+                    html += "</tbody> </table>"
 
-                    // Past request table population 
-                    $("#past_request_table tbody tr").remove()
-                    var html = '<tbody>';
+                    // update the html of the div to contain the table 
+                    $('#employee_pending_requests').html(html);
 
+                    //-------------- Past request table population --------------------
+
+                    // Set the headings of the table 
+                    var html = '<h2>Past Requests </h2> \
+                        <table id="past_request_table" class="table table-hover table-bordered" > \
+                            <thead> \
+                            <tr>\
+                                <th data-field="Date" >\
+                                    Date\
+                                </th>\
+                                <th data-field="Cost">\
+                                    Cost\
+                                </th>\
+                                <th data-field="Description">\
+                                    Description\
+                                </th>\
+                            </tr>\
+                                </thead>\
+                        <tbody>';
+
+                    // add each pending request to the table 
                     for (item in returnData["pastRequests"]) {
                         html += '<tr><td>'
                             + returnData["pastRequests"][item].date
@@ -147,7 +160,9 @@
                             + '</td></tr>';
                     }
                     html += "</tbody>"
-                    $('#past_request_table').append(html);
+
+                    // update the html of the div to contain the table 
+                    $('#employee_past_requests').html(html);
 
                 });
             } else {
