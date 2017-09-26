@@ -56,43 +56,47 @@
 
 	<div class="showinfo">
         <div>
-            <h1 id="employee-info-name"></h1>
+            <h1 id="employee_info_name"></h1>
         </div>
         <div>
-            <h1 id="employee-current-balance"></h1>
+            <h1 id="employee_current_balance"></h1>
         </div>
-        <div id="employee-pending-requests">
+        <div id="employee_current_balance">
             <h2>Pending Requests </h2>
-            <table class="table">
+            <table id="pending_request_table" class="table table-hover table-bordered" >
+                <thead>
                 <tr>
-                    <th>
+                    <th data-field="Date" >
                         Date
                     </th>
-                    <th>
+                    <th data-field="Cost">
                         Cost
                     </th>
-                    <th>
+                    <th data-field="Description">
                         Description
                     </th>
                 </tr>
+                    </thead>
             </table>
         </div>
-        <div id="employee-past-requests">
+        <div id="employee_past_requests">
             <h2>Past Requests </h2>
-            <table class="table">
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        Cost
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                </tr>
-                </table>
-        </div>
+            <table id="past_request_table" class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th data-field="Date">
+                            Date
+                        </th>
+                        <th data-field="Cost">
+                            Cost
+                        </th>
+                        <th data-field="Description">
+                            Description
+                        </th>
+                    </tr>
+                    </thead>
+            </table>
+        </div> 
 		
 	</div>
 
@@ -106,11 +110,40 @@
                     data: { UserID: UserID },
                 }).done(function (returnData) {
                     
-                    $("#employee-info-name").text(returnData["selectedEmployee"]['name']);
-                    $("#employee-current-balance").text(returnData["currentBudget"]);
+                    $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
+                    $("#employee_current_balance").text(returnData["currentBudget"]);
 
-                    console.log(returnData["pendingRequests"]); 
-                    console.log(returnData["pastRequests"]); 
+                    // Pending request table population 
+                    $("#pending_request_table tbody tr").remove()
+                    var html = '<tbody>';
+
+                    for (item in returnData["pendingRequests"]) {
+                        html += '<tr><td>'
+                            + returnData["pendingRequests"][item].date
+                            + '</td><td class="">'
+                            + returnData["pendingRequests"][item].cost
+                            + '</td><td class="">'
+                            + returnData["pendingRequests"][item].description
+                            + '</td></tr>';
+                    }
+                    html += "</tbody>"
+                    $('#pending_request_table').append(html);
+
+                    // Past request table population 
+                    $("#past_request_table tbody tr").remove()
+                    var html = '<tbody>';
+
+                    for (item in returnData["pastRequests"]) {
+                        html += '<tr><td>'
+                            + returnData["pastRequests"][item].date
+                            + '</td><td class="">'
+                            + returnData["pastRequests"][item].cost
+                            + '</td><td class="">'
+                            + returnData["pastRequests"][item].description
+                            + '</td></tr>';
+                    }
+                    html += "</tbody>"
+                    $('#past_request_table').append(html);
 
                 });
             } else {
