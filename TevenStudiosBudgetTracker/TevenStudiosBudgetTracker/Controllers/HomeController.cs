@@ -66,6 +66,15 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Employee page.";
 
+            //Check if they are a Manager or an Employee, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+            System.Diagnostics.Debug.WriteLine("ROLEID = " + Roleid);
+
+            if ((Roleid != 1) && (Roleid != 2))
+            {
+                return StatusCode(403);
+            }
+
             dynamic mymodel = new ExpandoObject();
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
@@ -91,6 +100,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Admin page.";
 
+
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
             AdminViewData data = new AdminViewData();
@@ -103,6 +113,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult Manager()
         {
             ViewData["Message"] = "Management page.";
+
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
