@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using TevenStudiosBudgetTracker.Models;
 using System.Dynamic;
@@ -34,7 +34,6 @@ namespace TevenStudiosBudgetTracker.Controllers
             return RedirectToAction("LoginSuccessful");
         }
 
-        //This action Harry
         public JsonResult LoginSuccessful()
         {
             string Name = HttpContext.Session.GetString(SessionKeyName);
@@ -59,10 +58,6 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Employee page.";
 
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
-            {
-                return View();
-            }
             dynamic mymodel = new ExpandoObject();
 
             // set user and transaction contexts
@@ -77,8 +72,15 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
 
-            // max budget
-            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+            //get the user's max budget spend so they can't spend more than they currently have and will
+            //accrue for the year
+            var futureAccruedBudget = getUserMaxBudgetRequest(user);
+            var maxBudget = futureAccruedBudget + budget;
+            if (maxBudget > user.AnnualBudget)
+            {
+                maxBudget = user.AnnualBudget;
+            }
+            mymodel.MaxBudgetRequest = maxBudget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
@@ -117,11 +119,6 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult Manager()
         {
             ViewData["Message"] = "Management page.";
-
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
-            {
-                return View();
-            }
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
@@ -196,8 +193,16 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
-            //// Build user model
-            User umodel = new User();
+            // Build user model
+            User umodel = new User
+            {
+                ID = Int32.Parse(HttpContext.Request.Form["editID"].ToString()),
+                Name = HttpContext.Request.Form["editName"].ToString(),
+                Email = HttpContext.Request.Form["editEmail"].ToString(),
+                RoleId = Int32.Parse(HttpContext.Request.Form["editRole"].ToString()),
+                StartBudget = Int32.Parse(HttpContext.Request.Form["editBudget"].ToString()),
+                AnnualBudget = Int32.Parse(HttpContext.Request.Form["editAnnualBudget"].ToString())
+            };
             try
             {
                 umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["editManager"].ToString());
@@ -206,15 +211,8 @@ namespace TevenStudiosBudgetTracker.Controllers
             {
                 umodel.ManagerId = -1;
             }
-            umodel.ID = Int32.Parse(HttpContext.Request.Form["editID"].ToString());
-            umodel.Name = HttpContext.Request.Form["editName"].ToString();
-            umodel.Email = HttpContext.Request.Form["editEmail"].ToString();
-            umodel.RoleId = Int32.Parse(HttpContext.Request.Form["editRole"].ToString());
-            umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["editBudget"].ToString());
-            umodel.AnnualBudget = Int32.Parse(HttpContext.Request.Form["editAnnualBudget"].ToString());
 
             int result = context.EditUserSQL(umodel);
-
             if (result > 0)
             {
                 ViewBag.Result = umodel.Name + " was successfully edited";
@@ -302,8 +300,15 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
 
-            // max budget
-            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+            //get the user's max budget spend so they can't spend more than they currently have and will
+            //accrue for the year
+            var futureAccruedBudget = getUserMaxBudgetRequest(user);
+            var maxBudget = futureAccruedBudget + budget;
+            if (maxBudget > user.AnnualBudget)
+            {
+                maxBudget = user.AnnualBudget;
+            }
+            mymodel.MaxBudgetRequest = maxBudget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
@@ -336,6 +341,31 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.ChangeAnnualBudgetDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget, selectedEmployee.ChangeAnnualBudget);
 
             return Json(new { id = UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests });
+        }
+
+        private double getUserMaxBudgetRequest(User user)
+        {
+            DateTime today = DateTime.Today;
+            Console.WriteLine("today: " + today);
+            String year = today.ToString("yyyy");
+            String date = user.StartDate.ToString("dd/MM");
+            String time = user.StartDate.ToString("HH:mm:ss tt");
+            String budgetChange = date + "/" + year + " " + time;
+            DateTime budgetChangeDate = Convert.ToDateTime(budgetChange);
+            int daysDifference = (int)(budgetChangeDate - today).TotalDays;
+            Console.WriteLine("days different: " + daysDifference);
+            double futureAccruedBudget;
+            if (daysDifference > 0)
+            {
+                futureAccruedBudget = daysDifference * (user.AnnualBudget / 365);
+            }
+            else
+            {
+                var nextYearBudgetDate = budgetChangeDate.AddYears(1);
+                int daysToBudgetYear = (int)(nextYearBudgetDate - today).TotalDays;
+                futureAccruedBudget = daysToBudgetYear * (user.AnnualBudget / 365);
+            }
+            return futureAccruedBudget;
         }
     }
 }
