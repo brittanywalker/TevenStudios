@@ -247,13 +247,15 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Managers = context.GetAllManagers();
             data.CurrentUserIndex = UserIndex;
 
-            User umodel = new User();
-            umodel.Name = data.Users[UserIndex].Name;
-            umodel.Email = data.Users[UserIndex].Email;
-            umodel.ManagerId = data.Users[UserIndex].ManagerId;
-            umodel.RoleId = data.Users[UserIndex].RoleId;
-            umodel.StartBudget = data.Users[UserIndex].StartBudget;
-            umodel.AnnualBudget = data.Users[UserIndex].AnnualBudget;
+            User umodel = new User
+            {
+                Name = data.Users[UserIndex].Name,
+                Email = data.Users[UserIndex].Email,
+                ManagerId = data.Users[UserIndex].ManagerId,
+                RoleId = data.Users[UserIndex].RoleId,
+                StartBudget = data.Users[UserIndex].StartBudget,
+                AnnualBudget = data.Users[UserIndex].AnnualBudget
+            };
 
             data.currentEditUser = umodel;
 
@@ -294,6 +296,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             // gets the current user's details
             User user = userContext.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
+            mymodel.CurrentUser = user;
 
             // get and set the UI's budget
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);

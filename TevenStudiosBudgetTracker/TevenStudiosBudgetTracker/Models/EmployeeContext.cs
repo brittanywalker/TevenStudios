@@ -44,6 +44,7 @@ namespace TevenStudiosBudgetTracker.Models
         {
             this.ConnectionString = connectionString;
         }
+
         public MySqlConnection getConnection()
         {
             return new MySqlConnection(ConnectionString);
