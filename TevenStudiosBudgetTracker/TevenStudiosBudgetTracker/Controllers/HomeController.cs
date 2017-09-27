@@ -14,7 +14,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
     public class HomeController : Controller
     {
-        public int CurrentUserID = 1;
         //Set Session names
         const string SessionKeyId = "_ID";
         const string SessionKeyRoleId = "_RoleId";
@@ -23,7 +22,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         public IActionResult GoogleLogin(string userEmail)
         {
-
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             User result = context.GetUserByEmail(userEmail);
             if (result.Name != null)
@@ -66,19 +64,24 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Employee page.";
 
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
+            {
+                return View();
+            }
             dynamic mymodel = new ExpandoObject();
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
-            mymodel.PastRequests = transactionContext.GetAllPastRequests(CurrentUserID);
+            mymodel.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
             mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+            mymodel.CurrentUser = user;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+            mymodel.PendingRequests = context.GetAllPendingRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View(mymodel);
         }
@@ -99,6 +102,10 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
+            {
+                data.CurrentUser = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
+            }
 
             return View(data);
         }
@@ -107,11 +114,16 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
+            {
+                return View();
+            }
+
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            User user = context.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             ManagerViewData data = new ManagerViewData();
-            User user = context.GetUser(CurrentUserID);
             data.Employees = context.GetEmployeesForManager(user.ID);
-            data.Manager = user;
+            data.CurrentUser = user;
 
             return View(data);
         }
@@ -124,17 +136,19 @@ namespace TevenStudiosBudgetTracker.Controllers
         [HttpPost]
        public IActionResult GetDetails()   //Harry pls rename this to something more intuitive :P xoxo
         {
-             // Build user model
-             User umodel = new User();
-             umodel.Name = HttpContext.Request.Form["name"].ToString();
-             umodel.Email = HttpContext.Request.Form["email"].ToString();
-             umodel.ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString());
-             umodel.RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString());
-             umodel.StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString());
-             umodel.AnnualBudget = Int32.Parse(HttpContext.Request.Form["annualBudget"].ToString());
+            // Build user model
+            User umodel = new User
+            {
+                Name = HttpContext.Request.Form["name"].ToString(),
+                Email = HttpContext.Request.Form["email"].ToString(),
+                ManagerId = Int32.Parse(HttpContext.Request.Form["manager"].ToString()),
+                RoleId = Int32.Parse(HttpContext.Request.Form["role"].ToString()),
+                StartBudget = Int32.Parse(HttpContext.Request.Form["budget"].ToString()),
+                AnnualBudget = Int32.Parse(HttpContext.Request.Form["annualBudget"].ToString())
+            };
 
-             // Get context
-             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            // Get context
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
 
              //Save user to database, get result
              int result = context.SaveUserDetails(umodel);
@@ -153,7 +167,6 @@ namespace TevenStudiosBudgetTracker.Controllers
 
            return View("Admin", data);
          }
-
 
         public IActionResult DeleteUser(int UserID)
         {
@@ -219,6 +232,8 @@ namespace TevenStudiosBudgetTracker.Controllers
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             User currentUser = context.retrieveUserDetails(UserID);
 
+            Console.WriteLine("user name: " + currentUser.Name);
+
             return Json(new {ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget, AnnualBudget = currentUser.AnnualBudget});
         }
 
@@ -274,13 +289,13 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
             UserContext userContext = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
-            User user = userContext.GetUser(CurrentUserID);
+            User user = userContext.GetUser((int)HttpContext.Session.GetInt32(SessionKeyId));
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
             mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            mymodel.PendingRequests = context.GetAllPendingRequests(CurrentUserID);
+            mymodel.PendingRequests = context.GetAllPendingRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
             return View("Employee", mymodel);
         }
@@ -290,7 +305,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Management page.";
 
-            // gets manager and employee info
+            // gets selected employee
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             User selectedEmployee = context.GetUser(UserID);
 
@@ -305,7 +320,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             // gets the employees current budget 
             double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.StartDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget);
 
-            return Json(new {id=UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests}); 
+            return Json(new { id = UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests });
         }
     }
 }

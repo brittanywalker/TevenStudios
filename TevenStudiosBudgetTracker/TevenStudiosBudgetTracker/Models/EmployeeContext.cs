@@ -331,22 +331,22 @@ namespace TevenStudiosBudgetTracker.Models
 
     }
 
-        public class AdminViewData
-        {
-            public List<User> Users { get; set; }
-            public int CurrentUserIndex;
-            public List<User> Managers { get; set; }
-            public User currentEditUser { get; set; }
-
-        }
+    public class AdminViewData
+    {
+        public List<User> Users { get; set; }
+        public int CurrentUserIndex;
+        public List<User> Managers { get; set; }
+        public User CurrentUser { get; set; }
+        public User currentEditUser { get; set; }
+    }
 
     public class ManagerViewData
     {
         public List<User> Employees { get; set; }
-        public User Manager { get; set; }
         public User SelectedEmployee { get; set; }
         public List<PendingRequest> PendingRequests { get; set; }
         public List<Transaction> PastRequests { get; set; }
+        public User CurrentUser { get; set; }
     }
 
     public class PendingRequest
@@ -397,25 +397,24 @@ namespace TevenStudiosBudgetTracker.Models
 
             public int SubmitPendingRequest(PendingRequest newRequest)
             {
-            using (MySqlConnection conn = getConnection())
-            {
-                DateTime dateTimeNow = DateTime.Now;
-                string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+                using (MySqlConnection conn = getConnection())
+                {
+                    DateTime dateTimeNow = DateTime.Now;
+                    string startDate = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
 
-                //string startDate = "2001-09-11 08:45:00";		
-                string query;
+                    //string startDate = "2001-09-11 08:45:00";		
+                    string query;
                 
-                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + 1 + "','" + newRequest.Date + "','" + newRequest.Description +
-                "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
+                    query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + 1 + "','" + newRequest.Date + "','" + newRequest.Description +
+                    "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
                 
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                conn.Close();
-                return i;
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    conn.Open();
+                    int i = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return i;
+                }
             }
-
         }
-    }
     }
