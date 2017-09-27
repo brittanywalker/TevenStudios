@@ -75,6 +75,9 @@ namespace TevenStudiosBudgetTracker.Controllers
             User user = userContext.GetUser(CurrentUserID);
             double budget = transactionContext.getCurrentBudget(user.ID, user.StartDate, user.StartBudget, user.AnnualBudget);
             mymodel.Budget = budget;
+
+            DateTime today = DateTime.Today;
+            int numberOfDaysDifferent = (int)(user.ChangeAnnualBudgetDate - today).TotalDays;
             mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
 
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
