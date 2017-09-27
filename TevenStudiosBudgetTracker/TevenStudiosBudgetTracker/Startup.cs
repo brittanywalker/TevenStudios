@@ -44,8 +44,7 @@ namespace TevenStudiosBudgetTracker
 
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(20); // After 20 minutes idle: the session times out
                 options.CookieHttpOnly = true;
             });
         }
