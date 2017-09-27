@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TevenStudiosBudgetTracker.Models
 {
@@ -31,6 +29,7 @@ namespace TevenStudiosBudgetTracker.Models
         {
             this.ConnectionString = connectionString; 
         }
+
         public MySqlConnection getConnection()
         {
             return new MySqlConnection(ConnectionString); 
@@ -70,7 +69,6 @@ namespace TevenStudiosBudgetTracker.Models
         {
             double value = 0;
             using (MySqlConnection conn = getConnection())
-
             {
                 conn.Open();
                 // find all transactions of the user that are not denied (either pending or approved)
@@ -110,6 +108,5 @@ namespace TevenStudiosBudgetTracker.Models
             
             return Math.Round(remainingValue, 2); ; // return value rounded to 2dp
         }
-
     }
 }
