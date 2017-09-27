@@ -44,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `TevenStudios`.`User` (
   `RoleId` INT NULL,
   `StartBudget` DOUBLE NULL,
   `AnnualBudget` DOUBLE NULL,
+  `ChangeAnnualBudgetDate` DATETIME NULL,
+  `ChangeAnnualBudget` DOUBLE NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `id_UNIQUE` (`ID` ASC),
   INDEX `Role_ID_idx` (`RoleId` ASC),
@@ -137,7 +139,7 @@ COMMIT;
 START TRANSACTION;
 USE `TevenStudios`;
 -- Create initial user ID to be associated with the pending requests
-INSERT INTO `TevenStudios`.`User` (`ID`, `Name`, `Email`, `StartDate`, `RoleId`, `StartBudget`, `AnnualBudget`) VALUES (1, 'Joe Bloggs', 'joe@gmail.com', '2017-01-25 10:00:00', 1, 150.00, 3000.00) ON DUPLICATE KEY UPDATE `Name`=VALUES(`Name`), `Email`=VALUES(`Email`), `StartDate`=VALUES(`StartDate`), `RoleId`=VALUES(`RoleId`), `StartBudget`=VALUES(`StartBudget`), `AnnualBudget`=VALUES(`AnnualBudget`);
+INSERT INTO `TevenStudios`.`User` (`ID`, `Name`, `Email`, `StartDate`, `RoleId`, `StartBudget`, `AnnualBudget`,`ChangeAnnualBudgetDate`,`ChangeAnnualBudget`) VALUES (1, 'Joe Bloggs', 'joe@gmail.com', '2017-01-25 10:00:00', 1, 150.00, 3000.00,'2017-01-25 10:00:00',0.00) ON DUPLICATE KEY UPDATE `Name`=VALUES(`Name`), `Email`=VALUES(`Email`), `StartDate`=VALUES(`StartDate`), `RoleId`=VALUES(`RoleId`), `StartBudget`=VALUES(`StartBudget`), `AnnualBudget`=VALUES(`AnnualBudget`), `ChangeAnnualBudgetDate`=VALUES(`ChangeAnnualBudgetDate`),`ChangeAnnualBudget`=VALUES(`ChangeAnnualBudget`) ;
 
 -- Create user's pending requests
 INSERT INTO `TevenStudios`.`Transactions` (`UserId`, `Date`, `Description`, `Amount`, `StatusId`, `ID`) VALUES (1, '2017-08-25 10:00:00', 'Java Book', 100.54, 0, 1) ON DUPLICATE KEY UPDATE `UserId`=VALUES(`UserId`), `Date`=VALUES(`Date`), `Description`=VALUES(`Description`), `Amount`=VALUES(`Amount`), `StatusId`=VALUES(`StatusId`);

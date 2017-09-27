@@ -87,30 +87,27 @@ namespace TevenStudiosBudgetTracker.Models
         }
 
         // returns the value of the current budget using the current user's ID, Start Date and Start Budget
-        public double getCurrentBudget(int userId, DateTime startDate, double startBudget, double maxBudget)
+        public double getCurrentBudget(int userId, DateTime startDate, double startBudget, double maxBudget, double changeAnnualBudget)
         {
-            // calculate number of days between today and the start date
+            // 1. calculate number of days between today and the start date
             DateTime today = DateTime.Now; // Today's date
             int numberOfDaysDifferent = (int) (today - startDate).TotalDays; // total days is cast down from their start date
-            Console.WriteLine("Number of Days between " + today + " and " + startDate + " = " + numberOfDaysDifferent);
 
-            // 1. calculate accrued budget = $3000 / number of days in year * the number of days in the year that have passed
+            // 2. calculate accrued budget = $3000 / number of days in year * the number of days in the year that have passed
             double currentBudget = numberOfDaysDifferent * (maxBudget / 365);
-            Console.WriteLine("Current Budget = " + currentBudget);
-            
-            // Get current amount spent by looping through the transactions
+
+            // 3. Get current amount spent by looping through the transactions
             double userTransactions = getTotalTransactionAmount(userId);
-            Console.WriteLine("User has spent = " + userTransactions);
 
-            // Calculate remaining value = the start budget + the current budget - all approved or pending spendings
-            double remainingValue = startBudget + currentBudget - userTransactions;
+            // 4. Calculate remaining value = the start budget + the current budget + budget before annual change - all approved or pending spendings
+            double remainingValue = startBudget + currentBudget + changeAnnualBudget - userTransactions;
 
-            if (remainingValue >= maxBudget) // capped at the maximum budget
+            // 5. capped at the maximum budget
+            if (remainingValue >= maxBudget) 
             {
                 remainingValue = maxBudget;
             }
-
-            Console.WriteLine("User has remaining budget of " + remainingValue);
+            
             return Math.Round(remainingValue, 2); ; // return value rounded to 2dp
         }
 
