@@ -78,9 +78,10 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
 
-            DateTime today = DateTime.Today;
-            int numberOfDaysDifferent = (int)(user.ChangeAnnualBudgetDate - today).TotalDays;
-            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+            //get the user's max budget spend so they can't spend more than they currently have and will
+            //accrue for the year
+            var futureAccruedBudget = getUserMaxBudgetRequest(user);
+            mymodel.MaxBudgetRequest = futureAccruedBudget + budget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
@@ -292,8 +293,10 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(user.ID, user.ChangeAnnualBudgetDate, user.StartBudget, user.AnnualBudget, user.ChangeAnnualBudget);
             mymodel.Budget = budget;
 
-            // max budget
-            mymodel.MaxBudgetRequest = user.AnnualBudget + budget;
+            //get the user's max budget spend so they can't spend more than they currently have and will
+            //accrue for the year
+            var futureAccruedBudget = getUserMaxBudgetRequest(user);
+            mymodel.MaxBudgetRequest = futureAccruedBudget + budget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
@@ -326,6 +329,31 @@ namespace TevenStudiosBudgetTracker.Controllers
             double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.ChangeAnnualBudgetDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget, selectedEmployee.ChangeAnnualBudget);
 
             return Json(new {id=UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests});
+        }
+
+        private double getUserMaxBudgetRequest(User user)
+        {
+            DateTime today = DateTime.Today;
+            Console.WriteLine("today: " + today);
+            String year = today.ToString("yyyy");
+            String date = user.StartDate.ToString("dd/MM");
+            String time = user.StartDate.ToString("HH:mm:ss tt");
+            String budgetChange = date + "/" + year + " " + time;
+            DateTime budgetChangeDate = Convert.ToDateTime(budgetChange);
+            int daysDifference = (int)(budgetChangeDate - today).TotalDays;
+            Console.WriteLine("days different: " + daysDifference);
+            double futureAccruedBudget;
+            if (daysDifference > 0)
+            {
+                futureAccruedBudget = daysDifference * (user.AnnualBudget / 365);
+            }
+            else
+            {
+                var nextYearBudgetDate = budgetChangeDate.AddYears(1);
+                int daysToBudgetYear = (int)(nextYearBudgetDate - today).TotalDays;
+                futureAccruedBudget = daysToBudgetYear * (user.AnnualBudget / 365);
+            }
+            return futureAccruedBudget;
         }
     }
 }

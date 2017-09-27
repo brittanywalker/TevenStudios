@@ -266,6 +266,7 @@ namespace TevenStudiosBudgetTracker.Models
                     ID = Convert.ToInt32(reader["ID"]),
                     Name = reader["Name"].ToString(),
                     Email = reader["Email"].ToString(),
+                    StartDate = Convert.ToDateTime(reader["StartDate"]),
                     ManagerId = manager,
                     RoleId = Convert.ToInt32(reader["RoleId"]),
                     StartBudget = Convert.ToDouble(reader["StartBudget"]),
