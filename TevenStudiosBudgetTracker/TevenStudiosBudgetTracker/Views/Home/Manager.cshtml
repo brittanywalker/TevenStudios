@@ -54,20 +54,116 @@
 		</table>
 	</div>
 
+    <!-- Div to contain information about the selected user (right side of manager page)-->
 	<div class="showinfo">
-		Employee info
+        <!-- div to display employee name-->
+        <div>
+            <h1 id="employee_info_name" style="text-align:center"></h1>
+        </div>
+
+        <!-- div to display employee current balance-->
+        <div>
+            <h1 id="employee_current_balance" style="text-align:center"></h1>
+        </div>
+        <br />
+
+        <!-- div to display employee pending requests table-->
+        <div id="employee_pending_requests">
+        </div>
+        <br />
+
+        <!-- div to display employee past requests table-->
+        <div id="employee_past_requests">
+        </div> 
+		
 	</div>
 
 	<script>
-		function showSelectedUserInfo(UserID) {
+        //This function updates the HTML div for the employee info depending which employee is selected
+        function showSelectedUserInfo(UserID) {
             // userId = -1 if the userId was not sent to the modal correctly
             // otherwise makes call to get user info from database
-            if (userId != -1) {
+            if (UserID != -1) {
                 $.ajax({
                     url: '/Home/GetSelectedInfo',
-                    data: { UserID: UserId },
-                }).done(function () {
-                    window.location = "/Home/Manager";
+                    data: { UserID: UserID },
+                }).done(function (returnData) {
+
+                    // Set the name and current balance div for the employee 
+                    $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
+                    $("#employee_current_balance").text("$" + returnData["currentBudget"] + " available");
+
+
+                    //-------------- Pending request table population --------------------
+
+                    // Set the headings of the table 
+                    var html = '<h2>Pending Requests </h2> \
+                        <table id="pending_request_table" class="table table-hover table-bordered" > \
+                            <thead> \
+                            <tr>\
+                                <th data-field="Date" >\
+                                    Date\
+                                </th>\
+                                <th data-field="Cost">\
+                                    Cost\
+                                </th>\
+                                <th data-field="Description">\
+                                    Description\
+                                </th>\
+                            </tr>\
+                                </thead>\
+                        <tbody>';
+
+                    // add each pending request to the table 
+                    for (item in returnData["pendingRequests"]) {
+                        html += '<tr><td>'
+                            + returnData["pendingRequests"][item].date
+                            + '</td><td class="">'
+                            + returnData["pendingRequests"][item].cost
+                            + '</td><td class="">'
+                            + returnData["pendingRequests"][item].description
+                            + '</td></tr>';
+                    }
+                    html += "</tbody> </table>"
+
+                    // update the html of the div to contain the table 
+                    $('#employee_pending_requests').html(html);
+
+                    //-------------- Past request table population --------------------
+
+                    // Set the headings of the table 
+                    var html = '<h2>Past Requests </h2> \
+                        <table id="past_request_table" class="table table-hover table-bordered" > \
+                            <thead> \
+                            <tr>\
+                                <th data-field="Date" >\
+                                    Date\
+                                </th>\
+                                <th data-field="Cost">\
+                                    Cost\
+                                </th>\
+                                <th data-field="Description">\
+                                    Description\
+                                </th>\
+                            </tr>\
+                                </thead>\
+                        <tbody>';
+
+                    // add each pending request to the table 
+                    for (item in returnData["pastRequests"]) {
+                        html += '<tr><td>'
+                            + returnData["pastRequests"][item].date
+                            + '</td><td class="">'
+                            + returnData["pastRequests"][item].amount
+                            + '</td><td class="">'
+                            + returnData["pastRequests"][item].description
+                            + '</td></tr>';
+                    }
+                    html += "</tbody>"
+
+                    // update the html of the div to contain the table 
+                    $('#employee_past_requests').html(html);
+
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
