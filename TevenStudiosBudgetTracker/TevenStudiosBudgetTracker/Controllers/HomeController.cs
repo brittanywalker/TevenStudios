@@ -81,7 +81,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             //get the user's max budget spend so they can't spend more than they currently have and will
             //accrue for the year
             var futureAccruedBudget = getUserMaxBudgetRequest(user);
-            mymodel.MaxBudgetRequest = futureAccruedBudget + budget;
+            var maxBudget = futureAccruedBudget + budget;
+            if (maxBudget > user.AnnualBudget)
+            {
+                maxBudget = user.AnnualBudget;
+            }
+            mymodel.MaxBudgetRequest = maxBudget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
@@ -296,7 +301,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             //get the user's max budget spend so they can't spend more than they currently have and will
             //accrue for the year
             var futureAccruedBudget = getUserMaxBudgetRequest(user);
-            mymodel.MaxBudgetRequest = futureAccruedBudget + budget;
+            var maxBudget = futureAccruedBudget + budget;
+            if (maxBudget > user.AnnualBudget)
+            {
+                maxBudget = user.AnnualBudget;
+            }
+            mymodel.MaxBudgetRequest = maxBudget;
 
             // pending request
             PendingRequestsContext context = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
