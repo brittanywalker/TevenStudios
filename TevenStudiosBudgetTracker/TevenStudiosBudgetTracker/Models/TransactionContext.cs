@@ -57,6 +57,7 @@ namespace TevenStudiosBudgetTracker.Models
                             Date = reader["Date"].ToString(),
                             Amount = Convert.ToDouble(reader["Amount"]),
                             Description = reader["Description"].ToString(),
+                            StatusId = Convert.ToInt32(reader["StatusId"]),
                         });
                     }
                 }
