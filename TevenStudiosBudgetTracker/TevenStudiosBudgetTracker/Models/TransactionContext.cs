@@ -42,6 +42,7 @@ namespace TevenStudiosBudgetTracker.Models
         {
             List<Transaction> list = new List<Transaction>();
 
+            // Create a dictionary with the existing strings for each status type
             Dictionary<Int32, String> statusText = new Dictionary<Int32, String>();
 
             using (MySqlConnection conn = getConnection())
@@ -51,6 +52,7 @@ namespace TevenStudiosBudgetTracker.Models
 
                 using (var reader = cmd.ExecuteReader())
                 {
+                    // Add all status types from the database to the dictionary based on their ID
                     while (reader.Read())
                     {
                         statusText.Add(Convert.ToInt32(reader["ID"]), reader["Type"].ToString());
@@ -76,6 +78,8 @@ namespace TevenStudiosBudgetTracker.Models
                             Amount = Convert.ToDouble(reader["Amount"]),
                             Description = reader["Description"].ToString(),
                             StatusId = Convert.ToInt32(reader["StatusId"]),
+                            // Add the appropriate string for the transactions status type
+                            // Either "Approved" or "Denied"
                             StatusType = statusText[Convert.ToInt32(reader["StatusId"])],
                         });
                     }
