@@ -5,7 +5,9 @@
 }
 
 <h2 class="text-center">Employees</h2>
-<p></p>
+<p>The table below lists all the system's employees, with their respective emails, roles and budgets.
+    New users can be added, or existing ones can be edited or deleted.</p>
+<hr />
 <table class="table table-hover">
     <thead>
         <tr>
@@ -96,15 +98,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input required type="text" class="form-control full-width" id="name" name="name">
+                            <input required type="text" class="form-control" id="name" name="name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email address:</label>
-                            <input required type="email" class="form-control full-width" id="email" name="email">
+                            <input required type="email" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
                             <label for="manager">Manager:</label>
-                            <select class="form-control full-width" id="manager" name="manager">
+                            <select class="form-control" id="manager" name="manager">
                                 <option value="-1">None</option>
                                 @foreach (var item in Model.Managers)
                                 {
@@ -116,7 +118,7 @@
                         </div>
                         <div class="form-group form-row">
                             <label for="role">Role:</label>
-                            <select class="form-control full-width" id="role" name="role">
+                            <select class="form-control" id="role" name="role">
                                 <option value="0">Employee</option>
                                 <option value="1">Manager</option>
                                 <option value="2">Administrator</option>
@@ -126,14 +128,14 @@
                             <label for="budget">Starting Budget:</label>
                             <div class="input-group full-width">
                                 <span class="input-group-addon">$</span>
-                                <input required type="number" class="form-control full-width" id="budget" name="budget" value="0">
+                                <input required type="number" class="form-control" id="budget" name="budget" value="0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="annualBudget">Annual Budget:</label>
                             <div class="input-group full-width">
                                 <span class="input-group-addon">$</span>
-                                <input required type="number" class="form-control full-width" id="annualBudget" name="annualBudget" value="3000">
+                                <input required type="number" class="form-control" id="annualBudget" name="annualBudget" value="3000" min="0">
                             </div>
                         </div>
                     </div>
@@ -224,15 +226,15 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="editName">Name</label>
                             <input required type="text" class="form-control" id="editName" name="editName"> 
                         </div>
                         <div class="form-group">
-                            <label for="email">Email Address:</label>
+                            <label for="editEmail">Email Address:</label>
                             <input required type="email" class="form-control" id="editEmail" name="editEmail">
                         </div>
                         <div class="form-group">
-                            <label for="manager">Manager:</label>
+                            <label for="editManager">Manager:</label>
                             <select class="form-control" id="editManager" name="editManager">
                                 <option value="-1">None</option>
                                 @foreach (var item in Model.Managers)
@@ -244,7 +246,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="role">Role:</label>
+                            <label for="editRole">Role:</label>
                             <select class="form-control" id="editRole" name="editRole">
                                 <option value="0">Administrator</option>
                                 <option value="1">Employee</option>
@@ -252,12 +254,18 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Start Budget ($):</label>
-                            <input required type="number" class="form-control" id="editBudget" name="editBudget">
+                            <label for="editBudget">Start Budget:</label>
+                            <div class="input-group full-width">
+                                <span class="input-group-addon">$</span>
+                                <input required type="number" class="form-control" id="editBudget" name="editBudget">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="name">Annual Budget ($):</label>
-                            <input required type="number" class="form-control" id="editAnnualBudget" name="editAnnualBudget">
+                            <label for="editAnnualBudget">Annual Budget:</label>
+                            <div class="input-group full-width">
+                                <span class="input-group-addon">$</span>
+                                <input required type="number" class="form-control" id="editAnnualBudget" name="editAnnualBudget">
+                            </div>
                         </div>
                         <div style="visibility:hidden">
                             <input required type="text" class="form-control" id="editID" name="editID">

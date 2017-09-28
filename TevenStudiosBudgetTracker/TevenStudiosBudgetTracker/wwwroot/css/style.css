@@ -3,9 +3,24 @@
 }
 
 #modal-width {
-    width: 500px;
+    width: 350px;
 }
 
 .full-width {
-    width: 500px;
+    width: 280px;
 }
+
+/* Nav bar colours */
+.navbar-inverse {
+    background-color: #040c47 !important;
+    border-color: #eafffd;
+    font-family: Tahoma;
+}
+    .navbar-inverse .navbar-brand {
+        color: #ffffff;
+    }
+
+        .navbar-inverse .navbar-brand:hover,
+        .navbar-inverse .navbar-brand:focus {
+            color: #ffffff;
+        }
