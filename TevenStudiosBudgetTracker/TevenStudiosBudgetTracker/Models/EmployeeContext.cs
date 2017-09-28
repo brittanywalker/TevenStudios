@@ -26,6 +26,10 @@ namespace TevenStudiosBudgetTracker.Models
         public double StartBudget { get; set; }
 
         public double AnnualBudget { get; set; }
+
+        public double ChangeAnnualBudget { get; set; }
+
+        public DateTime ChangeAnnualBudgetDate { get; set; }
     }
 
     public class RoleType
@@ -81,6 +85,8 @@ namespace TevenStudiosBudgetTracker.Models
                             RoleId = Convert.ToInt32(reader["RoleId"]),
                             StartBudget = Convert.ToDouble(reader["StartBudget"]),
                             AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
+                            ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]),
+                            ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]),
                         });
                     }
                 }
@@ -140,34 +146,8 @@ namespace TevenStudiosBudgetTracker.Models
                         user.RoleId = Convert.ToInt32(reader["RoleId"]);
                         user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
                         user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
-                    }
-                }
-            }
-            return user;
-        }
-
-        //Potential duplicate with retrieveUserDetails
-        public User GetUser(int id)
-        {
-            User user = new User();
-
-            using (MySqlConnection conn = getConnection())
-
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from User where ID=" + id, conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.ID = Convert.ToInt32(reader["ID"]);
-                        user.Name = reader["Name"].ToString();
-                        user.Email = reader["Email"].ToString();
-                        user.StartDate = Convert.ToDateTime(reader["StartDate"]);
-                        user.RoleId = Convert.ToInt32(reader["RoleId"]);
-                        user.StartBudget = Convert.ToDouble(reader["StartBudget"]);
-                        user.AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]);
+                        user.ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]);
+                        user.ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"]);
                     }
                 }
             }
@@ -227,13 +207,13 @@ namespace TevenStudiosBudgetTracker.Models
                  string query;		
                  if (user.ManagerId.Equals(-1)) // If no manager		
                  {		
-                     query = "insert into User(Name, Email, StartDate, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
-                     "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";		
+                     query = "insert into User(Name, Email, StartDate, RoleId, StartBudget, AnnualBudget, ChangeAnnualBudget, ChangeAnnualBudgetDate) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "','0.00','" + startDate + "')";		
                  }		
                  else // If has a manager		
                  {		
-                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget) values('" + user.Name + "','" + user.Email + "','" + startDate +		
-                     "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "')";
+                     query = "insert into User(Name, Email, StartDate, ManagerId, RoleId, StartBudget, AnnualBudget, ChangeAnnualBudget, ChangeAnnualBudgetDate) values('" + user.Name + "','" + user.Email + "','" + startDate +		
+                     "','" + user.ManagerId + "','" + user.RoleId + "','" + user.StartBudget + "','" + user.AnnualBudget + "','0.00','" + startDate + "')";
                 }		
  		
                  MySqlCommand cmd = new MySqlCommand(query, conn);		
@@ -286,16 +266,18 @@ namespace TevenStudiosBudgetTracker.Models
                     ID = Convert.ToInt32(reader["ID"]),
                     Name = reader["Name"].ToString(),
                     Email = reader["Email"].ToString(),
-
+                    StartDate = Convert.ToDateTime(reader["StartDate"]),
                     ManagerId = manager,
-
                     RoleId = Convert.ToInt32(reader["RoleId"]),
                     StartBudget = Convert.ToDouble(reader["StartBudget"]),
-                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"])
+                    AnnualBudget = Convert.ToDouble(reader["AnnualBudget"]),
+                    ChangeAnnualBudget = Convert.ToDouble(reader["ChangeAnnualBudget"]),
+                    ChangeAnnualBudgetDate = Convert.ToDateTime(reader["ChangeAnnualBudgetDate"])
                 };
 
                 conn.Close();
             }
+
             return currentUser;
         }
 
@@ -305,18 +287,29 @@ namespace TevenStudiosBudgetTracker.Models
             {
                 string query;
 
+                DateTime today = DateTime.Now; // current time
+                string todayString = today.ToString("yyyy-MM-dd HH:mm:ss");
+                User userDetails = retrieveUserDetails(user.ID); // gets all the user's details (inc. Change Annual Budget & Date)
+                int numberOfDaysDifferent = (int)(today - userDetails.ChangeAnnualBudgetDate).TotalDays; // days between today & last budget change
+                double currentBudget = numberOfDaysDifferent * (userDetails.AnnualBudget / 365); // value of days * accrued budget
+                double changeBudget = userDetails.ChangeAnnualBudget + currentBudget; // add this value to the current saved since last change
+
                 if (user.ManagerId.Equals(-1)) // If no manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget + 
+                    "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
+                    "' WHERE ID = '" + user.ID + "'";
                 }
                 else // If has a manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
                     "', ManagerId = '" + user.ManagerId +
                     "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
-                    "', AnnualBudget = '" + user.AnnualBudget + "' WHERE ID = '" + user.ID + "'";
+                    "', AnnualBudget = '" + user.AnnualBudget +
+                    "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString +
+                    "' WHERE ID = '" + user.ID + "'";
                 }
 
                 Console.WriteLine("query: " + query);
@@ -328,7 +321,6 @@ namespace TevenStudiosBudgetTracker.Models
                 return i;
             }
         }
-
     }
 
         public class AdminViewData
@@ -337,14 +329,16 @@ namespace TevenStudiosBudgetTracker.Models
             public int CurrentUserIndex;
             public List<User> Managers { get; set; }
             public User currentEditUser { get; set; }
-
         }
 
-        public class ManagerViewData
-        {
-            public List<User> Employees { get; set; }
-            public User Manager { get; set; }
-        }
+    public class ManagerViewData
+    {
+        public List<User> Employees { get; set; }
+        public User Manager { get; set; }
+        public User SelectedEmployee { get; set; }
+        public List<PendingRequest> PendingRequests { get; set; }
+        public List<Transaction> PastRequests { get; set; }
+    }
 
     public class PendingRequest
         {
@@ -392,7 +386,7 @@ namespace TevenStudiosBudgetTracker.Models
                 return list;
             }
 
-            public int SubmitPendingRequest(PendingRequest newRequest)
+            public int SubmitPendingRequest(PendingRequest newRequest, int userId)
             {
             using (MySqlConnection conn = getConnection())
             {
@@ -402,7 +396,7 @@ namespace TevenStudiosBudgetTracker.Models
                 //string startDate = "2001-09-11 08:45:00";		
                 string query;
                 
-                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + 1 + "','" + newRequest.Date + "','" + newRequest.Description +
+                query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + userId + "','" + newRequest.Date + "','" + newRequest.Description +
                 "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
                 
 
