@@ -19,6 +19,8 @@ namespace TevenStudiosBudgetTracker.Models
         public Double Amount { get; set; }
 
         public int StatusId { get; set; }
+
+        public string StatusType { get; set; }
     }
 
     public class TransactionContext
@@ -40,6 +42,22 @@ namespace TevenStudiosBudgetTracker.Models
         {
             List<Transaction> list = new List<Transaction>();
 
+            Dictionary<Int32, String> statusText = new Dictionary<Int32, String>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Status_Types", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        statusText.Add(Convert.ToInt32(reader["ID"]), reader["Type"].ToString());
+                    }
+                }
+            }
+
             using (MySqlConnection conn = getConnection())
             {
                 conn.Open();
@@ -58,6 +76,7 @@ namespace TevenStudiosBudgetTracker.Models
                             Amount = Convert.ToDouble(reader["Amount"]),
                             Description = reader["Description"].ToString(),
                             StatusId = Convert.ToInt32(reader["StatusId"]),
+                            StatusType = statusText[Convert.ToInt32(reader["StatusId"])],
                         });
                     }
                 }
