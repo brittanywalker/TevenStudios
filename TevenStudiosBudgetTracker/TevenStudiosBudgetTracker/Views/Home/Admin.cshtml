@@ -5,8 +5,24 @@
 }
 
 <h2 class="text-center">Employees</h2>
-<p>The table below lists all the system's employees, with their respective emails, roles and budgets.
-    New users can be added, or existing ones can be edited or deleted.</p>
+<div class="row">
+    <div class="col-sm-10">
+        <p class="text-center">
+            <br/>
+            The table below lists all the system's employees, with their respective emails, roles and budgets.
+            Employees can be added, edited or deleted.
+            <br />
+        </p>
+    </div>
+    <div class="col-sm-2">
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-lg left-float-button btn-block" data-toggle="modal"
+                data-target="#addNewUser" title="Add new employee">
+            <span class="glyphicon glyphicon-plus"></span><strong> Employee</strong>
+        </button>
+    </div>
+</div>
+
 <hr />
 <table class="table table-hover">
     <thead>
@@ -24,15 +40,15 @@
                 Date
             </th>
             <th>
+                Role
+            </th>
+            <th class="text-center">
                 Manager ID
             </th>
-            <th>
-                Role ID
-            </th>
-            <th>
+            <th  class="text-center">
                 Start Budget
             </th>
-            <th>
+            <th class="text-center">
                 Annual Budget
             </th>
             <th></th>
@@ -55,11 +71,20 @@
             <td>
                 @Html.DisplayTextFor(modelItem => Model.Users[i].StartDate)
             </td>
-            <td class="text-center">
-                @Html.DisplayTextFor(modelItem => Model.Users[i].ManagerId)
+            <td>
+                @if(@Model.Users[i].RoleId == 0)
+                {
+                    <p>Admin</p>
+                } else if(@Model.Users[i].RoleId == 1)
+                {
+                    <p>Employee</p>
+                } else
+                {
+                    <p>Manager</p>
+                }
             </td>
             <td class="text-center">
-                @Html.DisplayFor(modelItem => Model.Users[i].RoleId)
+                @Html.DisplayTextFor(modelItem => Model.Users[i].ManagerId)
             </td>
             <td class="text-center">
                 $@Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
@@ -69,20 +94,19 @@
             </td>
             <td>
                 <button id="editButton" type="button" class="btn btn-info" 
-                        onclick="populateModal(@Model.Users[i].ID)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        onclick="populateModal(@Model.Users[i].ID)" title="Edit employee">
+                <span class="glyphicon glyphicon-pencil"></span></button>
             </td>
             <td>
-                <button id="deleteButton" type="button" class="btn btn-danger"
-                        data-id ="@Model.Users[i].ID" data-toggle="modal" data-target="#deleteUser"><span class="glyphicon glyphicon-trash"></span></button>
+                <button id="deleteButton" type="button" class="btn btn-danger" data-id ="@Model.Users[i].ID" 
+                        data-toggle="modal" data-target="#deleteUser" title="Delete employee">
+                <span class="glyphicon glyphicon-trash"></span></button>
             </td>
         </tr>
     }
 </table>
 
 <div class="container">
-
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#addNewUser">Add New User</button>
 
     <!-- Add User Modal -->
     <div class="modal fade" id="addNewUser" role="dialog">
@@ -119,9 +143,9 @@
                         <div class="form-group form-row">
                             <label for="role">Role:</label>
                             <select class="form-control" id="role" name="role">
-                                <option value="0">Employee</option>
-                                <option value="1">Manager</option>
-                                <option value="2">Administrator</option>
+                                <option value="0">Administrator</option>
+                                <option value="1">Employee</option>
+                                <option value="2">Manager</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -152,11 +176,11 @@
     {
         @if (ViewBag.isSuccess != null && ViewBag.isSuccess)
         {
-            <h4 class="alert alert-success col-sm-9">@ViewBag.Result</h4>
+            <h4 class="alert alert-success">@ViewBag.Result</h4>
         }
         else
         {
-            <h4 class="alert alert-danger col-sm-9">@ViewBag.Result</h4>
+            <h4 class="alert alert-danger">@ViewBag.Result</h4>
         }
     }
 </div>

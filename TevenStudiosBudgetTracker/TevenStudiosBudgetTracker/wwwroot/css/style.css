@@ -1,26 +1,41 @@
-﻿td {
+﻿/* Align text to center in the tables content */
+td {
     vertical-align: middle;
 }
 
+/* Sets the width of all the popups to 350px*/
 #modal-width {
     width: 350px;
 }
 
+/* Sets the width of the input selections in the popup with one's that have spans
+    This way all the inputs in the form are equal size
+*/
 .full-width {
     width: 280px;
 }
 
 /* Nav bar colours */
 .navbar-inverse {
-    background-color: #040c47 !important;
-    border-color: #eafffd;
-    font-family: Tahoma;
+    background-color: #040c47 !important; /* Dark blue color*/
+    border-color: #eafffd; /* Light blue*/
+    font-family: Tahoma; /* Header font*/
 }
-    .navbar-inverse .navbar-brand {
+    .navbar-inverse .navbar-brand { /* Text color */
         color: #ffffff;
     }
 
         .navbar-inverse .navbar-brand:hover,
-        .navbar-inverse .navbar-brand:focus {
+        .navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
             color: #ffffff;
         }
+
+/* Popup header colour */
+.modal-header {
+    background-color: #040c47;
+}
+
+/* Popup title text colour*/
+.modal-title {
+    color: #ffffff; /* White */
+}
