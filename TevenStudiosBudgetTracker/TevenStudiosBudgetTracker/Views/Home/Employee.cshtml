@@ -83,3 +83,39 @@
     }
 
 </div>
+
+<h2> Past Requests</h2>
+<table class="table">
+	<tr>
+		<th>
+			Date
+		</th>
+		<th>
+			Cost
+		</th>
+		<th>
+			Description
+		</th>
+		<th>
+			Status
+		</th>
+	</tr>
+
+	@foreach (var pastRequests in Model.PastRequests)
+	{
+		<tr>
+			<td>
+				@pastRequests.Date
+			</td>
+			<td>
+				@pastRequests.Amount
+			</td>
+			<td>
+				@pastRequests.Description
+			</td>
+			<td>
+				@pastRequests.StatusType
+			</td>
+		</tr>
+	}
+</table>
