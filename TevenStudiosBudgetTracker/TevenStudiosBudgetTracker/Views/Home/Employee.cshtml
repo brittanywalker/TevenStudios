@@ -6,132 +6,116 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-7">
-            <div>
-                <div class="alert alert-info">
-                    <h4 class="text-right"> Current Balance</h4>
-                    <h1 class="text-right large-text"> $@Model.Budget </h1>
-                </div>
+            <div class="alert alert-info">
+                <h4 class="text-right"> Current Balance</h4>
+                <h1 class="text-right large-text"> $@Model.Budget </h1>
             </div>
             <!-- Trigger the modal with a button -->
             <div>
-                <div>
-                    @if (ViewBag.Result != null)
+                @if (ViewBag.Result != null)
+                {
+                    @if (ViewBag.isSuccess != null && ViewBag.isSuccess)
                     {
-                        @if (ViewBag.isSuccess != null && ViewBag.isSuccess)
-                        {
-                            <h4 class="alert alert-success">@ViewBag.Result</h4>
-                        }
-                        else
-                        {
-                            <h4 class="alert alert-danger">@ViewBag.Result</h4>
-                        }
+                        <h4 class="alert alert-success">@ViewBag.Result</h4>
                     }
-                </div>
+                    else
+                    {
+                        <h4 class="alert alert-danger">@ViewBag.Result</h4>
+                    }
+                }
             </div>
             <div>
                 <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> Request</button>
             </div>
             <br />
-            <div>
-                <h2> Pending Requests</h2>
-                <p>Your requests that are waiting to be approved by your manager.</p>
-                <table class="table table-hover table-responsive">
+                    <h2> Pending Requests</h2>
+                    <p>Your requests that are waiting to be approved by your manager.</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
 
-                    <colgroup>
-                        <col span="1" style="width: 18%;">
-                        <col span="1" style="width: 10%;">
-                        <col span="1" style="width: 72%;">
-                    </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="table-pending-date">
+                                        Date
+                                    </th>
+                                    <th class="text-right table-pending-cost">
+                                        Cost
+                                    </th>
+                                    <th class="table-pending-description">
+                                        Description
+                                    </th>
+                                </tr>
+                            </thead>
 
-                    <thead>
-                        <tr>
-                            <th>
-                                Date
-                            </th>
-                            <th class="text-right">
-                                Cost
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var pendingRequest in Model.PendingRequests)
-                        {
-                            <tr>
-                                <td>
-                                    @pendingRequest.Date
-                                </td>
-                                <td class="text-right">
-                                    $@pendingRequest.Cost
-                                </td>
-                                <td>
-                                    @pendingRequest.Description
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                            <tbody class="table-height-pending">
+                                @foreach (var pendingRequest in Model.PendingRequests)
+                                {
+                                    <tr>
+                                        <td class="table-pending-date">
+                                            @pendingRequest.Date
+                                        </td>
+                                        <td class="text-right table-pending-cost">
+                                            $@pendingRequest.Cost
+                                        </td>
+                                        <td class="table-pending-description">
+                                            @pendingRequest.Description
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         <div class="col-lg-5">
-            <div class="">
                 <h2 class="text-center"> Past Requests</h2>
                 <p class="text-center">A list of all previous transactions, along with their status.</p>
-                <table class="table table-hover table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
 
-                    <colgroup>
-                        <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 18%;">
-                        <col span="1" style="width: 10%;">
-                        <col span="1" style="width: 67%;">
-                    </colgroup>
-
-                    <thead>
-                        <tr>
-                            <th>
-                                Status
-                            </th>
-                            <th>
-                                Date
-                            </th>
-                            <th>
-                                Cost
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var pastRequests in Model.PastRequests)
-                        {
+                        <thead>
                             <tr>
-                                <td>
-                                    @if (@pastRequests.StatusType == "Approved")
-                                    {
-                                        <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="alert alert-danger"><span class="glyphicon glyphicon-remove"></span></div>
-                                    }
-                                </td>
-                                <td>
-                                    @pastRequests.Date
-                                </td>
-                                <td>
-                                    $@pastRequests.Amount
-                                </td>
-                                <td>
-                                    @pastRequests.Description
-                                </td>
+                                <th class="table-past-status">
+                                    Status
+                                </th>
+                                <th class="table-past-date">
+                                    Date
+                                </th>
+                                <th class="table-past-cost">
+                                    Cost
+                                </th>
+                                <th class="table-past-description">
+                                    Description
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody class="table-height-past">
+                            @foreach (var pastRequests in Model.PastRequests)
+                            {
+                                <tr>
+                                    <td class="table-past-status">
+                                        @if (@pastRequests.StatusType == "Approved")
+                                        {
+                                            <div title=@pastRequests.StatusType class="alert alert-success"><span class="glyphicon glyphicon-ok"></span></div>
+                                        }
+                                        else
+                                        {
+                                            <div title=@pastRequests.StatusType class="alert alert-danger"><span class="glyphicon glyphicon-remove"></span></div>
+                                        }
+                                    </td>
+                                    <td class="table-past-date">
+                                        @pastRequests.Date
+                                    </td>
+                                    <td class="table-past-cost">
+                                        $@pastRequests.Amount
+                                    </td>
+                                    <td class="table-past-description">
+                                        @pastRequests.Description
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

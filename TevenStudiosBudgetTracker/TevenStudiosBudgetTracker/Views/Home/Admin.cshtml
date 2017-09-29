@@ -24,87 +24,99 @@
 </div>
 
 <hr />
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Role
-            </th>
-            <th class="text-center">
-                Manager ID
-            </th>
-            <th  class="text-center">
-                Start Budget
-            </th>
-            <th class="text-center">
-                Annual Budget
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
+<div class="container">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="table-admin-number">
+                            ID
+                        </th>
+                        <th class="table-admin-name">
+                            Name
+                        </th>
+                        <th class="table-admin-email">
+                            Email
+                        </th>
+                        <th class="table-admin-date">
+                            Date
+                        </th>
+                        <th class="table-admin-role">
+                            Role
+                        </th>
+                        <th class="text-center table-admin-number">
+                            Manager ID
+                        </th>
+                        <th class="text-center table-admin-start-budget">
+                            Start Budget
+                        </th>
+                        <th class="text-center table-admin-annual-budget">
+                            Annual Budget
+                        </th>
+                        <th class="table-admin-button"></th>
+                        <th class="table-admin-button"></th>
+                    </tr>
+                </thead>
 
-    @for (int i=0; i<Model.Users.Count; i++)
-    {
-        <tr>
-            <td>
-                @Html.DisplayTextFor(modelItem => Model.Users[i].ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Users[i].Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Users[i].Email)
-            </td>
-            <td>
-                @Html.DisplayTextFor(modelItem => Model.Users[i].StartDate)
-            </td>
-            <td>
-                @if(@Model.Users[i].RoleId == 0)
-                {
-                    <p>Admin</p>
-                } else if(@Model.Users[i].RoleId == 1)
-                {
-                    <p>Employee</p>
-                } else
-                {
-                    <p>Manager</p>
-                }
-            </td>
-            <td class="text-center">
-                @Html.DisplayTextFor(modelItem => Model.Users[i].ManagerId)
-            </td>
-            <td class="text-center">
-                $@Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
-            </td>
-            <td class="text-center">
-                $@Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
-            </td>
-            <td>
-                <button id="editButton" type="button" class="btn btn-info" 
-                        onclick="populateModal(@Model.Users[i].ID)" title="Edit employee">
-                <span class="glyphicon glyphicon-pencil"></span></button>
-            </td>
-            <td>
-                <button id="deleteButton" type="button" class="btn btn-danger" data-id ="@Model.Users[i].ID" 
-                        data-toggle="modal" data-target="#deleteUser" title="Delete employee">
-                <span class="glyphicon glyphicon-trash"></span></button>
-            </td>
-        </tr>
-    }
-</table>
+                <tbody class="table-height-employees">
+                    @for (int i = 0; i < Model.Users.Count; i++)
+                    {
+                        <tr>
+                            <td class="table-admin-number">
+                                @Html.DisplayTextFor(modelItem => Model.Users[i].ID)
+                            </td>
+                            <td class="table-admin-name">
+                                @Html.DisplayFor(modelItem => Model.Users[i].Name)
+                            </td>
+                            <td class="table-admin-email">
+                                @Html.DisplayFor(modelItem => Model.Users[i].Email)
+                            </td>
+                            <td class="table-admin-date">
+                                @Html.DisplayTextFor(modelItem => Model.Users[i].StartDate)
+                            </td>
+                            <td class="table-admin-role">
+                                @if (@Model.Users[i].RoleId == 0)
+                                {
+                                    <p>Admin</p>
+                                }
+                                else if (@Model.Users[i].RoleId == 1)
+                                {
+                                    <p>Employee</p>
+                                }
+                                else
+                                {
+                                    <p>Manager</p>
+                                }
+                            </td>
+                            <td class="text-center table-admin-number">
+                                @Html.DisplayTextFor(modelItem => Model.Users[i].ManagerId)
+                            </td>
+                            <td class="text-center table-admin-start-budget">
+                                $@Html.DisplayFor(modelItem => Model.Users[i].StartBudget)
+                            </td>
+                            <td class="text-center table-admin-annual-budget">
+                                $@Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
+                            </td>
+                            <td class="table-admin-button">
+                                <button id="editButton" type="button" class="btn btn-info"
+                                        onclick="populateModal(@Model.Users[i].ID)" title="Edit employee">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </td>
+                            <td class="table-admin-button">
+                                <button id="deleteButton" type="button" class="btn btn-danger" data-id="@Model.Users[i].ID"
+                                        data-toggle="modal" data-target="#deleteUser" title="Delete employee">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <div class="container">
 
@@ -251,7 +263,7 @@
 
                         <div class="form-group">
                             <label for="editName">Name</label>
-                            <input required type="text" class="form-control" id="editName" name="editName"> 
+                            <input required type="text" class="form-control" id="editName" name="editName">
                         </div>
                         <div class="form-group">
                             <label for="editEmail">Email Address:</label>
@@ -309,7 +321,7 @@
             $.post('/Home/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
-                        
+
                         userString = JSON.stringify(returnedData);
                         userObject = JSON.parse(userString);
                         console.log("user object: " + userString);
@@ -327,6 +339,6 @@
                         $('#editUser').modal('toggle');
                     }
                 });
-            }
+        }
     </script>
 </div>
