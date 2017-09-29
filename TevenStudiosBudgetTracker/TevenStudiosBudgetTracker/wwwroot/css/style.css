@@ -39,3 +39,8 @@ td {
 .modal-title {
     color: #ffffff; /* White */
 }
+
+/* A larger text value: used to print the user's budget */
+.large-text {
+    font-size: 100px;
+}

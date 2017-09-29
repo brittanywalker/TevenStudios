@@ -285,10 +285,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             if (result > 0)
             {
                 ViewBag.Result = " Request was successfully submitted";
+                ViewBag.isSuccess = true;
             }
             else
             {
                 ViewBag.Result = "Something went wrong";
+                ViewBag.isSuccess = false;
             }
 
             ViewData["Message"] = "Employee page.";
