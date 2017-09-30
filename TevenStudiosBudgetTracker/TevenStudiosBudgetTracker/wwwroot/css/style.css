@@ -3,6 +3,13 @@ td {
     vertical-align: middle;
 }
 
+/* Sets the body to have padding to avoid some of the footer covering
+    content.*/
+
+.row {
+    padding-bottom:20px;
+}
+
 /* Sets the width of all the popups to 350px*/
 #modal-width {
     width: 350px;
