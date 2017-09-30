@@ -159,6 +159,9 @@
                                 <th data-field="Description">\
                                     Description\
                                 </th>\
+                                <th>\
+                                    Status\
+		                        </th>\
                             </tr>\
                                 </thead>\
                         <tbody>';
@@ -171,6 +174,8 @@
                             + returnData["pastRequests"][item].amount
                             + '</td><td class="">'
                             + returnData["pastRequests"][item].description
+                            + '</td><td class="">'
+                            + returnData["pastRequests"][item].statusType
                             + '</td></tr>';
                     }
                     html += "</tbody>"
@@ -183,8 +188,7 @@
                 alert("Sorry, there was an error processing your request. Please try again.");
             }
         }
-	</script>
-    <script>
+
         function ApproveRequest(requestID, id) {
             $.ajax({
                 url: '/Home/ApproveRequest',
@@ -202,7 +206,6 @@
                 showSelectedUserInfo(id);
             });
         }
-    </script>
-
+	</script>
 </div>
 
