@@ -129,9 +129,13 @@
                             + '</td><td class="">'
                             + returnData["pendingRequests"][item].description
                             + '</td>'
-                            + '<td><button id="approveButton" type="button" class="btn btn-info">Approve</button>'
+                            + '<td><button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest('
+                            + returnData["pendingRequests"][item].id + ',' + returnData["id"]
+                            + ')">Approve</button>'
                             + '</td>'
-                            + '<td><button id="declineButton" type="button" class="btn btn-info">Decline</button>'
+                            + '<td><button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest('
+                            + returnData["pendingRequests"][item].id + ',' + returnData["id"]
+                            + ')">Decline</button>'
                             + '</td></tr> ';
                     }
                     html += "</tbody> </table>"
@@ -178,8 +182,27 @@
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
             }
-		}
+        }
 	</script>
+    <script>
+        function ApproveRequest(requestID, id) {
+            $.ajax({
+                url: '/Home/ApproveRequest',
+                data: { ID: requestID },
+            }).done(function () {
+                showSelectedUserInfo(id);
+            });
+        }
+
+        function DeclineRequest(requestID, id) {
+            $.ajax({
+                url: '/Home/DeclineRequest',
+                data: { ID: requestID },
+            }).done(function () {
+                showSelectedUserInfo(id);
+            });
+        }
+    </script>
 
 </div>
 

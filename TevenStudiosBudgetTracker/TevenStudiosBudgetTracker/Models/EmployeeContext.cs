@@ -339,6 +339,7 @@ namespace TevenStudiosBudgetTracker.Models
         public string Date { get; set; }
         public string Cost { get; set; }
         public string Description { get; set; }
+        public string ID { get; set; }
     }
 
     public class PendingRequestsContext
@@ -372,6 +373,7 @@ namespace TevenStudiosBudgetTracker.Models
                             Date = reader["Date"].ToString(),
                             Cost = reader["Amount"].ToString(),
                             Description = reader["Description"].ToString(),
+                            ID = reader["ID"].ToString(),
                         });
                     }
                 }
@@ -397,11 +399,11 @@ namespace TevenStudiosBudgetTracker.Models
             }
         }
 
-        public int ApprovePendingRequest(PendingRequest Request)
+        public int ApprovePendingRequest(string ID)
         {
             using (MySqlConnection conn = getConnection())
             {
-                string query = "Update Transactions Set StatusId = '1' Where Data = '" + Request.Date + "' and Cost = '" + Request.Cost + "' and Description = '" + Request.Description + "'";
+                string query = "Update Transactions Set StatusId = '1' Where ID = '" + ID + "'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -410,11 +412,11 @@ namespace TevenStudiosBudgetTracker.Models
             }
         }
 
-        public int DeclinePendingRequest(PendingRequest Request)
+        public int DeclinePendingRequest(string ID)
         {
             using (MySqlConnection conn = getConnection())
             {
-                string query = "Update Transactions Set StatusId = '2' Where Data = '" + Request.Date + "' and Cost = '" + Request.Cost + "' and Description = '" + Request.Description + "'";
+                string query = "Update Transactions Set StatusId = '2' Where ID = '" + ID + "'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
