@@ -396,5 +396,18 @@ namespace TevenStudiosBudgetTracker.Models
                 return i;
             }
         }
+
+        public int ApprovePendingRequest(PendingRequest Request)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query = "Update Transactions Set StatusId = '1' Where Data = '" + Request.Date + "' and Cost = '" + Request.Cost + "' and Description = '" + Request.Description + "'";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
     }
 }
