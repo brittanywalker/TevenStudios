@@ -89,14 +89,14 @@
                     data: { UserID: UserID },
                 }).done(function (returnData) {
 
-                    // Set the name and current balance div for the employee 
+                    // Set the name and current balance div for the employee
                     $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
                     $("#employee_current_balance").text("$" + returnData["currentBudget"] + " available");
 
 
                     //-------------- Pending request table population --------------------
 
-                    // Set the headings of the table 
+                    // Set the headings of the table
                     var html = '<h2>Pending Requests </h2> \
                         <table id="pending_request_table" class="table table-hover table-bordered" > \
                             <thead> \
@@ -110,11 +110,17 @@
                                 <th data-field="Description">\
                                     Description\
                                 </th>\
+                                <th data-field="Approve" >\
+                                    Approve\
+                                </th>\
+                                <th data-field="Decline" >\
+                                    Decline\
+                                </th>\
                             </tr>\
                                 </thead>\
                         <tbody>';
 
-                    // add each pending request to the table 
+                    // add each pending request to the table
                     for (item in returnData["pendingRequests"]) {
                         html += '<tr><td>'
                             + returnData["pendingRequests"][item].date
@@ -122,16 +128,20 @@
                             + returnData["pendingRequests"][item].cost
                             + '</td><td class="">'
                             + returnData["pendingRequests"][item].description
-                            + '</td></tr>';
+                            + '</td>'
+                            + '<td><button id="approveButton" type="button" class="btn btn-info">Approve</button>'
+                            + '</td>'
+                            + '<td><button id="declineButton" type="button" class="btn btn-info">Decline</button>'
+                            + '</td></tr> ';
                     }
                     html += "</tbody> </table>"
 
-                    // update the html of the div to contain the table 
+                    // update the html of the div to contain the table
                     $('#employee_pending_requests').html(html);
 
                     //-------------- Past request table population --------------------
 
-                    // Set the headings of the table 
+                    // Set the headings of the table
                     var html = '<h2>Past Requests </h2> \
                         <table id="past_request_table" class="table table-hover table-bordered" > \
                             <thead> \
@@ -149,7 +159,7 @@
                                 </thead>\
                         <tbody>';
 
-                    // add each pending request to the table 
+                    // add each pending request to the table
                     for (item in returnData["pastRequests"]) {
                         html += '<tr><td>'
                             + returnData["pastRequests"][item].date
@@ -161,7 +171,7 @@
                     }
                     html += "</tbody>"
 
-                    // update the html of the div to contain the table 
+                    // update the html of the div to contain the table
                     $('#employee_past_requests').html(html);
 
                 });
