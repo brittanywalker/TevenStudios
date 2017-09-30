@@ -57,6 +57,20 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult Employee()
         {
             ViewData["Message"] = "Employee page.";
+			
+			//Check if User is logged in, if not, make the url forbidden. This is useful if they attempt to type in the URL.
+            if (HttpContext.Session.GetInt32(SessionKeyRoleId) == null)
+            {
+                return StatusCode(403);
+            }
+
+            //Check if they are a Manager or an Employee, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+
+            if ((Roleid != 1) && (Roleid != 2))
+            {
+                return StatusCode(403);
+            }
 
             dynamic mymodel = new ExpandoObject();
 
@@ -102,6 +116,20 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult Admin()
         {
             ViewData["Message"] = "Admin page.";
+			
+			//Check if User is logged in, if not, make the url forbidden. This is useful if they attempt to type in the URL.
+            if (HttpContext.Session.GetInt32(SessionKeyRoleId) == null)
+            {
+                return StatusCode(403);
+            }
+
+            //Check if they are an admin, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+
+            if (Roleid != 0)
+            {
+                return StatusCode(403);
+            }
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
@@ -119,6 +147,20 @@ namespace TevenStudiosBudgetTracker.Controllers
         public IActionResult Manager()
         {
             ViewData["Message"] = "Management page.";
+			
+			//Check if User is logged in, if not, make the url forbidden. This is useful if they attempt to type in the URL.
+            if (HttpContext.Session.GetInt32(SessionKeyRoleId) == null)
+            {
+                return StatusCode(403);
+            }
+
+            //Check if they are a Manager, if not, send them to the forbidden page.
+            int Roleid = (int)HttpContext.Session.GetInt32(SessionKeyRoleId);
+
+            if (Roleid != 2)
+            {
+                return StatusCode(403);
+            }
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();

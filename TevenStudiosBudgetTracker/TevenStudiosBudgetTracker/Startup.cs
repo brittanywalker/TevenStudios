@@ -64,7 +64,7 @@ namespace TevenStudiosBudgetTracker
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
             app.UseStaticFiles();
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
