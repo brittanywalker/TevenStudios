@@ -60,18 +60,18 @@ td {
 .table-height-pending {
     overflow-y: scroll;
     overflow-x: auto;
-    height: 360px;
+    /*height: 360px;*/
     width: 95%;
-    position: absolute;
+    /*position: absolute;*/
 }
 
 /* ... the past requests table */
 .table-height-past {
     overflow-y: scroll;
     overflow-x: auto;
-    height: 600px;
+    /*height: 600px;*/
     width: 100%;
-    position: absolute;
+    /*position: absolute;*/
 }
 
 /* ... the admin table */
@@ -159,10 +159,10 @@ table-responsive {
 /* Sets footer values */
 footer {
     width: 100%;
-    height: 80px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    right: 20px;
+    padding:20px;
+    background-color:white;
 }
 
 .alert-info {
