@@ -69,6 +69,53 @@
 
         <!-- div to display employee pending requests table-->
         <div id="employee_pending_requests">
+			<h2>All Pending Requests</h2>
+			<table>
+				<tr>
+					<th>
+						Date
+					</th>
+					<th>
+						ID
+					</th>
+					<th>
+						Name
+					</th>
+					<th>
+						Email
+					</th>
+					<th>
+						Cost
+					</th>
+					<th>
+						Description
+					</th>
+					<th>
+						Approve
+					</th>
+					<th>
+						Decline
+					</th>
+				</tr>
+
+				@for (int i = 0; i < Model.Employees.Count; i++)
+				{
+					<tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+						<td>
+							@Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.Employees[i].Name)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.Employees[i].Email)
+						</td>
+						<td>
+							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest(@Model.Employees[i].ID)">Approve</button>'
+						</td>
+					</tr>
+				}
+			</table>
         </div>
         <br />
 
@@ -196,7 +243,14 @@
             }).done(function () {
                 showSelectedUserInfo(id);
             });
-        }
+		}
+
+		function ApproveRequestAllRequests(requestID) {
+			$.ajax({
+				url: '/Home/ApproveRequest',
+				data: { ID: requestID },
+			});
+		}
 
         function DeclineRequest(requestID, id) {
             $.ajax({
@@ -205,7 +259,14 @@
             }).done(function () {
                 showSelectedUserInfo(id);
             });
-        }
+		}
+
+		function DeclineRequest(requestID) {
+			$.ajax({
+				url: '/Home/DeclineRequest',
+				data: { ID: requestID },
+			});
+		}
 	</script>
 </div>
 
