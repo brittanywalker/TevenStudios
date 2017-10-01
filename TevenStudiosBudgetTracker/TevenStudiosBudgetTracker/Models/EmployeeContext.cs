@@ -394,7 +394,7 @@ namespace TevenStudiosBudgetTracker.Models
             using (MySqlConnection conn = getConnection())
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Users where ManagerId = " + UserID, conn);
+                MySqlCommand cmd = new MySqlCommand("select * from User where ManagerId = " + UserID, conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {

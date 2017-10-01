@@ -70,7 +70,7 @@
         <!-- div to display employee pending requests table-->
         <div id="employee_pending_requests">
 			<h2>All Pending Requests</h2>
-			<table>
+			<table class="table">
 				<tr>
 					<th>
 						Date
@@ -100,7 +100,7 @@
 
 				@for (int i = 0; i < Model.PendingRequests.Count; i++)
 				{
-					<tr>
+					<tr class="@Model.PendingRequests[i].ID">
 						<td>
 							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
 						</td>
@@ -120,10 +120,10 @@
 							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
 						</td>
 						<td>
-							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest(@Model.Employees[i].ID)">Approve</button>'
+							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
 						</td>
 						<td>
-							<button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest(@Model.Employees[i].ID)">Decline</button>'
+							<button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
 						</td>
 					</tr>
 				}
@@ -261,6 +261,8 @@
 			$.ajax({
 				url: '/Home/ApproveRequest',
 				data: { ID: requestID },
+			}).done(function () {
+				window.location = "/Home/Manager";
 			});
 		}
 
@@ -273,10 +275,12 @@
             });
 		}
 
-		function DeclineRequest(requestID) {
+		function DeclineRequestAllRequests(requestID) {
 			$.ajax({
 				url: '/Home/DeclineRequest',
 				data: { ID: requestID },
+			}).done(function () {
+				window.location = "/Home/Manager";
 			});
 		}
 	</script>
