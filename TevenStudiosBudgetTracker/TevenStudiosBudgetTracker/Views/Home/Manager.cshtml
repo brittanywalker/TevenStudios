@@ -69,6 +69,65 @@
 
         <!-- div to display employee pending requests table-->
         <div id="employee_pending_requests">
+			<h2>All Pending Requests</h2>
+			<table class="table">
+				<tr>
+					<th>
+						Date
+					</th>
+					<th>
+						ID
+					</th>
+					<th>
+						Name
+					</th>
+					<th>
+						Email
+					</th>
+					<th>
+						Cost
+					</th>
+					<th>
+						Description
+					</th>
+					<th>
+						Approve
+					</th>
+					<th>
+						Decline
+					</th>
+				</tr>
+
+				@for (int i = 0; i < Model.PendingRequests.Count; i++)
+				{
+					<tr class="@Model.PendingRequests[i].ID">
+						<td>
+							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
+						</td>
+						<td>
+							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
+						</td>
+						<td>
+							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
+						</td>
+						<td>
+							<button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
+						</td>
+					</tr>
+				}
+			</table>
         </div>
         <br />
 
@@ -196,7 +255,16 @@
             }).done(function () {
                 showSelectedUserInfo(id);
             });
-        }
+		}
+
+		function ApproveRequestAllRequests(requestID) {
+			$.ajax({
+				url: '/Home/ApproveRequest',
+				data: { ID: requestID },
+			}).done(function () {
+				window.location = "/Home/Manager";
+			});
+		}
 
         function DeclineRequest(requestID, id) {
             $.ajax({
@@ -205,7 +273,16 @@
             }).done(function () {
                 showSelectedUserInfo(id);
             });
-        }
+		}
+
+		function DeclineRequestAllRequests(requestID) {
+			$.ajax({
+				url: '/Home/DeclineRequest',
+				data: { ID: requestID },
+			}).done(function () {
+				window.location = "/Home/Manager";
+			});
+		}
 	</script>
 </div>
 

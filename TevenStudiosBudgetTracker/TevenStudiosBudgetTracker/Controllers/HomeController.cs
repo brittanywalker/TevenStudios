@@ -168,6 +168,9 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.CurrentUser = user;
 
+            PendingRequestsContext pcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            data.PendingRequests = pcontext.GetAllPendingRequestsManager(user.ID);
+
             return View(data);
         }
 
