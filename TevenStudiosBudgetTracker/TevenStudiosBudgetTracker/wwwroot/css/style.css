@@ -170,6 +170,8 @@ footer {
     bottom: 0;
     padding: 20px;
     background-color: white;
+    text-align: right;
+    right: 0;
 }
 
 .alert-info {
