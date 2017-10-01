@@ -49,12 +49,7 @@ td {
 
 /* A larger text value: used to print the user's budget */
 .large-text {
-    font-size: 100px;
-}
-
-/* Sets the width to 95 %*/
-.set-95-width {
-    width: 95%
+    font-size: 6vw;
 }
 
 /* Sets the table's overflow value*/
@@ -67,18 +62,18 @@ td {
 .table-height-pending {
     overflow-y: scroll;
     overflow-x: auto;
-    /*height: 360px;*/
+    height: 360px;
     width: 95%;
-    /*position: absolute;*/
+    position: absolute;
 }
 
 /* ... the past requests table */
 .table-height-past {
     overflow-y: scroll;
     overflow-x: auto;
-    /*height: 600px;*/
-    width: 100%;
-    /*position: absolute;*/
+    height: 600px;
+    width: 95%;
+    position: absolute;
 }
 
 /* ... the admin table */
@@ -163,17 +158,32 @@ table-responsive {
     overflow-x: auto;
 }
 
+/* Sets tables to be responsive*/
+budget-responsive {
+    overflow-x: scroll;
+    min-width: 10px;
+}
+
 /* Sets footer values */
 footer {
     width: 100%;
     position: fixed;
     bottom: 0;
-    padding:20px;
-    background-color:white;
+    padding: 20px;
+    background-color: white;
 }
 
 .alert-info {
     color: #333;
     background-color: #ffffff;
     border-color: #BCE8F1;
+}
+
+/* Sets the table's div min-height so the tables don't overlap */
+.non-overlap-divs {
+    min-height: 800px;
+}
+
+.top-padding {
+    padding-top: 50px;
 }
