@@ -98,20 +98,32 @@
 					</th>
 				</tr>
 
-				@for (int i = 0; i < Model.Employees.Count; i++)
+				@for (int i = 0; i < Model.PendingRequests.Count; i++)
 				{
-					<tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+					<tr>
 						<td>
-							@Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => Model.Employees[i].Name)
+							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => Model.Employees[i].Email)
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
 						</td>
 						<td>
 							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest(@Model.Employees[i].ID)">Approve</button>'
+						</td>
+						<td>
+							<button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest(@Model.Employees[i].ID)">Decline</button>'
 						</td>
 					</tr>
 				}
