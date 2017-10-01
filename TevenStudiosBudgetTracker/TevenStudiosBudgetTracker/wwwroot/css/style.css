@@ -1,0 +1,196 @@
+﻿/* Align text to center in the tables content */
+td {
+    vertical-align: middle;
+}
+
+/* Sets the body to have padding to avoid some of the footer covering
+    content.*/
+
+.row {
+    padding-bottom:20px;
+}
+
+/* Sets the width of all the popups to 350px*/
+#modal-width {
+    width: 350px;
+}
+
+/* Sets the width of the input selections in the popup with one's that have spans
+    This way all the inputs in the form are equal size
+*/
+.full-width {
+    width: 280px;
+}
+
+/* Nav bar colours */
+.navbar-inverse {
+    background-color: #040c47 !important; /* Dark blue color*/
+    border-color: #eafffd; /* Light blue*/
+    font-family: Tahoma; /* Header font*/
+}
+    .navbar-inverse .navbar-brand { /* Text color */
+        color: #ffffff;
+    }
+
+        .navbar-inverse .navbar-brand:hover,
+        .navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
+            color: #ffffff;
+        }
+
+/* Popup header colour */
+.modal-header {
+    background-color: #040c47;
+}
+
+/* Popup title text colour*/
+.modal-title {
+    color: #ffffff; /* White */
+}
+
+/* A larger text value: used to print the user's budget */
+.large-text {
+    font-size: 6vw;
+}
+
+/* Sets the table's overflow value*/
+.table-resize {
+    overflow: hidden;
+}
+
+/* Sets the heights & scrollable values for ... */
+/* ... the pending requests table */
+.table-height-pending {
+    overflow-y: scroll;
+    overflow-x: auto;
+    height: 280px;
+    width: 95%;
+    position: absolute;
+}
+
+/* ... the past requests table */
+.table-height-past {
+    overflow-y: scroll;
+    overflow-x: auto;
+    height: 600px;
+    width: 95%;
+    position: absolute;
+}
+
+/* ... the admin table */
+.table-height-employees {
+    overflow-y: scroll;
+    overflow-x: auto;
+    height: 400px;
+    width: 100%;
+    position: absolute;
+}
+
+/* Sets the width for each column in the ... */
+/* ... pending requests table*/
+.table-pending-date {
+    width: 18%;
+}
+
+.table-pending-cost {
+    width: 10%;
+}
+
+.table-pending-description {
+    width: 72%;
+}
+
+/* ... past requests table*/
+.table-past-height {
+    width: 18%;
+}
+
+.table-past-status {
+    width: 5%;
+}
+
+.table-past-date {
+    width: 18%;
+}
+
+.table-past-cost {
+    width: 10%;
+}
+
+.table-past-description {
+    width: 67%;
+}
+
+/* ... admin's employees table*/
+.table-admin-number {
+    width: 6%;
+}
+
+.table-admin-name {
+    width: 19%;
+}
+
+.table-admin-email {
+    width: 20%;
+}
+
+.table-admin-role {
+    width: 10%;
+}
+
+.table-admin-date {
+    width: 15%;
+}
+
+.table-admin-annual-budget {
+    width: 7%;
+}
+
+.table-admin-start-budget {
+    width: 7%;
+}
+
+.table-admin-button {
+    width: 6%
+}
+
+/* Sets tables to be responsive*/
+table-responsive {
+    overflow-x: auto;
+}
+
+/* Sets tables to be responsive*/
+budget-responsive {
+    overflow-x: scroll;
+}
+
+/* Sets footer values */
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding: 20px;
+    background-color: white;
+    text-align: right;
+    right: 0;
+}
+
+.alert-info {
+    color: #333;
+    background-color: #ffffff;
+    border-color: #BCE8F1;
+}
+
+/* Sets the table's div min-height so the tables don't overlap */
+.non-overlap-divs {
+    min-height: 800px;
+}
+
+/* Sets the top padding for each view so they aren't covered in a small screen */
+.top-view-padding {
+    padding-top: 50px;
+}
+
+/* Adds padding to the top of pending requests table*/
+.padding-pending-requests {
+    padding-top: 60px;
+}

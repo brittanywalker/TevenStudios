@@ -291,7 +291,8 @@ namespace TevenStudiosBudgetTracker.Models
                 if (user.ManagerId.Equals(-1)) // If no manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
-                        "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                        "', ManagerId = NULL" +
+                        ", RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                         "', AnnualBudget = '" + user.AnnualBudget + 
                         "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
                         "' WHERE ID = '" + user.ID + "'";
