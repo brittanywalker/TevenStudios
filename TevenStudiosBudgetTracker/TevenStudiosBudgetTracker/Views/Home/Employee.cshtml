@@ -3,14 +3,18 @@
 @{
     ViewData["Title"] = "Employee Page";
 }
-<div class="container">
+<div class="container top-view-padding">
     <div class="row">
-        <div class="col-lg-7 non-overlap-divs top-padding">
+        <!-- The left-hand panel-->
+        <div class="col-lg-7 non-overlap-divs">
+
+            <!-- The user's current budget -->
             <div class="alert alert-info budget-responsive">
                 <h4 class="text-right"> Current Balance</h4>
                 <h1 class="text-right large-text budget-responsive"> $@Model.Budget </h1>
             </div>
-            <!-- Trigger the modal with a button -->
+            
+            <!-- The modal's response from a request -->
             <div>
                 @if (ViewBag.Result != null)
                 {
@@ -24,15 +28,18 @@
                     }
                 }
             </div>
+
+            <!-- The submit a request button-->
             <div>
                 <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> Request</button>
             </div>
-            <br />
-            <h2> Pending Requests</h2>
+
+            <!-- Pending requests -->
+            <h2 class="padding-pending-requests"> Pending Requests</h2>
             <p>Your requests that are waiting to be approved by your manager.</p>
             <div>
                 <table class="table table-hover table-responsive">
-
+                    <!-- Header -->
                     <thead>
                         <tr>
                             <th class="table-pending-date">
@@ -46,7 +53,7 @@
                             </th>
                         </tr>
                     </thead>
-
+                    <!-- Content -->
                     <tbody class="table-height-pending">
                         @foreach (var pendingRequest in Model.PendingRequests)
                         {
@@ -66,12 +73,16 @@
                 </table>
             </div>
         </div>
-        <div class="col-lg-5 top-padding">
+
+        <!-- The right-hand side panel -->
+        <div class="col-lg-5 non-overlap-divs">
+
+            <!-- Past Requests-->
             <h2> Past Requests</h2>
             <p>A list of all previous transactions, along with their status.</p>
             <div>
                 <table class="table table-hover table-responsive">
-
+                    <!-- Header -->
                     <thead>
                         <tr>
                             <th class="table-past-status">
@@ -88,11 +99,13 @@
                             </th>
                         </tr>
                     </thead>
-
+                    <!-- Content -->
                     <tbody class="table-height-past">
                         @foreach (var pastRequests in Model.PastRequests)
                         {
                             <tr>
+                                <!-- Status of the request made by the employee -->
+                                <!-- Prints a green tick if success, red cross if denied -->
                                 <td class="table-past-status">
                                     @if (@pastRequests.StatusType == "Approved")
                                     {
@@ -121,6 +134,7 @@
     </div>
 </div>
 
+<!-- The submit a request modal -->
 <div class="container">
     <!-- Modal -->
     <div class="modal fade" id="submitRequest" role="dialog">
@@ -155,7 +169,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

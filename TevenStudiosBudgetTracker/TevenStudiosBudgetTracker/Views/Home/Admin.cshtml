@@ -4,8 +4,10 @@
     ViewData["Title"] = "Admin Page";
 }
 
-<h2 class="text-center">Employees</h2>
+<h2 class="text-center top-view-padding">Employees</h2>
 <div class="row">
+
+    <!-- The Employee table description on the left-hand side -->
     <div class="col-sm-10">
         <p class="text-center">
             <br/>
@@ -14,6 +16,8 @@
             <br />
         </p>
     </div>
+    
+    <!-- The Add New Employee Button -->
     <div class="col-sm-2">
         <!-- Trigger the modal with a button -->
         <button type="button" class="btn btn-info btn-lg left-float-button btn-block" data-toggle="modal"
@@ -23,6 +27,7 @@
     </div>
 </div>
 
+<!-- Prints the result from adding a new employee -->
 <div>
     @if (ViewBag.Result != null)
     {
@@ -37,13 +42,13 @@
     }
 </div>
 
-
-
+<!-- The Employee Table -->
 <hr />
 <div class="container">
     <div class="col-lg-12">
         <div class="table-responsive">
             <table class="table table-hover">
+                <!-- Header -->
                 <thead>
                     <tr>
                         <th class="table-admin-number">
@@ -75,6 +80,7 @@
                     </tr>
                 </thead>
 
+                <!-- Body -->
                 <tbody class="table-height-employees">
                     @for (int i = 0; i < Model.Users.Count; i++)
                     {
@@ -91,6 +97,7 @@
                             <td class="table-admin-date">
                                 @Html.DisplayTextFor(modelItem => Model.Users[i].StartDate)
                             </td>
+                            <!-- Prints the role as text instead of the ID -->
                             <td class="table-admin-role">
                                 @if (@Model.Users[i].RoleId == 0)
                                 {
@@ -114,12 +121,14 @@
                             <td class="text-center table-admin-annual-budget">
                                 $@Html.DisplayFor(modelItem => Model.Users[i].AnnualBudget)
                             </td>
+                            <!-- Edit Employee Button -->
                             <td class="table-admin-button">
                                 <button id="editButton" type="button" class="btn btn-info"
                                         onclick="populateModal(@Model.Users[i].ID)" title="Edit employee">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                             </td>
+                            <!-- Delete Employee Button-->
                             <td class="table-admin-button">
                                 <button id="deleteButton" type="button" class="btn btn-danger" data-id="@Model.Users[i].ID"
                                         data-toggle="modal" data-target="#deleteUser" title="Delete employee">
@@ -134,9 +143,9 @@
     </div>
 </div>
 
+<!-- Add New User modal-->
 <div class="container">
 
-    <!-- Add User Modal -->
     <div class="modal fade" id="addNewUser" role="dialog">
         <div id="modal-width" class="modal-dialog">
 
@@ -197,7 +206,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -214,6 +222,7 @@
 <!-- Delete User Modal -->
 <div class="modal fade" id="deleteUser" role="alert">
     <div class="modal-dialog">
+        
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -252,8 +261,9 @@
     </script>
 </div>
 
+<!-- Edit User Modal -->
 <div class="container">
-    <!-- Edit User Modal -->
+    
     <div class="modal fade" id="editUser" role="dialog">
         <div id="modal-width" class="modal-dialog">
 
