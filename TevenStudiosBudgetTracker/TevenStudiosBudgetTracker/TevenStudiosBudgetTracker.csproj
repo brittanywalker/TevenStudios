@@ -34,6 +34,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\StatusCode\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
