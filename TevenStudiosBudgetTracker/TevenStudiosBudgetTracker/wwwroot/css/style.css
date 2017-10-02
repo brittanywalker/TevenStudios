@@ -194,3 +194,8 @@ footer {
 .padding-pending-requests {
     padding-top: 60px;
 }
+
+/* Padding to center error message */
+.error-page {
+    padding: 50px;
+}

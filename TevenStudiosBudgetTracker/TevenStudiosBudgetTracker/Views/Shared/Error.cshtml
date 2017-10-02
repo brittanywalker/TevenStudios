@@ -2,13 +2,23 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<!-- Code modified from: https://github.com/alexphelps/server-error-pages -->
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+<!-- Error Message Displayed -->
+<div class="container error-page">
+    <div class="alert alert-danger error-page">
+        <h1 class="large-text">Error</h1>
+        <p class="lead"><span class="glyphicon glyphicon-info-sign"></span> Sorry! An error occurred while processing your request.</p>
+        <p>
+            <a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">Take Me To The Homepage</a>
+        </p>
+    </div>
+</div>
+
+<!-- Script to send the user back to the home page -->
+<script type="text/javascript">
+                function checkSite() {
+                    var currentSite = window.location.href;
+                    window.location = "http://localhost:50456/Home/";
+                }
+</script>
