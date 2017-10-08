@@ -168,6 +168,9 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Employees = context.GetEmployeesForManager(user.ID);
             data.CurrentUser = user;
 
+            PendingRequestsContext pcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            data.PendingRequests = pcontext.GetAllPendingRequestsManager(user.ID);
+
             return View(data);
         }
 
@@ -198,11 +201,14 @@ namespace TevenStudiosBudgetTracker.Controllers
             if (result > 0)
             {
                 ViewBag.Result = umodel.Name + " was successfully added";
+                ViewBag.isSuccess = true;
             }
             else
             {
-                ViewBag.Result = "Something went wrong";
+                ViewBag.Result = "Something went wrong, please try again.";
+                ViewBag.isSuccess = false;
             }
+
             // Not sure if this is correct, but need to reload data some how
             // Maybe have this as a method as might be used multiple times
             AdminViewData data = new AdminViewData();
@@ -219,10 +225,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             if (result > 0)
             {
                 ViewBag.Result = "Successfully deleted";
+                ViewBag.isSuccess = true;
             }
             else
             {
-                ViewBag.Result = "Something went wrong";
+                ViewBag.Result = "Something went wrong, please try again.";
+                ViewBag.isSuccess = false;
             }
 
             AdminViewData data = new AdminViewData();
@@ -258,10 +266,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             if (result > 0)
             {
                 ViewBag.Result = umodel.Name + " was successfully edited";
+                ViewBag.isSuccess = true;
             }
             else
             {
-                ViewBag.Result = "Something went wrong";
+                ViewBag.Result = "Something went wrong, please try again.";
+                ViewBag.isSuccess = false;
             }
 
             AdminViewData data = new AdminViewData();
@@ -320,10 +330,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             if (result > 0)
             {
                 ViewBag.Result = " Request was successfully submitted";
+                ViewBag.isSuccess = true;
             }
             else
             {
                 ViewBag.Result = "Something went wrong";
+                ViewBag.isSuccess = false;
             }
 
             ViewData["Message"] = "Employee page.";
@@ -408,6 +420,28 @@ namespace TevenStudiosBudgetTracker.Controllers
                 futureAccruedBudget = daysToBudgetYear * (user.AnnualBudget / 365);
             }
             return futureAccruedBudget;
+        }
+
+        public IActionResult ApproveRequest(string ID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            // gets employee's pending requests
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            var ApprovedRequest = Pendingcontext.ApprovePendingRequest(ID);
+
+            return Json(new { id = ID});
+        }
+
+        public IActionResult DeclineRequest(string ID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            // gets employee's pending requests
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            var ApprovedRequest = Pendingcontext.DeclinePendingRequest(ID);
+
+            return Json(new { id = ID }); ;
         }
     }
 }

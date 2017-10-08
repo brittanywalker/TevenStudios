@@ -291,7 +291,8 @@ namespace TevenStudiosBudgetTracker.Models
                 if (user.ManagerId.Equals(-1)) // If no manager
                 {
                     query = "UPDATE User SET Name = '" + user.Name + "', Email = '" + user.Email +
-                        "', RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
+                        "', ManagerId = NULL" +
+                        ", RoleId = '" + user.RoleId + "', StartBudget = '" + user.StartBudget +
                         "', AnnualBudget = '" + user.AnnualBudget + 
                         "', ChangeAnnualBudget = '" + changeBudget + "', ChangeAnnualBudgetDate = '" + todayString + 
                         "' WHERE ID = '" + user.ID + "'";
@@ -339,6 +340,11 @@ namespace TevenStudiosBudgetTracker.Models
         public string Date { get; set; }
         public string Cost { get; set; }
         public string Description { get; set; }
+        public string ID { get; set; }
+
+        public int UserID { get; set; }
+        public string UserName { get; set; }
+        public string UserEmail { get; set; }
     }
 
     public class PendingRequestsContext
@@ -372,7 +378,63 @@ namespace TevenStudiosBudgetTracker.Models
                             Date = reader["Date"].ToString(),
                             Cost = reader["Amount"].ToString(),
                             Description = reader["Description"].ToString(),
+                            ID = reader["ID"].ToString(),
                         });
+                    }
+                }
+            }
+            return list;
+        }
+
+        // Get all pending requests for the associated manager to approve (not the employee)
+        public List<PendingRequest> GetAllPendingRequestsManager(int UserID)
+        {
+            // Get all of the manager's employees
+            List<User> employees = new List<User>();
+
+            using (MySqlConnection conn = getConnection())
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from User where ManagerId = " + UserID, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        employees.Add(new User()
+                        {
+                            Name = reader["Name"].ToString(),
+                            ID = Convert.ToInt32(reader["ID"].ToString()),
+                            Email = reader["Email"].ToString(),
+                        });
+                    }
+                }
+            }
+
+            List<PendingRequest> list = new List<PendingRequest>();
+            // Cycle through all of the employees
+            foreach (User u in employees)
+            {
+                using (MySqlConnection conn = getConnection())
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("select * from Transactions where UserId = " + u.ID + " and StatusId = 0", conn);
+                    // Find all of their pending requests and add them to the list
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new PendingRequest()
+                            {
+                                Date = reader["Date"].ToString(),
+                                Cost = reader["Amount"].ToString(),
+                                Description = reader["Description"].ToString(),
+                                ID = reader["ID"].ToString(),
+                                UserID = u.ID,
+                                UserName = u.Name,
+                                UserEmail = u.Email,
+                            });
+                        }
                     }
                 }
             }
@@ -389,6 +451,32 @@ namespace TevenStudiosBudgetTracker.Models
                 string query = "insert into Transactions(UserId, Date, Description, Amount, StatusId) values('" + userId + "','" + newRequest.Date + "','" + newRequest.Description +
                     "','" + newRequest.Cost + "','" + 0 + "')";  // this status of 0 is pending and should be refactored to be an global variable later 
 
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
+
+        public int ApprovePendingRequest(string ID)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query = "Update Transactions Set StatusId = '1' Where ID = '" + ID + "'";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                conn.Close();
+                return i;
+            }
+        }
+
+        public int DeclinePendingRequest(string ID)
+        {
+            using (MySqlConnection conn = getConnection())
+            {
+                string query = "Update Transactions Set StatusId = '2' Where ID = '" + ID + "'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
