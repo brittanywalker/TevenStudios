@@ -37,8 +37,11 @@
     <Folder Include="Views\StatusCode\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\teven.png" />
   </ItemGroup>
 
   <ItemGroup>
