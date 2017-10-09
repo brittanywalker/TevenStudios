@@ -251,7 +251,7 @@
         //Function to approve a single request.
 		function ApproveRequest(requestID, id) {
             $.ajax({
-                url: '/Home/ApproveRequest',
+                url: '/Manager/ApproveRequest',
                 data: { ID: requestID },
             }).done(function () {
                 showSelectedUserInfo(id);
@@ -281,7 +281,7 @@
         //Function to decline all the requests.
 		function DeclineRequestAllRequests(requestID) {
 			$.ajax({
-				url: '/Home/DeclineRequest',
+				url: '/Manager/DeclineRequest',
 				data: { ID: requestID },
 			}).done(function () {
 				window.location = "/Home/Manager";
