@@ -16,7 +16,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyEmail = "_Email";
 
 
-        public IActionResult Employee()
+        public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
 
@@ -128,7 +128,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             // past requests
             mymodel.PastRequests = transactionContext.GetAllPastRequests((int)HttpContext.Session.GetInt32(SessionKeyId));
 
-            return View("Employee", mymodel);
+            return View("Index", mymodel);
         }
 
         private double getUserMaxBudgetRequest(User user)
