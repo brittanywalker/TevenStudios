@@ -85,7 +85,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Admin", data);
+            return View("Index", data);
         }
 
         //Edit user gets the details of the selected user.
@@ -128,7 +128,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Admin", data);
+            return View("Index", data);
         }
 
         //Delete user from database given their ID.
@@ -150,7 +150,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-            return View("Admin", data);
+            return View("Index", data);
         }
 
         //Get User data given their ID, return in Json object.
