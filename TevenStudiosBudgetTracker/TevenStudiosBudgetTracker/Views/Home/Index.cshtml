@@ -23,7 +23,7 @@
             var profile = googleUser.getBasicProfile();
 
             $.ajax({
-                url: '/Home/GoogleLogin',
+                url: '/Index/GoogleLogin',
                 data: { 'UserEmail': profile.getEmail() },
                 success: function (data) {
                     if (data.success) {

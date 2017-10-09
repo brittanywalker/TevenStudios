@@ -89,6 +89,10 @@ namespace TevenStudiosBudgetTracker
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "index",
+                    template: "{controller=Index}/{action=Index}/{id?}");
             });
         }
     }
