@@ -219,26 +219,5 @@ namespace TevenStudiosBudgetTracker.Controllers
 
         
 
-        public IActionResult ApproveRequest(string ID)
-        {
-            ViewData["Message"] = "Management page.";
-
-            // gets employee's pending requests
-            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            var ApprovedRequest = Pendingcontext.ApprovePendingRequest(ID);
-
-            return Json(new { id = ID});
-        }
-
-        public IActionResult DeclineRequest(string ID)
-        {
-            ViewData["Message"] = "Management page.";
-
-            // gets employee's pending requests
-            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
-            var ApprovedRequest = Pendingcontext.DeclinePendingRequest(ID);
-
-            return Json(new { id = ID }); ;
-        }
     }
 }

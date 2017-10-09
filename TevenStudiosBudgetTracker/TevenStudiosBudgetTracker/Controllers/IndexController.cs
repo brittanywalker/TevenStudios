@@ -41,7 +41,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             if (Roleid == 0)
             {
-                return this.Json(new { success = true, redirect = "Admin" });
+                return this.Json(new { success = true, redirect = "Home" });
             }
             else if (Roleid == 1)
             {

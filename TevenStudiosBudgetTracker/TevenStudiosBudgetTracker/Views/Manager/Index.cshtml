@@ -248,7 +248,8 @@
             }
         }
 
-        function ApproveRequest(requestID, id) {
+        //Function to approve a single request.
+		function ApproveRequest(requestID, id) {
             $.ajax({
                 url: '/Home/ApproveRequest',
                 data: { ID: requestID },
@@ -257,24 +258,27 @@
             });
 		}
 
+        //Function to approve all the requests.
 		function ApproveRequestAllRequests(requestID) {
 			$.ajax({
-				url: '/Home/ApproveRequest',
+				url: '/Manager/ApproveRequest',
 				data: { ID: requestID },
 			}).done(function () {
-				window.location = "/Home/Manager";
+                window.location = "/Manager/Index";
 			});
 		}
 
+        //Function to decline a single request.
         function DeclineRequest(requestID, id) {
             $.ajax({
-                url: '/Home/DeclineRequest',
+                url: '/Manager/DeclineRequest',
                 data: { ID: requestID },
             }).done(function () {
                 showSelectedUserInfo(id);
             });
 		}
-
+        
+        //Function to decline all the requests.
 		function DeclineRequestAllRequests(requestID) {
 			$.ajax({
 				url: '/Home/DeclineRequest',
