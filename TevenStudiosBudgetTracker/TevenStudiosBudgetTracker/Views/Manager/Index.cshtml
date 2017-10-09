@@ -144,7 +144,7 @@
             // otherwise makes call to get user info from database
             if (UserID != -1) {
                 $.ajax({
-                    url: '/Home/GetSelectedInfo',
+                    url: '/Manager/GetSelectedInfo',
                     data: { UserID: UserID },
                 }).done(function (returnData) {
 

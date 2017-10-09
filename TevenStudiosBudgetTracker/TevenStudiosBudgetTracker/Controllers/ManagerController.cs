@@ -70,5 +70,29 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             return Json(new { id = ID }); ;
         }
+
+        // This function gets information about a selected user to be displayed on the right hand side of the manager screen
+        public IActionResult GetSelectedInfo(int UserID)
+        {
+            ViewData["Message"] = "Management page.";
+
+            // gets selected employee
+            UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
+            User selectedEmployee = context.retrieveUserDetails(UserID);
+
+            // gets employee's pending requests
+            PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
+            var pendingRequests = Pendingcontext.GetAllPendingRequests(UserID);
+
+            // gets employee's past requests
+            TransactionContext transactionContext = HttpContext.RequestServices.GetService(typeof(TransactionContext)) as TransactionContext;
+            var pastRequests = transactionContext.GetAllPastRequests(UserID);
+
+            // gets the employees current budget 
+            double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.ChangeAnnualBudgetDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget, selectedEmployee.ChangeAnnualBudget);
+
+            return Json(new { id = UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests });
+        }
+
     }
 }
