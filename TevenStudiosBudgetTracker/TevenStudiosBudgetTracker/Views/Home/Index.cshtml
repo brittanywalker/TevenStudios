@@ -27,7 +27,7 @@
                 data: { 'UserEmail': profile.getEmail() },
                 success: function (data) {
                     if (data.success) {
-                        window.location.href = "Home/" + data.redirect;
+                        window.location.href = data.redirect + "/Index";
                     }
                     else
                     { 

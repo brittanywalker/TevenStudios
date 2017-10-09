@@ -18,7 +18,7 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyEmail = "_Email";
 
         //This returns the manager view.
-        public IActionResult Manager()
+        public IActionResult Index()
         {
             ViewData["Message"] = "Management page.";
 
