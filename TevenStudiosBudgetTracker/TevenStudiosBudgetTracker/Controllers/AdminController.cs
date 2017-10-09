@@ -153,5 +153,14 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View("Admin", data);
         }
 
+        //Get User data given their ID, return in Json object.
+        public IActionResult GetCurrentUserData(int UserID)
+        {
+            UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
+            User currentUser = context.retrieveUserDetails(UserID);
+
+            return Json(new { ID = currentUser.ID, Name = currentUser.Name, Email = currentUser.Email, ManagerId = currentUser.ManagerId, RoleId = currentUser.RoleId, StartBudget = currentUser.StartBudget, AnnualBudget = currentUser.AnnualBudget });
+        }
+
     }
 }
