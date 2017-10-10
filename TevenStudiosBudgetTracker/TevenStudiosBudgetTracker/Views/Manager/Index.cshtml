@@ -154,10 +154,14 @@
                                     @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
                                 </td>
                                 <td>
-                                    <button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
+                                    <button id="approveButton" type="button" class="btn btn-success" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">
+                                        <span class="glyphicon glyphicon-ok"></span>    
+                                    </button>
                                 </td>
                                 <td>
-                                    <button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
+                                    <button id="declineButton" type="button" class="btn btn-danger" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
                                 </td>
                             </tr>
                         }
