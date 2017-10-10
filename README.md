@@ -53,7 +53,7 @@ If your email is different to this you can add yourself as an admin by following
 
 1. Open the _TevenStudios_ connection in MySQL Workbench.
 2. In the **Schema** section, click **tevenstudios** -> **Tables** -> **user**. If you hover over this user table, click the table icon on the far right. This will open up the table in both SQL script format and show the **Result Grid**.
-3. Add the user into the table by adding values in the appropriate columns in the Result Grid. All values must be entered. Make sure the email is one you can log in with.
+3. Add the user into the table by adding values in the appropriate columns in the Result Grid. All values must be entered. Make sure the email is one you can log in with. To make the user an admin, add an ID of _0_ in the column _RoleId_.
 4. Click **Apply**.
 5. Follow the wizard using the default parameters. This should successfully add the user into the database.
 
@@ -80,4 +80,10 @@ To run the solution file select **Debug** > **Start Without Debugging**.
 
 This will open up the localhost in your default browser. Here you can view and go about the functionality developed by TevenStudios.
 
-You can login using an email that exists in the database. This should navigate you to the Admin's functionality. Here you can add more users, and assign them their roles. If you add a user with an alternative role and email, you can log out and login using their credentials. This should take you to the new user's appropriate pages.
+You can log in using your Google Account email. This email must be in the database. To check this follow the instructions in the section above regarding _Users in the database_.
+
+If your role in the database is an **Administrator**, following login you will be redirected to the Admin page. Here you can add, edit and delete users of the system. You can assign them roles, budgets, and managers. You can edit their emails.
+
+If you login with the email of an **Employee**, you will be redirected to a page where you can view your budget, see your past requests and pending requests. You can also lodge a request here to your manager for the expenditure.
+
+If you login with the email of a **Manager**, you will also have access to the **Employee** page described above. On top of this, there is a tab that redirects you to Manager page. Here you can view your employees along with their respective budget and requests. The manager can approve and decline these requests here.
