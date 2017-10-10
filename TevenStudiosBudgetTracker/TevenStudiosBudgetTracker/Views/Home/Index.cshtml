@@ -4,14 +4,83 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
+<style>
+    #login_heading {
+        text-align: center;
+        padding: 20px;
+        background-image: url('images/teven.png');
+        background-size: cover;
+        height: 150px;
+        width: 400px;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+
+    #login_button_div {
+        width: 50%;
+        height: 300px;
+        background-color: #f2f2f2;
+        box-shadow: 3px 3px 5px #d9d9d9;
+        padding: 50px;
+        margin-top: 1%;
+        padding-top: 50px;
+    }
+
+    #log_in_label {
+        font-size: 18px;
+        font-family: Tahoma; 
+    }
+    
+    #login_google_button {
+        padding-top: 10%;
+    }
+
+    .abcRioButton {
+        height: 50px !important;
+        width: 200px !important;
+    }
+
+    .abcRioButtonContents {
+        font-size: 18px !important;
+        line-height: 48px !important;
+        font-family: Tahoma !important;
+    }
+
+    .abcRioButtonIcon{
+       padding: 10px !important;
+       padding-left: 14px !important;
+    }
+    
+    .abcRioButtonIconImage {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .abcRioButtonSvg {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+</style>
+
 @{
     ViewData["Title"] = "Login Page";
 }
 
-<h2> Login</h2>
+<div id="login_heading">
+    
+</div>
 
-<div class="container">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+<div id="login_button_div" class="container">
+    <div>
+        <center id="log_in_label">
+            Log into Employee Budget Tracker
+        </center>
+    </div>
+    <center>
+        <div id="login_google_button" class="g-signin2" data-onsuccess="onSignIn"></div>
+    </center>
     <h3 id="erorr-signin"></h3>
     <script type="text/javascript">
 
