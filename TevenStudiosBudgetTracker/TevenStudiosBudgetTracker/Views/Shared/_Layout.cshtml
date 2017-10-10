@@ -1,4 +1,4 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
 <!DOCTYPE html>
 <html>
@@ -62,18 +62,18 @@
             </div>
             <div class="navbar-collapse collapse">
                @if (Model?.CurrentUser?.RoleId == 2)
-               {
+                {
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Manager">Manager</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Employee">Employee</a></li>
+                        <li><a asp-area="" asp-controller="Manager" asp-action="Index">Manager</a></li>
+                        <li><a asp-area="" asp-controller="Employee" asp-action="Index">Employee</a></li>
                     </ul>
-               }
-               @if (Model?.CurrentUser?.RoleId != null)
-               {
+                }
+                @if (Model?.CurrentUser?.RoleId != null)
+                {
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" onclick="signOut();">Logout, @Model.CurrentUser.Name</a></li>
                 </ul>
-               }
+                }
                 <script>
                     function signOut() {
                         window.location.href = "../";
