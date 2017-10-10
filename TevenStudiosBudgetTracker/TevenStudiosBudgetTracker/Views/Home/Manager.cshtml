@@ -5,14 +5,21 @@
 		background-color: azure;
 	}
 
+    .body-content{
+        width: 80%; 
+        margin-left: auto; 
+        margin-right: auto; 
+    }
+
     .EmployeeListContainer {
         display: flex;
         padding-top: 0px;
+        width: 100% !important; 
     }
 
 	.showinfo {
 		flex: 1;
-		margin-right: 10px;
+		margin-right: 0px;
 	}
 
     #employee_info_name {
@@ -40,9 +47,8 @@
 }
 
 <div class="EmployeeListContainer container top-view-padding">
-	<div class="row">
         <!-- The left hand panel -->
-        <div class="showinfo col-lg-5 non-overlap-divs">
+        <div class="showinfo col-sm-3 col-md-6 col-lg-4 non-overlap-divs">
             <h2 class="employeeHeading">Employees</h2>
             <!-- Table displaying manager's employees -->
             <table class="table table-hover table-responsive">
@@ -75,7 +81,7 @@
         </div>
 
         <!-- The right-hand side panel -->
-        <div class="showinfo col-lg-5 non-overlap-divs">
+        <div class="showinfo col-sm-9 col-md-6 col-lg-8 non-overlap-divs">
             <!-- Displays budget and request information about the selected user -->
             <div>
                 <h1 id="employee_info_name" style="text-align:center"></h1>
