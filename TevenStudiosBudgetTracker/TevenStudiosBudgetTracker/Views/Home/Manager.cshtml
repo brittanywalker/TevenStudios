@@ -7,134 +7,150 @@
 
     .EmployeeListContainer {
         display: flex;
+        padding-top: 0px;
     }
 
 	.showinfo {
 		flex: 1;
 		margin-right: 10px;
 	}
+
+    #employee_info_name {
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+
+    .employeeHeading {
+        margin-top: 60px;
+    }
+
+    #nameTd {
+        max-width: 50px;
+        word-wrap: break-word;
+    }
+
+    #emailTd {
+        max-width: 100px;
+        word-wrap: break-word;
+    }
 </style>
 
 @{
     ViewData["Title"] = "Manager Page";
 }
 
-<h2>Employees</h2>
-
-<div class="EmployeeListContainer">
-	<div class="showinfo">
-		<table class="table">
-			<tr>
-				<th>
-					ID
-				</th>
-				<th>
-					Name
-				</th>
-				<th>
-					Email
-				</th>
-			</tr>
-
-			@for (int i = 0; i < Model.Employees.Count; i++)
-			{
-				<tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
-					<td>
-						@Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => Model.Employees[i].Name)
-					</td>
-					<td>
-						@Html.DisplayFor(modelItem => Model.Employees[i].Email)
-					</td>
-				</tr>
-			}
-		</table>
-	</div>
-
-    <!-- Div to contain information about the selected user (right side of manager page)-->
-	<div class="showinfo">
-        <!-- div to display employee name-->
-        <div>
-            <h1 id="employee_info_name" style="text-align:center"></h1>
+<div class="EmployeeListContainer container top-view-padding">
+	<div class="row">
+        <!-- The left hand panel -->
+        <div class="showinfo col-lg-5 non-overlap-divs">
+            <h2 class="employeeHeading">Employees</h2>
+            <!-- Table displaying manager's employees -->
+            <table class="table table-hover table-responsive">
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                </tr>
+                @for (int i = 0; i < Model.Employees.Count; i++)
+                {
+                    <tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+                        <td>
+                            @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+                        </td>
+                        <td id="nameTd">
+                            @Html.DisplayFor(modelItem => Model.Employees[i].Name)
+                        </td>
+                        <td id="emailTd">
+                            @Html.DisplayFor(modelItem => Model.Employees[i].Email)
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
 
-        <!-- div to display employee current balance-->
-        <div>
-            <h1 id="employee_current_balance" style="text-align:center"></h1>
+        <!-- The right-hand side panel -->
+        <div class="showinfo col-lg-5 non-overlap-divs">
+            <!-- Displays budget and request information about the selected user -->
+            <div>
+                <h1 id="employee_info_name" style="text-align:center"></h1>
+            </div>
+            <div>
+                <h1 id="employee_current_balance" style="text-align:center"></h1>
+            </div>
+            <br />
+            <!-- Employee pending requests table-->
+            <div id="employee_pending_requests">
+                <h2>All Pending Requests</h2>
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Cost
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Approve
+                        </th>
+                        <th>
+                            Decline
+                        </th>
+                    </tr>
+                    @for (int i = 0; i < Model.PendingRequests.Count; i++)
+                    {
+                        <tr class="@Model.PendingRequests[i].ID">
+                            <td>
+                                @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
+                            </td>
+                            <td>
+                                <button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
+                            </td>
+                            <td>
+                                <button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <br />
+            <!-- Employee past requests table-->
+            <div id="employee_past_requests">
+            </div>
         </div>
-        <br />
-
-        <!-- div to display employee pending requests table-->
-        <div id="employee_pending_requests">
-			<h2>All Pending Requests</h2>
-			<table class="table">
-				<tr>
-					<th>
-						Date
-					</th>
-					<th>
-						ID
-					</th>
-					<th>
-						Name
-					</th>
-					<th>
-						Email
-					</th>
-					<th>
-						Cost
-					</th>
-					<th>
-						Description
-					</th>
-					<th>
-						Approve
-					</th>
-					<th>
-						Decline
-					</th>
-				</tr>
-
-				@for (int i = 0; i < Model.PendingRequests.Count; i++)
-				{
-					<tr class="@Model.PendingRequests[i].ID">
-						<td>
-							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
-						</td>
-						<td>
-							@Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
-						</td>
-						<td>
-							<button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
-						</td>
-						<td>
-							<button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
-						</td>
-					</tr>
-				}
-			</table>
-        </div>
-        <br />
-
-        <!-- div to display employee past requests table-->
-        <div id="employee_past_requests">
-        </div> 
-		
-	</div>
+    </div>
 
 	<script>
         //This function updates the HTML div for the employee info depending which employee is selected
