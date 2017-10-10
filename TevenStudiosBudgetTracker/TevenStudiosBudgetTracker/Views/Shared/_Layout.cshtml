@@ -68,7 +68,7 @@
                         <li><a asp-area="" asp-controller="Employee" asp-action="Index">Employee</a></li>
                     </ul>
                 }
-                @if (!(Model?.CurrentUser?.RoleId == null))
+                @if (Model?.CurrentUser?.RoleId != null)
                 {
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" onclick="signOut();">Logout</a></li>
