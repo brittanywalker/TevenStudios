@@ -6,7 +6,7 @@
     }
 
     .body-content {
-        width: 80%;
+        width: 90%;
         margin-left: auto;
         margin-right: auto;
     }
@@ -38,17 +38,11 @@
         margin-top: 60px;
     }
 
-    #nameTd {
-        max-width: 50px;
+    th, td {
         word-wrap: break-word;
     }
 
-    #emailTd {
-        max-width: 100px;
-        word-wrap: break-word;
-    }
-
-    .manager-table{
+    .manager-table {
         border: 2px solid #ddd; 
     }
 </style>
@@ -60,19 +54,19 @@
 <div class="EmployeeListContainer container container-fluid top-view-padding">
     <div class="row">
         <!-- The left hand panel -->
-        <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-4 non-overlap-divs">
+        <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-5 non-overlap-divs">
             <h2 class="employeeHeading">Employees</h2>
             <!-- Table displaying manager's employees -->
             <table class="manager-table table table-hover table-responsive">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="col-md-1">
                             ID
                         </th>
-                        <th>
+                        <th class="col-md-5">
                             Name
                         </th>
-                        <th>
+                        <th class="col-md-6">
                             Email
                         </th>
                     </tr>
@@ -84,10 +78,10 @@
                             <td>
                                 @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
                             </td>
-                            <td id="nameTd">
+                            <td>
                                 @Html.DisplayFor(modelItem => Model.Employees[i].Name)
                             </td>
-                            <td id="emailTd">
+                            <td>
                                 @Html.DisplayFor(modelItem => Model.Employees[i].Email)
                             </td>
                         </tr>
@@ -96,9 +90,9 @@
             </table>
         </div>
         <!-- The right-hand side panel -->
-        <div class="showinfo col-sm-9 col-md-6 col-lg-8 non-overlap-divs">
+        <div class="showinfo col-sm-9 col-md-6 col-lg-7 non-overlap-divs">
             <!-- Displays budget and request information about the selected user -->
-            <div>
+            <div style="margin-top: 60px;">
                 <h1 id="employee_info_name" style="text-align:center"></h1>
             </div>
             <div>
@@ -111,28 +105,28 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>
+                            <th style="width: 10%;">
                                 Date
                             </th>
-                            <th>
+                            <th style="width: 5%;">
                                 ID
                             </th>
-                            <th>
+                            <th style="width: 20%;">
                                 Name
                             </th>
-                            <th>
+                            <th style="width: 20%;">
                                 Email
                             </th>
-                            <th>
+                            <th style="width: 5%;">
                                 Cost
                             </th>
-                            <th>
+                            <th style="width: 20%;">
                                 Description
                             </th>
-                            <th>
+                            <th style="width: 10%;">
                                 Approve
                             </th>
-                            <th>
+                            <th style="width: 10%;">
                                 Decline
                             </th>
                         </tr>
