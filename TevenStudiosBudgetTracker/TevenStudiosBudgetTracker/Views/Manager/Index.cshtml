@@ -1,19 +1,33 @@
 ﻿@model TevenStudiosBudgetTracker.Models.ManagerViewData
 
 <style>
-	.item:hover {
-		background-color: azure;
-	}
+    .item:hover {
+        background-color: azure;
+    }
+
+    .body-content {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
     .EmployeeListContainer {
         display: flex;
         padding-top: 0px;
+        width: 100% !important;
     }
 
-	.showinfo {
-		flex: 1;
-		margin-right: 10px;
-	}
+    .row {
+        width: 100%;
+    }
+
+    #lhs-manager-col {
+        padding-right: 50px;
+    }
+
+    .showinfo {
+        flex: 1;
+    }
 
     #employee_info_name {
         padding-top: 0px;
@@ -33,49 +47,56 @@
         max-width: 100px;
         word-wrap: break-word;
     }
+
+    .manager-table{
+        border: 2px solid #ddd; 
+    }
 </style>
 
 @{
     ViewData["Title"] = "Manager Page";
 }
 
-<div class="EmployeeListContainer container top-view-padding">
-	<div class="row">
+<div class="EmployeeListContainer container container-fluid top-view-padding">
+    <div class="row">
         <!-- The left hand panel -->
-        <div class="showinfo col-lg-5 non-overlap-divs">
+        <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-4 non-overlap-divs">
             <h2 class="employeeHeading">Employees</h2>
             <!-- Table displaying manager's employees -->
-            <table class="table table-hover table-responsive">
-                <tr>
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Email
-                    </th>
-                </tr>
-                @for (int i = 0; i < Model.Employees.Count; i++)
-                {
-                    <tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
-                        <td>
-                            @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
-                        </td>
-                        <td id="nameTd">
-                            @Html.DisplayFor(modelItem => Model.Employees[i].Name)
-                        </td>
-                        <td id="emailTd">
-                            @Html.DisplayFor(modelItem => Model.Employees[i].Email)
-                        </td>
+            <table class="manager-table table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Employees.Count; i++)
+                    {
+                        <tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+                            <td>
+                                @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+                            </td>
+                            <td id="nameTd">
+                                @Html.DisplayFor(modelItem => Model.Employees[i].Name)
+                            </td>
+                            <td id="emailTd">
+                                @Html.DisplayFor(modelItem => Model.Employees[i].Email)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
-
         <!-- The right-hand side panel -->
-        <div class="showinfo col-lg-5 non-overlap-divs">
+        <div class="showinfo col-sm-9 col-md-6 col-lg-8 non-overlap-divs">
             <!-- Displays budget and request information about the selected user -->
             <div>
                 <h1 id="employee_info_name" style="text-align:center"></h1>
@@ -88,61 +109,65 @@
             <div id="employee_pending_requests">
                 <h2>All Pending Requests</h2>
                 <table class="table table-hover">
-                    <tr>
-                        <th>
-                            Date
-                        </th>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Cost
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Approve
-                        </th>
-                        <th>
-                            Decline
-                        </th>
-                    </tr>
-                    @for (int i = 0; i < Model.PendingRequests.Count; i++)
-                    {
-                        <tr class="@Model.PendingRequests[i].ID">
-                            <td>
-                                @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
-                            </td>
-                            <td>
-                                @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
-                            </td>
-                            <td>
-                                <button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
-                            </td>
-                            <td>
-                                <button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
-                            </td>
+                    <thead>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Cost
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Approve
+                            </th>
+                            <th>
+                                Decline
+                            </th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.PendingRequests.Count; i++)
+                        {
+                            <tr class="@Model.PendingRequests[i].ID">
+                                <td>
+                                    @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
+                                </td>
+                                <td>
+                                    <button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">Approve</button>'
+                                </td>
+                                <td>
+                                    <button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">Decline</button>'
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
             <br />
@@ -151,27 +176,28 @@
             </div>
         </div>
     </div>
+</div>
 
-	<script>
-        //This function updates the HTML div for the employee info depending which employee is selected
-        function showSelectedUserInfo(UserID) {
-            // userId = -1 if the userId was not sent to the modal correctly
-            // otherwise makes call to get user info from database
-            if (UserID != -1) {
-                $.ajax({
-                    url: '/Manager/GetSelectedInfo',
-                    data: { UserID: UserID },
-                }).done(function (returnData) {
+<script>
+    //This function updates the HTML div for the employee info depending which employee is selected
+    function showSelectedUserInfo(UserID) {
+        // userId = -1 if the userId was not sent to the modal correctly
+        // otherwise makes call to get user info from database
+        if (UserID != -1) {
+            $.ajax({
+                url: '/Manager/GetSelectedInfo',
+                data: { UserID: UserID },
+            }).done(function (returnData) {
 
-                    // Set the name and current balance div for the employee
-                    $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
-                    $("#employee_current_balance").text("$" + returnData["currentBudget"] + " available");
+                // Set the name and current balance div for the employee
+                $("#employee_info_name").text(returnData["selectedEmployee"]['name']);
+                $("#employee_current_balance").text("$" + returnData["currentBudget"] + " available");
 
 
-                    //-------------- Pending request table population --------------------
+                //-------------- Pending request table population --------------------
 
-                    // Set the headings of the table
-                    var html = '<h2>Pending Requests </h2> \
+                // Set the headings of the table
+                var html = '<h2>Pending Requests </h2> \
                         <table id="pending_request_table" class="table table-hover table-bordered" > \
                             <thead> \
                             <tr>\
@@ -194,33 +220,33 @@
                                 </thead>\
                         <tbody>';
 
-                    // add each pending request to the table
-                    for (item in returnData["pendingRequests"]) {
-                        html += '<tr><td>'
-                            + returnData["pendingRequests"][item].date
-                            + '</td><td class="">'
-                            + returnData["pendingRequests"][item].cost
-                            + '</td><td class="">'
-                            + returnData["pendingRequests"][item].description
-                            + '</td>'
-                            + '<td><button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest('
-                            + returnData["pendingRequests"][item].id + ',' + returnData["id"]
-                            + ')">Approve</button>'
-                            + '</td>'
-                            + '<td><button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest('
-                            + returnData["pendingRequests"][item].id + ',' + returnData["id"]
-                            + ')">Decline</button>'
-                            + '</td></tr> ';
-                    }
-                    html += "</tbody> </table>"
+                // add each pending request to the table
+                for (item in returnData["pendingRequests"]) {
+                    html += '<tr><td>'
+                        + returnData["pendingRequests"][item].date
+                        + '</td><td class="">'
+                        + returnData["pendingRequests"][item].cost
+                        + '</td><td class="">'
+                        + returnData["pendingRequests"][item].description
+                        + '</td>'
+                        + '<td><button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest('
+                        + returnData["pendingRequests"][item].id + ',' + returnData["id"]
+                        + ')">Approve</button>'
+                        + '</td>'
+                        + '<td><button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest('
+                        + returnData["pendingRequests"][item].id + ',' + returnData["id"]
+                        + ')">Decline</button>'
+                        + '</td></tr> ';
+                }
+                html += "</tbody> </table>"
 
-                    // update the html of the div to contain the table
-                    $('#employee_pending_requests').html(html);
+                // update the html of the div to contain the table
+                $('#employee_pending_requests').html(html);
 
-                    //-------------- Past request table population --------------------
+                //-------------- Past request table population --------------------
 
-                    // Set the headings of the table
-                    var html = '<h2>Past Requests </h2> \
+                // Set the headings of the table
+                var html = '<h2>Past Requests </h2> \
                         <table id="past_request_table" class="table table-hover table-bordered" > \
                             <thead> \
                             <tr>\
@@ -240,68 +266,66 @@
                                 </thead>\
                         <tbody>';
 
-                    // add each pending request to the table
-                    for (item in returnData["pastRequests"]) {
-                        html += '<tr><td>'
-                            + returnData["pastRequests"][item].date
-                            + '</td><td class="">'
-                            + returnData["pastRequests"][item].amount
-                            + '</td><td class="">'
-                            + returnData["pastRequests"][item].description
-                            + '</td><td class="">'
-                            + returnData["pastRequests"][item].statusType
-                            + '</td></tr>';
-                    }
-                    html += "</tbody>"
+                // add each pending request to the table
+                for (item in returnData["pastRequests"]) {
+                    html += '<tr><td>'
+                        + returnData["pastRequests"][item].date
+                        + '</td><td class="">'
+                        + returnData["pastRequests"][item].amount
+                        + '</td><td class="">'
+                        + returnData["pastRequests"][item].description
+                        + '</td><td class="">'
+                        + returnData["pastRequests"][item].statusType
+                        + '</td></tr>';
+                }
+                html += "</tbody>"
 
-                    // update the html of the div to contain the table
-                    $('#employee_past_requests').html(html);
+                // update the html of the div to contain the table
+                $('#employee_past_requests').html(html);
 
-                });
-            } else {
-                alert("Sorry, there was an error processing your request. Please try again.");
-            }
+            });
+        } else {
+            alert("Sorry, there was an error processing your request. Please try again.");
         }
+    }
 
-        //Function to approve a single request.
-		function ApproveRequest(requestID, id) {
-            $.ajax({
-                url: '/Manager/ApproveRequest',
-                data: { ID: requestID },
-            }).done(function () {
-                showSelectedUserInfo(id);
-            });
-		}
+    //Function to approve a single request.
+    function ApproveRequest(requestID, id) {
+        $.ajax({
+            url: '/Manager/ApproveRequest',
+            data: { ID: requestID },
+        }).done(function () {
+            showSelectedUserInfo(id);
+        });
+    }
 
-        //Function to approve all the requests.
-		function ApproveRequestAllRequests(requestID) {
-			$.ajax({
-				url: '/Manager/ApproveRequest',
-				data: { ID: requestID },
-			}).done(function () {
-                window.location = "/Manager/Index";
-			});
-		}
+    //Function to approve all the requests.
+    function ApproveRequestAllRequests(requestID) {
+        $.ajax({
+            url: '/Manager/ApproveRequest',
+            data: { ID: requestID },
+        }).done(function () {
+            window.location = "/Manager/Index";
+        });
+    }
 
-        //Function to decline a single request.
-        function DeclineRequest(requestID, id) {
-            $.ajax({
-                url: '/Manager/DeclineRequest',
-                data: { ID: requestID },
-            }).done(function () {
-                showSelectedUserInfo(id);
-            });
-		}
-        
-        //Function to decline all the requests.
-		function DeclineRequestAllRequests(requestID) {
-			$.ajax({
-				url: '/Manager/DeclineRequest',
-				data: { ID: requestID },
-			}).done(function () {
-				window.location = "/Manager/Index";
-			});
-		}
-	</script>
-</div>
+    //Function to decline a single request.
+    function DeclineRequest(requestID, id) {
+        $.ajax({
+            url: '/Manager/DeclineRequest',
+            data: { ID: requestID },
+        }).done(function () {
+            showSelectedUserInfo(id);
+        });
+    }
 
+    //Function to decline all the requests.
+    function DeclineRequestAllRequests(requestID) {
+        $.ajax({
+            url: '/Manager/DeclineRequest',
+            data: { ID: requestID },
+        }).done(function () {
+            window.location = "/Manager/Index";
+        });
+    }
+</script>
