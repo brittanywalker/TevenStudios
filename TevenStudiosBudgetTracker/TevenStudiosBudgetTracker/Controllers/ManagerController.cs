@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace TevenStudiosBudgetTracker.Controllers
 {
+    // Contoller for the Manager View and its functionality
     public class ManagerController : Controller
     {
         //Set Session names
@@ -17,7 +18,11 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
 
-        //This returns the manager view.
+        /**
+            Returns the Manager View
+
+            @return the ManagerViewData containing info needed for the view
+        */
         public IActionResult Index()
         {
             ViewData["Message"] = "Management page.";
@@ -36,6 +41,7 @@ namespace TevenStudiosBudgetTracker.Controllers
                 return StatusCode(403);
             }
 
+            // Creates the ManagerViewData to be passed back to the Manager view
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
             ManagerViewData data = new ManagerViewData();
             User user = context.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
@@ -48,7 +54,12 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View(data);
         }
 
-        
+        /**
+            Function called when a manager approves a request
+
+            @param ID id of the Request being approved
+            @return id of the Request being approved
+        */
         public IActionResult ApproveRequest(string ID)
         {
             ViewData["Message"] = "Management page.";
@@ -57,9 +68,16 @@ namespace TevenStudiosBudgetTracker.Controllers
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             var ApprovedRequest = Pendingcontext.ApprovePendingRequest(ID);
 
+            // Returns the ID that was passed in
             return Json(new { id = ID });
         }
 
+        /**
+            Function called when a manager declines a request
+
+            @param ID id of the Request being declined
+            @return id of the Request being declined
+        */
         public IActionResult DeclineRequest(string ID)
         {
             ViewData["Message"] = "Management page.";
@@ -68,10 +86,16 @@ namespace TevenStudiosBudgetTracker.Controllers
             PendingRequestsContext Pendingcontext = HttpContext.RequestServices.GetService(typeof(PendingRequestsContext)) as PendingRequestsContext;
             var ApprovedRequest = Pendingcontext.DeclinePendingRequest(ID);
 
+            // Returns the ID that was passed in
             return Json(new { id = ID }); ;
         }
 
-        // This function gets information about a selected user to be displayed on the right hand side of the manager screen
+        /**
+            This function gets information about a selected user to be displayed on the right hand side of the manager screen
+
+            @param UserID ID of the user being selected
+            @return the selected users information
+        */
         public IActionResult GetSelectedInfo(int UserID)
         {
             ViewData["Message"] = "Management page.";
@@ -91,6 +115,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             // gets the employees current budget 
             double budget = transactionContext.getCurrentBudget(selectedEmployee.ID, selectedEmployee.ChangeAnnualBudgetDate, selectedEmployee.StartBudget, selectedEmployee.AnnualBudget, selectedEmployee.ChangeAnnualBudget);
 
+            // Returns info of the employee that was selected back to the view
             return Json(new { id = UserID, selectedEmployee = selectedEmployee, currentBudget = budget, pendingRequests = pendingRequests, pastRequests = pastRequests });
         }
 
