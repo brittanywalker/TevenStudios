@@ -84,11 +84,28 @@ namespace TevenStudiosBudgetTracker
             //Use the Session storage.
             app.UseSession();
 
+            //Map the controller and view routes.
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "index",
+                    template: "{controller=Index}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "manager",
+                    template: "{controller=Manager}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "admin",
+                    template: "{controller=Admin}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "employee",
+                    template: "{controller=Employee}/{action=Index}/{id?}");
             });
         }
     }

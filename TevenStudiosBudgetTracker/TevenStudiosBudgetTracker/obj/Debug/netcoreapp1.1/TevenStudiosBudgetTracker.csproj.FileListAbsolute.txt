@@ -56,5 +56,3 @@ C:\Users\Hannah\Desktop\Uni\761\TevenStudios\TevenStudiosBudgetTracker\TevenStud
 C:\Users\Hannah\Desktop\Uni\761\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
 C:\Users\Hannah\Desktop\Uni\761\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
 C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.Properties.Resources.resources
-C:\Users\Christina Bell\Documents\UNI2017\2017Semester2\761\Project\Code\TevenStudios\TevenStudiosBudgetTracker\TevenStudiosBudgetTracker\obj\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.csproj.GenerateResource.Cache

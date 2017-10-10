@@ -155,7 +155,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Create a New User</h4>
                 </div>
-                <form asp-controller="Home" asp-action="GetDetails" method="post">
+                <form asp-controller="Admin" asp-action="GetDetails" method="post">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -247,11 +247,11 @@
             // otherwise makes call to delete user from database
             if (userId != -1) {
                 $.ajax({
-                    url: '/Home/DeleteUser',
+                    url: '/Admin/DeleteUser',
                     data: { UserID: userId },
                 }).done(function () {
                     $('#deleteUser').modal('toggle');
-                    window.location = "/Home/Admin";
+                    window.location = "/Admin/Index";
                 });
             } else {
                 alert("Sorry, there was an error processing your request. Please try again.");
@@ -273,7 +273,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Edit User</h4>
                 </div>
-                <form asp-controller="Home" asp-action="EditUser" method="post">
+                <form asp-controller="Admin" asp-action="EditUser" method="post">
                     <div class="modal-body">
 
                         <div class="form-group">
@@ -333,7 +333,7 @@
 
     <script>
         function populateModal(UserID) {
-            $.post('/Home/GetCurrentUserData/?UserID=' + UserID,
+            $.post('/Admin/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
 
