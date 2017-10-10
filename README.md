@@ -41,7 +41,7 @@ Clone the source code from TevenStudios: `git clone https://github.com/brittanyw
 
 ## Users in the database
 
-The exist admins with the following emails in the database:
+There exist admins with the following emails in the database:
 * r.hoda@auckland.ac.nz
 * k.blincoe@auckland.ac.nz
 * ysha962@aucklanduni.ac.nz
@@ -79,3 +79,5 @@ You can now login to the application using the email that was provided.
 To run the solution file select **Debug** > **Start Without Debugging**.
 
 This will open up the localhost in your default browser. Here you can view and go about the functionality developed by TevenStudios.
+
+You can login using an email that exists in the database. This should navigate you to the Admin's functionality. Here you can add more users, and assign them their roles. If you add a user with an alternative role and email, you can log out and login using their credentials. This should take you to the new user's appropriate pages.
