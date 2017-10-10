@@ -19,7 +19,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
 
         /**
-            Returns the admin view
+            Returns the Admin view
             
             @return the AdminViewData
         */

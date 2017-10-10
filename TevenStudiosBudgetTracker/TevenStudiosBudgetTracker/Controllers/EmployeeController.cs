@@ -15,7 +15,11 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
 
-
+        /**
+            Returns the Employee view
+            
+            @return the AdminViewData
+        */
         public IActionResult Index()
         {
             ViewData["Message"] = "Employee page.";
@@ -69,6 +73,11 @@ namespace TevenStudiosBudgetTracker.Controllers
         }
 
 
+        /**
+            Function that submits a new request for the logged in employee
+
+            @return the users model
+        */ 
         [HttpPost]
         public IActionResult SubmitRequest()
         {
@@ -131,6 +140,13 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View("Index", mymodel);
         }
 
+
+        /**
+            Function that gets the users max budget request
+
+            @param user user whose max budget request is being calculated
+            @return the passed users future accrued budget
+        */
         private double getUserMaxBudgetRequest(User user)
         {
             DateTime today = DateTime.Today;
@@ -141,7 +157,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             String budgetChange = date + "/" + year + " " + time;
             DateTime budgetChangeDate = Convert.ToDateTime(budgetChange);
             int daysDifference = (int)(budgetChangeDate - today).TotalDays;
-            Console.WriteLine("days different: " + daysDifference);
+
             double futureAccruedBudget;
             if (daysDifference > 0)
             {
