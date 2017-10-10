@@ -17,6 +17,12 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
 
+
+        /**
+            Returns the admin view
+            
+            @return the AdminViewData
+        */
         public IActionResult Index()
         {
             ViewData["Message"] = "Admin page.";
@@ -37,6 +43,7 @@ namespace TevenStudiosBudgetTracker.Controllers
 
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
+            // Creates the AdminViewData to be returned
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
@@ -48,7 +55,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View(data);
         }
 
-        //Get the details of a user from form and create new user.
+        /**
+            Get the details of a user from form and create new user. 
+            
+            @returns AdminViewData and a viewbag with success or fail message
+        */
         [HttpPost]
         public IActionResult GetDetails()
         {
@@ -79,8 +90,7 @@ namespace TevenStudiosBudgetTracker.Controllers
                 ViewBag.isSuccess = false;
             }
 
-            // Not sure if this is correct, but need to reload data some how
-            // Maybe have this as a method as might be used multiple times
+            // Reloads the data for admin, needed to get the new user
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
@@ -88,7 +98,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View("Index", data);
         }
 
-        //Edit user gets the details of the selected user.
+        /**
+            Function gets the details of the selected user and persists to the database
+
+            @return AdminViewData and a viewbag with a success or fail message
+        */
         public IActionResult EditUser()
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
@@ -112,6 +126,7 @@ namespace TevenStudiosBudgetTracker.Controllers
                 umodel.ManagerId = -1;
             }
 
+            // Persists changes to the database, generates either success or fail message
             int result = context.EditUserSQL(umodel);
             if (result > 0)
             {
@@ -124,6 +139,7 @@ namespace TevenStudiosBudgetTracker.Controllers
                 ViewBag.isSuccess = false;
             }
 
+            // Reloads the data, needed to get the reloaded user
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
@@ -131,9 +147,15 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View("Index", data);
         }
 
-        //Delete user from database given their ID.
+        /**
+            Delete user from database given their ID.
+            
+            @param UserID id of the user to be deleted
+            @return AdminViewData and a viewbag with a success or fail message
+        */
         public IActionResult DeleteUser(int UserID)
         {
+            // Gets the user from UsedID and deletes from the database, generates success or fail message
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
             int result = context.DeleteUserSQL(UserID);
             if (result > 0)
@@ -147,13 +169,19 @@ namespace TevenStudiosBudgetTracker.Controllers
                 ViewBag.isSuccess = false;
             }
 
+            // Reloads data, needed to show user removed
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
             return View("Index", data);
         }
 
-        //Get User data given their ID, return in Json object.
+        /**
+            Get User data given their ID, return in Json object.
+
+            @param UserID id of the user to be retrieved
+            @return JSON containing that users information
+        */
         public IActionResult GetCurrentUserData(int UserID)
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
