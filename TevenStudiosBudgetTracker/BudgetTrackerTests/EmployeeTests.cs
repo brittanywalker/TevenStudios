@@ -8,9 +8,9 @@ namespace BudgetTrackerTests
     public class EmployeeTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestViewName()
         {
-            var controller = new HomeController();
+            var controller = new EmployeeController();
             var result = controller.Index() as ViewResult;
             Assert.AreEqual("Index", result.ViewName);
         }

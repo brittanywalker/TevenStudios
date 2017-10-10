@@ -1,0 +1,15 @@
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\BudgetTrackerTests.deps.json
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\BudgetTrackerTests.runtimeconfig.json
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\BudgetTrackerTests.runtimeconfig.dev.json
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\BudgetTrackerTests.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\BudgetTrackerTests.pdb
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\bin\Debug\netcoreapp1.1\TevenStudiosBudgetTracker.pdb
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\obj\Debug\netcoreapp1.1\BudgetTrackerTests.csprojResolveAssemblyReference.cache
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\obj\Debug\netcoreapp1.1\BudgetTrackerTests.csproj.CoreCompileInputs.cache
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\obj\Debug\netcoreapp1.1\BudgetTrackerTests.AssemblyInfo.cs
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\obj\Debug\netcoreapp1.1\BudgetTrackerTests.dll
+C:\Users\britt\Documents\TevenStudios\TevenStudiosBudgetTracker\BudgetTrackerTests\obj\Debug\netcoreapp1.1\BudgetTrackerTests.pdb
