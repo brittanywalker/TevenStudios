@@ -15,6 +15,11 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
 
+        /**
+            Returns the Home view
+
+            @return home view
+        */
         public IActionResult Index()
         {
             ViewData["Message"] = "Home page.";
@@ -27,7 +32,9 @@ namespace TevenStudiosBudgetTracker.Controllers
             return View();
         }
 
-        //Doesn't seem to be used. DELETE? 
+        /**
+            Sets the currents users index
+        */
         public ActionResult SetCurrentUserIndex(int UserIndex)
         {
             UserContext context = HttpContext.RequestServices.GetService(typeof(TevenStudiosBudgetTracker.Models.UserContext)) as UserContext;
