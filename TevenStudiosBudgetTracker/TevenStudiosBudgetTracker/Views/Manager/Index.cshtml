@@ -27,7 +27,7 @@
         max-height: 80vh;
     }
 
-    #all-pending-requests-table {
+    #all-pending-requests-table, #employees_table_div {
         width: 100%;
         max-height: 70vh;
         overflow: auto;
@@ -61,7 +61,10 @@
     }
 
     .manager-table {
-        border: 2px solid #ddd; 
+        border: 2px solid #ddd;
+        width: 100%;
+        max-height: 70vh;
+        overflow: auto;
     }
 
     #seeAllButton {
@@ -84,6 +87,10 @@
         max-height: 80vh;
         width: 100%;
     }
+
+    #employees_div {
+        overflow: auto;
+    }
 </style>
 
 @{
@@ -103,37 +110,39 @@
                 </div>
             </div>
             <!-- Table displaying manager's employees -->
-            <table class="manager-table table table-hover table-responsive">
-                <thead>
-                    <tr>
-                        <th class="col-md-1">
-                            ID
-                        </th>
-                        <th class="col-md-5">
-                            Name
-                        </th>
-                        <th class="col-md-6">
-                            Email
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Employees.Count; i++)
-                    {
-                        <tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
-                            <td>
-                                @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Employees[i].Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Employees[i].Email)
-                            </td>
+            <div id="employees_table_div">
+                <table class="manager-table table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1">
+                                ID
+                            </th>
+                            <th class="col-md-5">
+                                Name
+                            </th>
+                            <th class="col-md-6">
+                                Email
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Employees.Count; i++)
+                    {
+                            <tr class="item" onclick="showSelectedUserInfo(@Model.Employees[i].ID)">
+                                <td>
+                                    @Html.DisplayTextFor(modelItem => Model.Employees[i].ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.Employees[i].Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model.Employees[i].Email)
+                                </td>
+                            </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- The right-hand side panel -->
         <div class="showinfo col-sm-9 col-md-6 col-lg-7">
