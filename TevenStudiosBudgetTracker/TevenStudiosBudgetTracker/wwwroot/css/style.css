@@ -176,3 +176,50 @@ footer {
 .error-page {
     padding: 50px;
 }
+
+
+#employee-left-hand-panel {
+    padding-left: 0px;
+    padding-right: 60px;
+}
+
+#employee-right-hand-panel {
+}
+
+/* Adds padding to the top of pending requests table*/
+.padding-pending-requests {
+    padding-top: 80px;
+}
+
+/* Sets the heights & scrollable values for ... */
+/* ... the pending requests table */
+.table-height-pending {
+    overflow-y: scroll;
+    height: 40%;
+}
+
+.table {
+    border-bottom: 2px solid #ddd;
+}
+
+/* ... the past requests table */
+.table-height-past {
+    overflow-y: scroll;
+}
+
+/*Style the tables to overflow within their contained divs*/
+#pending-request-table-wrapper {
+    max-height: 42vh;
+    overflow-y: scroll;
+    overflow-x: auto;
+    overflow-wrap: break-word;
+    border: 2px solid #ddd;
+}
+
+#past-request-table-wrapper {
+    max-height: 76vh;
+    overflow-y: scroll;
+    overflow-x: auto;
+    overflow-wrap: break-word;
+    border: 2px solid #ddd;
+}
