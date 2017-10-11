@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TevenStudiosBudgetTracker.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BudgetTrackerTests
 {
     [TestClass]
-    class StatusCodeTests
+    public class StatusCodeTests
     {
         [TestMethod]
         public void CorrectStatusCodeTest()
         {
             var controller = new StatusCodeController();
             var result = controller.Index(404) as ViewResult;
-            Assert.AreEqual(404, result.ViewData);
-
+            var code = result.ViewData.Model;
+            Assert.AreEqual(404, code);
         }
     }
 }

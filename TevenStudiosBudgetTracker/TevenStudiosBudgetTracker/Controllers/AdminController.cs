@@ -17,7 +17,6 @@ namespace TevenStudiosBudgetTracker.Controllers
         const string SessionKeyName = "_Name";
         const string SessionKeyEmail = "_Email";
 
-
         /**
             Returns the Admin view
             
