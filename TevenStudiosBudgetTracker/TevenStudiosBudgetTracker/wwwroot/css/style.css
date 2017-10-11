@@ -64,7 +64,6 @@ td {
     overflow-x: auto;
     height: 400px;
     width: 100%;
-    position: absolute;
 }
 
 /* Sets the width for each column in the ... */

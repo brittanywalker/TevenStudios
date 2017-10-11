@@ -1,20 +1,22 @@
 ﻿@model TevenStudiosBudgetTracker.Models.AdminViewData
 
+<style>
+    .table-height-employees {
+        overflow-y: scroll;
+        overflow-x: auto;
+        max-height: 47vh;
+        width: 100%;
+    }
+</style>
+
 @{
     ViewData["Title"] = "Admin Page";
 }
 
 <h2 class="text-center top-view-padding">Employees</h2>
 <div class="row">
-
-    <!-- The Employee table description on the left-hand side -->
     <div class="col-sm-10">
-        <p class="text-center">
-            <br/>
-            The table below lists all the system's employees, with their respective emails, roles and budgets.
-            Employees can be added, edited or deleted.
-            <br />
-        </p>
+        <span></span>
     </div>
     
     <!-- The Add New Employee Button -->
@@ -43,10 +45,10 @@
 </div>
 
 <!-- The Employee Table -->
-<hr />
+<hr style="margin-left:50px; margin-top:0px;" />
 <div class="container">
     <div class="col-lg-12">
-        <div class="table-responsive">
+        <div class="table-responsive users-table">
             <table class="table table-hover">
                 <!-- Header -->
                 <thead>
@@ -273,7 +275,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Edit User</h4>
                 </div>
-                <form asp-controller="Admin" asp-action="EditUser" method="post">
+                <form asp-controller="Admin" asp-action="EditUser" method="post" id="editForm" data-toggle="validator">
                     <div class="modal-body">
 
                         <div class="form-group">
@@ -336,24 +338,28 @@
             $.post('/Admin/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
-
                         userString = JSON.stringify(returnedData);
                         userObject = JSON.parse(userString);
-                        console.log("user object: " + userString);
-                        document.getElementById("editName").setAttribute("value", userObject["name"]);
-                        document.getElementById("editEmail").setAttribute("value", userObject["email"]);
+                        document.getElementById("editName").value = userObject["name"];
+                        document.getElementById("editEmail").value = userObject["email"];
                         $("#editManager").val(userObject["managerId"]);
                         $("#editRole").val(userObject["roleId"]);
                         $("#editID").val(userObject["id"]);
-                        document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
-                        document.getElementById("editAnnualBudget").setAttribute("value", userObject["annualBudget"]);
+                        document.getElementById("editBudget").value = userObject["startBudget"];
+                        document.getElementById("editAnnualBudget").value = userObject["annualBudget"];
 
                         $('#editUser').modal('toggle');
                     } else {
                         alert("Sorry, there was an error processing your request. Please try again.");
                         $('#editUser').modal('toggle');
                     }
-                });
+                });   
         }
+
+        $('#editUser').on('hidden.bs.modal', function (e) {
+            $(this).find("input").val('').end();
+            $("#submitEditUser").val('Submit');
+
+        });
     </script>
 </div>
