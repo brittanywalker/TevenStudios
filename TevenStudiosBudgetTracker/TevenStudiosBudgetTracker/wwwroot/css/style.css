@@ -223,3 +223,8 @@ footer {
     overflow-wrap: break-word;
     border: 2px solid #ddd;
 }
+
+#navbar_logo_home{
+    width: 250px;
+    padding: 2px;
+}
