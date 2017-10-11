@@ -168,7 +168,6 @@ footer {
 
 /* Sets the table's div min-height so the tables don't overlap */
 .non-overlap-divs {
-    min-height: 800px;
 }
 
 /* Sets the top padding for each view so they aren't covered in a small screen */

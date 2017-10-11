@@ -1,8 +1,19 @@
 ﻿<style>
+
+    .body-content {
+    }
+
+    .employee-page-content {
+    }
+    
     #employee-left-hand-panel {
         padding-left: 0px;
         padding-right: 60px;
     }
+
+    #employee-right-hand-panel {
+    }
+
 
     /* Adds padding to the top of pending requests table*/
     .padding-pending-requests {
@@ -25,6 +36,22 @@
         overflow-y: scroll;
     }
 
+    #pending-request-table-wrapper {
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        overflow-wrap: break-word;
+        border: 2px solid #ddd;
+    }
+
+    #past-request-table-wrapper {
+        max-height: 550px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        overflow-wrap: break-word;
+        border: 2px solid #ddd;
+    }
+
 </style>
 
 ﻿@model dynamic
@@ -32,7 +59,7 @@
 @{
     ViewData["Title"] = "Employee Page";
 }
-<div class="container">
+<div id="employee-page-content" class="container">
     <div class="row">
         <!-- The left-hand panel-->
         <div id="employee-left-hand-panel" class="col-lg-6 non-overlap-divs">
@@ -65,7 +92,7 @@
 
             <!-- Pending requests -->
             <h2 class="padding-pending-requests"> Pending Requests</h2>
-            <div>
+            <div id="pending-request-table-wrapper">
                 <table class="table table-hover table-responsive table-height-pending">
                     <!-- Header -->
                     <thead>
@@ -103,11 +130,11 @@
         </div>
 
         <!-- The right-hand side panel -->
-        <div class="col-lg-6 non-overlap-divs">
+        <div id="employee-right-hand-panel" class="col-lg-6 non-overlap-divs">
 
             <!-- Past Requests-->
             <h2> Past Requests</h2>
-            <div>
+            <div id="past-request-table-wrapper">
                 <table class="table table-hover table-responsive">
                     <!-- Header -->
                     <thead>
