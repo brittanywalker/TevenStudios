@@ -1,6 +1,18 @@
 # TevenStudios
 Repository for 761 agile project, working on Employee Budget Tracking app.
 
+### Project Goal
+
+The project goal is to create an internal training budget management application to allow employees to submit training budget requests and manage their training budget. Managers can then accept employee requests, with an internal admin able to add and modify employees and their budgets. The outcome of this project will simplify the management of training budgets, replacing the current approach using an excel spreadsheet.
+
+### Features
+
+The capabilities of this system depend on whether the user is an Administrator, Manager or Employee. These are discussed below respectively.
+
+1. Administrators have the ability to add, delete and edit users of the system, as well as assigning their role (admin, manager or employee), budget (annual and start) and manager.
+2. Managers are able to view the employees that they manage, along with relevant information about each employee’s budget and previous transactions. They will be able to see requests that they have received from their employees for spending, and choose whether to approve or decline these requests. Managers are also employee, so they have access to their own information as an Employee. This is discussed below in (3).
+3. Employees are able to visualise their budget and what they have spent it on. They can then make requests to their managers to use a portion of their budget and describe what they are using it for. This request's status will change once the Manager accepts or declines this request. The employees budget shown includes pending requests as deducted, to ensure the employee doesn't spend more then their maximum allocated annual budget.
+
 **Team: (Name | UPI | GitHub Username)**
 * Elizabeth Stevenson | este775 | @Libby713
 * Christina Bell | cbel296 | @ChristinaBell
