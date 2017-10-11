@@ -96,7 +96,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
 
-            return View("Index", data);
+            return Redirect("/Admin");
         }
 
         /**
@@ -144,8 +144,8 @@ namespace TevenStudiosBudgetTracker.Controllers
             AdminViewData data = new AdminViewData();
             data.Users = context.GetAllUsers();
             data.Managers = context.GetAllManagers();
-
-            return View("Index", data);
+            
+            return Redirect("/Admin");
         }
 
         /**
