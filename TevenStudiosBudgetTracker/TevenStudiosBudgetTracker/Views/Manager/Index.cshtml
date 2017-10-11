@@ -5,6 +5,10 @@
         background-color: azure;
     }
 
+    tbody {
+        overflow-y: scroll;
+    }
+
     .body-content {
         width: 90%;
         margin-left: auto;
@@ -45,6 +49,14 @@
     .manager-table {
         border: 2px solid #ddd; 
     }
+
+    #seeAllButton {
+        margin-top: 60px;
+    }
+
+    #viewAllDiv {
+        padding-left: 6.5%;
+    }
 </style>
 
 @{
@@ -55,7 +67,14 @@
     <div class="row">
         <!-- The left hand panel -->
         <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-5 non-overlap-divs">
-            <h2 class="employeeHeading">Employees</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="employeeHeading">Employees</h2>
+                </div>
+                <div class="col-md-4" id="viewAllDiv">
+                    <button id="seeAllButton" class="btn-info btn">View All Requests</button>
+                </div>
+            </div>
             <!-- Table displaying manager's employees -->
             <table class="manager-table table table-hover table-responsive">
                 <thead>
@@ -93,10 +112,10 @@
         <div class="showinfo col-sm-9 col-md-6 col-lg-7 non-overlap-divs">
             <!-- Displays budget and request information about the selected user -->
             <div style="margin-top: 60px;">
-                <h1 id="employee_info_name" style="text-align:center"></h1>
+                <h1 id="employee_info_name" style="text-align:right"></h1>
             </div>
             <div>
-                <h1 id="employee_current_balance" style="text-align:center"></h1>
+                <h2 id="employee_current_balance" style="text-align:right"></h2>
             </div>
             <br />
             <!-- Employee pending requests table-->
@@ -195,7 +214,7 @@
                 //-------------- Pending request table population --------------------
 
                 // Set the headings of the table
-                var html = '<h2>Pending Requests </h2> \
+                var html = '<h3>Pending Requests </h3> \
                         <table id="pending_request_table" class="table table-hover table-bordered" > \
                             <thead> \
                             <tr>\
@@ -227,13 +246,13 @@
                         + '</td><td class="">'
                         + returnData["pendingRequests"][item].description
                         + '</td>'
-                        + '<td><button id="approveButton" type="button" class="btn btn-info" onclick="ApproveRequest('
+                        + '<td><button id="approveButton" type="button" class="btn btn-success" onclick="ApproveRequest('
                         + returnData["pendingRequests"][item].id + ',' + returnData["id"]
-                        + ')">Approve</button>'
+                        + ')"><span class="glyphicon glyphicon-ok"></span></button>'
                         + '</td>'
-                        + '<td><button id="declineButton" type="button" class="btn btn-info" onclick="DeclineRequest('
+                        + '<td><button id="declineButton" type="button" class="btn btn-danger" onclick="DeclineRequest('
                         + returnData["pendingRequests"][item].id + ',' + returnData["id"]
-                        + ')">Decline</button>'
+                        + ')"><span class="glyphicon glyphicon-remove"></span></button>'
                         + '</td></tr> ';
                 }
                 html += "</tbody> </table>"
@@ -244,7 +263,7 @@
                 //-------------- Past request table population --------------------
 
                 // Set the headings of the table
-                var html = '<h2>Past Requests </h2> \
+                var html = '<h3>Past Requests </h3> \
                         <table id="past_request_table" class="table table-hover table-bordered" > \
                             <thead> \
                             <tr>\
