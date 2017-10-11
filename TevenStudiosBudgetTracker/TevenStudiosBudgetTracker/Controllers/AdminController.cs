@@ -44,9 +44,11 @@ namespace TevenStudiosBudgetTracker.Controllers
             UserContext context = HttpContext.RequestServices.GetService(typeof(UserContext)) as UserContext;
 
             // Creates the AdminViewData to be returned
-            AdminViewData data = new AdminViewData();
-            data.Users = context.GetAllUsers();
-            data.Managers = context.GetAllManagers();
+            AdminViewData data = new AdminViewData
+            {
+                Users = context.GetAllUsers(),
+                Managers = context.GetAllManagers()
+            };
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString(SessionKeyName)))
             {
                 data.CurrentUser = context.retrieveUserDetails((int)HttpContext.Session.GetInt32(SessionKeyId));
