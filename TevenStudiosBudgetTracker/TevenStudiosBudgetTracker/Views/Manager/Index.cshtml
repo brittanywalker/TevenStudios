@@ -5,8 +5,9 @@
         background-color: azure;
     }
 
-    tbody {
+    .tableScroll {
         overflow-y: scroll;
+        overflow-x: auto;
     }
 
     .body-content {
@@ -19,6 +20,11 @@
         display: flex;
         padding-top: 0px;
         width: 100% !important;
+        height: 90vh;
+    }
+
+    #all_employee_pending_requests {
+        max-height: 80vh;
     }
 
     .row {
@@ -27,10 +33,12 @@
 
     #lhs-manager-col {
         padding-right: 50px;
+        max-height: 90vh;
     }
 
     .showinfo {
         flex: 1;
+        max-height: 90vh;
     }
 
     #employee_info_name {
@@ -78,7 +86,7 @@
 <div class="EmployeeListContainer container container-fluid top-view-padding">
     <div class="row">
         <!-- The left hand panel -->
-        <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-5 non-overlap-divs">
+        <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-5">
             <div class="row" id="lhsHeading">
                 <div class="employeeHeadingContainer col-md-8">
                     <h2 class="heading">Employees</h2>
@@ -121,7 +129,7 @@
             </table>
         </div>
         <!-- The right-hand side panel -->
-        <div class="showinfo col-sm-9 col-md-6 col-lg-7 non-overlap-divs">
+        <div class="showinfo col-sm-9 col-md-6 col-lg-7">
             <!-- Pending requests table for all employees-->
             <div id="all_employee_pending_requests">
                 <h2 class="heading">All Pending Requests</h2>
