@@ -1,16 +1,45 @@
-﻿﻿@model dynamic
+﻿<style>
+    #employee-left-hand-panel {
+        padding-left: 0px;
+        padding-right: 60px;
+    }
+
+    /* Adds padding to the top of pending requests table*/
+    .padding-pending-requests {
+        padding-top: 80px;
+    }
+
+    /* Sets the heights & scrollable values for ... */
+    /* ... the pending requests table */
+    .table-height-pending {
+        overflow-y: scroll;
+        height: 40%;
+    }
+
+    .table{
+        border: 2px solid #ddd;
+    }
+
+    /* ... the past requests table */
+    .table-height-past {
+        overflow-y: scroll;
+    }
+
+</style>
+
+﻿@model dynamic
 
 @{
     ViewData["Title"] = "Employee Page";
 }
-<div class="container top-view-padding">
+<div class="container">
     <div class="row">
         <!-- The left-hand panel-->
-        <div class="col-lg-7 non-overlap-divs">
+        <div id="employee-left-hand-panel" class="col-lg-6 non-overlap-divs">
 
             <!-- The user's current budget -->
-            <div class="alert alert-info budget-responsive">
-                <h4 class="text-right"> Current Balance</h4>
+            <div class="budget-responsive">
+                <h3 class="text-right"> Current Balance</h3>
                 <h1 class="text-right large-text budget-responsive"> $@Model.Budget </h1>
             </div>
             
@@ -31,14 +60,13 @@
 
             <!-- The submit a request button-->
             <div>
-                <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> Request</button>
+                <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> New Request</button>
             </div>
 
             <!-- Pending requests -->
             <h2 class="padding-pending-requests"> Pending Requests</h2>
-            <p>Your requests that are waiting to be approved by your manager.</p>
             <div>
-                <table class="table table-hover table-responsive">
+                <table class="table table-hover table-responsive table-height-pending">
                     <!-- Header -->
                     <thead>
                         <tr>
@@ -54,7 +82,7 @@
                         </tr>
                     </thead>
                     <!-- Content -->
-                    <tbody class="table-height-pending">
+                    <tbody class="">
                         @foreach (var pendingRequest in Model.PendingRequests)
                         {
                             <tr>
@@ -75,11 +103,10 @@
         </div>
 
         <!-- The right-hand side panel -->
-        <div class="col-lg-5 non-overlap-divs">
+        <div class="col-lg-6 non-overlap-divs">
 
             <!-- Past Requests-->
             <h2> Past Requests</h2>
-            <p>A list of all previous transactions, along with their status.</p>
             <div>
                 <table class="table table-hover table-responsive">
                     <!-- Header -->

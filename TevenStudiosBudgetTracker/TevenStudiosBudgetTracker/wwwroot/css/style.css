@@ -28,14 +28,15 @@ td {
     border-color: #eafffd; /* Light blue*/
     font-family: Tahoma; /* Header font*/
 }
-    .navbar-inverse .navbar-brand { /* Text color */
-        color: #ffffff;
-    }
 
-        .navbar-inverse .navbar-brand:hover,
-        .navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
-            color: #ffffff;
-        }
+.navbar-inverse .navbar-brand { /* Text color */
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
+    color: #ffffff;
+}
 
 /* Popup header colour */
 .modal-header {
@@ -57,24 +58,9 @@ td {
     overflow: hidden;
 }
 
-/* Sets the heights & scrollable values for ... */
-/* ... the pending requests table */
-.table-height-pending {
-    overflow-y: scroll;
-    overflow-x: auto;
-    height: 280px;
-    width: 95%;
-    position: absolute;
-}
 
-/* ... the past requests table */
-.table-height-past {
-    overflow-y: scroll;
-    overflow-x: auto;
-    height: 600px;
-    width: 95%;
-    position: absolute;
-}
+
+
 
 /* ... the admin table */
 .table-height-employees {
@@ -190,10 +176,7 @@ footer {
     padding-top: 50px;
 }
 
-/* Adds padding to the top of pending requests table*/
-.padding-pending-requests {
-    padding-top: 60px;
-}
+
 
 /* Padding to center error message */
 .error-page {
