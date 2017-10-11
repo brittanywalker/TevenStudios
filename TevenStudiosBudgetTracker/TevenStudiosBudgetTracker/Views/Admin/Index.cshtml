@@ -1,20 +1,22 @@
 ﻿@model TevenStudiosBudgetTracker.Models.AdminViewData
 
+<style>
+    .table-height-employees {
+        overflow-y: scroll;
+        overflow-x: auto;
+        max-height: 47vh;
+        width: 100%;
+    }
+</style>
+
 @{
     ViewData["Title"] = "Admin Page";
 }
 
 <h2 class="text-center top-view-padding">Employees</h2>
 <div class="row">
-
-    <!-- The Employee table description on the left-hand side -->
     <div class="col-sm-10">
-        <p class="text-center">
-            <br/>
-            The table below lists all the system's employees, with their respective emails, roles and budgets.
-            Employees can be added, edited or deleted.
-            <br />
-        </p>
+        <span></span>
     </div>
     
     <!-- The Add New Employee Button -->
@@ -43,10 +45,10 @@
 </div>
 
 <!-- The Employee Table -->
-<hr />
+<hr style="margin-left:50px; margin-top:0px;" />
 <div class="container">
     <div class="col-lg-12">
-        <div class="table-responsive">
+        <div class="table-responsive users-table">
             <table class="table table-hover">
                 <!-- Header -->
                 <thead>

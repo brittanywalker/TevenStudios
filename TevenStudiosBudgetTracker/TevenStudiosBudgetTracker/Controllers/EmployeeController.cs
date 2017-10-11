@@ -150,7 +150,6 @@ namespace TevenStudiosBudgetTracker.Controllers
         public double getUserMaxBudgetRequest(User user)
         {
             DateTime today = DateTime.Today;
-            Console.WriteLine("today: " + today);
             String year = today.ToString("yyyy");
             String date = user.StartDate.ToString("dd/MM");
             String time = user.StartDate.ToString("HH:mm:ss tt");

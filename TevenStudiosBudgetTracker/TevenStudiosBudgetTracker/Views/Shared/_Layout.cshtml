@@ -1,4 +1,4 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
 <!DOCTYPE html>
 <html>
@@ -71,7 +71,7 @@
                 @if (Model?.CurrentUser?.RoleId != null)
                 {
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" onclick="signOut();">Logout</a></li>
+                    <li><a href="#" onclick="signOut();">Logout, @Model.CurrentUser.Name</a></li>
                 </ul>
                 }
                 <script>
