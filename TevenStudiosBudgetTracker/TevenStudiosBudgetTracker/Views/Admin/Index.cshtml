@@ -273,7 +273,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Edit User</h4>
                 </div>
-                <form asp-controller="Admin" asp-action="EditUser" method="post">
+                <form asp-controller="Admin" asp-action="EditUser" method="post" id="editForm" data-toggle="validator">
                     <div class="modal-body">
 
                         <div class="form-group">
@@ -336,24 +336,28 @@
             $.post('/Admin/GetCurrentUserData/?UserID=' + UserID,
                 function (returnedData) {
                     if (returnedData) {
-
                         userString = JSON.stringify(returnedData);
                         userObject = JSON.parse(userString);
-                        console.log("user object: " + userString);
-                        document.getElementById("editName").setAttribute("value", userObject["name"]);
-                        document.getElementById("editEmail").setAttribute("value", userObject["email"]);
+                        document.getElementById("editName").value = userObject["name"];
+                        document.getElementById("editEmail").value = userObject["email"];
                         $("#editManager").val(userObject["managerId"]);
                         $("#editRole").val(userObject["roleId"]);
                         $("#editID").val(userObject["id"]);
-                        document.getElementById("editBudget").setAttribute("value", userObject["startBudget"]);
-                        document.getElementById("editAnnualBudget").setAttribute("value", userObject["annualBudget"]);
+                        document.getElementById("editBudget").value = userObject["startBudget"];
+                        document.getElementById("editAnnualBudget").value = userObject["annualBudget"];
 
                         $('#editUser').modal('toggle');
                     } else {
                         alert("Sorry, there was an error processing your request. Please try again.");
                         $('#editUser').modal('toggle');
                     }
-                });
+                });   
         }
+
+        $('#editUser').on('hidden.bs.modal', function (e) {
+            $(this).find("input").val('').end();
+            $("#submitEditUser").val('Submit');
+
+        });
     </script>
 </div>
