@@ -147,7 +147,7 @@ namespace TevenStudiosBudgetTracker.Controllers
             @param user user whose max budget request is being calculated
             @return the passed users future accrued budget
         */
-        private double getUserMaxBudgetRequest(User user)
+        public double getUserMaxBudgetRequest(User user)
         {
             DateTime today = DateTime.Today;
             Console.WriteLine("today: " + today);
