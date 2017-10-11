@@ -58,7 +58,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home"class="navbar-brand">Teven Studios: Budget Tracker</a>
+                <a asp-area="" asp-controller="Home" id="navbar_logo_home" class="navbar-brand">
+                    <img id="nav_log_image" src="~/images/nav_bar_logo.png" width="270px"/></a>
             </div>
             <div class="navbar-collapse collapse">
                @if (Model?.CurrentUser?.RoleId == 2)

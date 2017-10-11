@@ -28,14 +28,15 @@ td {
     border-color: #eafffd; /* Light blue*/
     font-family: Tahoma; /* Header font*/
 }
-    .navbar-inverse .navbar-brand { /* Text color */
-        color: #ffffff;
-    }
 
-        .navbar-inverse .navbar-brand:hover,
-        .navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
-            color: #ffffff;
-        }
+.navbar-inverse .navbar-brand { /* Text color */
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus { /* Text color hover/ focus */
+    color: #ffffff;
+}
 
 /* Popup header colour */
 .modal-header {
@@ -57,37 +58,26 @@ td {
     overflow: hidden;
 }
 
-/* Sets the heights & scrollable values for ... */
-/* ... the pending requests table */
-.table-height-pending {
+/* ... the admin table */
+.table-height-employees {
     overflow-y: scroll;
     overflow-x: auto;
-    height: 280px;
-    width: 95%;
-    position: absolute;
-}
-
-/* ... the past requests table */
-.table-height-past {
-    overflow-y: scroll;
-    overflow-x: auto;
-    height: 600px;
-    width: 95%;
-    position: absolute;
+    height: 400px;
+    width: 100%;
 }
 
 /* Sets the width for each column in the ... */
 /* ... pending requests table*/
 .table-pending-date {
-    width: 18%;
+    width: 23%;
 }
 
 .table-pending-cost {
-    width: 10%;
+    width: 15%;
 }
 
 .table-pending-description {
-    width: 72%;
+    width: 62%;
 }
 
 /* ... past requests table*/
@@ -96,7 +86,7 @@ td {
 }
 
 .table-past-status {
-    width: 5%;
+    width: 8%;
 }
 
 .table-past-date {
@@ -108,7 +98,7 @@ td {
 }
 
 .table-past-description {
-    width: 67%;
+    width: 64%;
 }
 
 /* ... admin's employees table*/
@@ -159,7 +149,8 @@ footer {
     width: 100%;
     position: fixed;
     bottom: 0;
-    padding: 20px;
+    padding: 10px;
+    padding-top: 0px;
     background-color: white;
     text-align: right;
     right: 0;
@@ -173,7 +164,6 @@ footer {
 
 /* Sets the table's div min-height so the tables don't overlap */
 .non-overlap-divs {
-    min-height: 800px;
 }
 
 /* Sets the top padding for each view so they aren't covered in a small screen */
@@ -181,12 +171,64 @@ footer {
     padding-top: 50px;
 }
 
-/* Adds padding to the top of pending requests table*/
-.padding-pending-requests {
-    padding-top: 60px;
-}
-
 /* Padding to center error message */
 .error-page {
     padding: 50px;
+}
+
+
+#employee-left-hand-panel {
+    padding-left: 0px;
+    padding-right: 70px;
+}
+
+#employee-right-hand-panel {
+    padding-left: 0px;
+}
+
+/* Adds padding to the top of pending requests table*/
+.padding-pending-requests {
+    padding-top: 80px;
+}
+
+/* Sets the heights & scrollable values for ... */
+/* ... the pending requests table */
+.table-height-pending {
+    overflow-y: scroll;
+    height: 40%;
+}
+
+.table {
+    border-bottom: 2px solid #ddd;
+}
+
+/* ... the past requests table */
+.table-height-past {
+    overflow-y: scroll;
+}
+
+/*Style the tables to overflow within their contained divs*/
+#pending-request-table-wrapper {
+    max-height: 42vh;
+    overflow-y: scroll;
+    overflow-x: auto;
+    overflow-wrap: break-word;
+    border: 2px solid #ddd;
+}
+
+#past-request-table-wrapper {
+    max-height: 76vh;
+    overflow-y: scroll;
+    overflow-x: auto;
+    overflow-wrap: break-word;
+    border: 2px solid #ddd;
+}
+
+#navbar_logo_home{
+    width: 280px;
+    padding: 0px;
+}
+
+#nav_log_image{
+    margin-top: -8px;
 }

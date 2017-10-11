@@ -3,14 +3,14 @@
 @{
     ViewData["Title"] = "Employee Page";
 }
-<div class="container top-view-padding">
+<div id="employee-page-content" class="container">
     <div class="row">
         <!-- The left-hand panel-->
-        <div class="col-lg-7 non-overlap-divs">
+        <div id="employee-left-hand-panel" class="col-lg-6 non-overlap-divs">
 
             <!-- The user's current budget -->
-            <div class="alert alert-info budget-responsive">
-                <h4 class="text-right"> Current Balance</h4>
+            <div class="budget-responsive">
+                <h3 class="text-right"> Current Balance</h3>
                 <h1 class="text-right large-text budget-responsive"> $@Model.Budget </h1>
             </div>
             
@@ -31,20 +31,20 @@
 
             <!-- The submit a request button-->
             <div>
-                <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> Request</button>
+                <button type="button" class="btn btn-info btn-lg right-float-button" data-toggle="modal" data-target="#submitRequest"><span class="glyphicon glyphicon-plus"></span> New Request</button>
             </div>
 
             <!-- Pending requests -->
             <h2 class="padding-pending-requests"> Pending Requests</h2>
-            <div>
-                <table class="table table-hover table-responsive">
+            <div id="pending-request-table-wrapper">
+                <table class="table table-hover table-responsive table-height-pending">
                     <!-- Header -->
                     <thead>
                         <tr>
                             <th class="table-pending-date">
                                 Date
                             </th>
-                            <th class="text-right table-pending-cost">
+                            <th class="table-pending-cost">
                                 Cost
                             </th>
                             <th class="table-pending-description">
@@ -53,14 +53,14 @@
                         </tr>
                     </thead>
                     <!-- Content -->
-                    <tbody class="table-height-pending">
+                    <tbody class="">
                         @foreach (var pendingRequest in Model.PendingRequests)
                         {
                             <tr>
                                 <td class="table-pending-date">
                                     @pendingRequest.Date
                                 </td>
-                                <td class="text-right table-pending-cost">
+                                <td class="table-pending-cost">
                                     $@pendingRequest.Cost
                                 </td>
                                 <td class="table-pending-description">
@@ -74,11 +74,12 @@
         </div>
 
         <!-- The right-hand side panel -->
-        <div class="col-lg-5 non-overlap-divs">
+        <div id="employee-right-hand-panel" class="col-lg-6 non-overlap-divs">
 
             <!-- Past Requests-->
-            <h2 id="pastRequestsHeader" style="margin-top: 0;"> Past Requests</h2>
-            <div>
+            <h2> Past Requests</h2>
+            <div id="past-request-table-wrapper">
+
                 <table class="table table-hover table-responsive">
                     <!-- Header -->
                     <thead>
