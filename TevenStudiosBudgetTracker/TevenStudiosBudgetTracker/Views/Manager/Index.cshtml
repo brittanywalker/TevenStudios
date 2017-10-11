@@ -27,18 +27,20 @@
         max-height: 80vh;
     }
 
-    .row {
+    #all-pending-requests-table {
         width: 100%;
+        max-height: 70vh;
+        overflow: auto;
     }
 
     #lhs-manager-col {
         padding-right: 50px;
-        max-height: 90vh;
+        max-height: 80vh;
     }
 
     .showinfo {
         flex: 1;
-        max-height: 90vh;
+        max-height: 80vh;
     }
 
     #employee_info_name {
@@ -70,12 +72,17 @@
     #viewAllDiv {
         padding-left: 0px;
         padding-right: 0px;
-        
     }
 
     #lhsHeading {
         margin-right: 0px;
         margin-left: 0px;
+    }
+
+    #full-page-div {
+        padding-bottom: 0;
+        max-height: 80vh;
+        width: 100%;
     }
 </style>
 
@@ -84,7 +91,7 @@
 }
 
 <div class="EmployeeListContainer container container-fluid top-view-padding">
-    <div class="row">
+    <div class="row" id="full-page-div">
         <!-- The left hand panel -->
         <div id="lhs-manager-col" class="showinfo col-sm-3 col-md-6 col-lg-5">
             <div class="row" id="lhsHeading">
@@ -133,71 +140,73 @@
             <!-- Pending requests table for all employees-->
             <div id="all_employee_pending_requests">
                 <h2 class="heading">All Pending Requests</h2>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%;">
-                                Date
-                            </th>
-                            <th style="width: 5%;">
-                                ID
-                            </th>
-                            <th style="width: 20%;">
-                                Name
-                            </th>
-                            <th style="width: 20%;">
-                                Email
-                            </th>
-                            <th style="width: 5%;">
-                                Cost
-                            </th>
-                            <th style="width: 20%;">
-                                Description
-                            </th>
-                            <th style="width: 10%;">
-                                Approve
-                            </th>
-                            <th style="width: 10%;">
-                                Decline
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.PendingRequests.Count; i++)
-                        {
-                            <tr class="@Model.PendingRequests[i].ID">
-                                <td>
-                                    @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
-                                </td>
-                                <td>
-                                    @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
-                                </td>
-                                <td>
-                                    <button id="approveButton" type="button" class="btn btn-success" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">
-                                        <span class="glyphicon glyphicon-ok"></span>    
-                                    </button>
-                                </td>
-                                <td>
-                                    <button id="declineButton" type="button" class="btn btn-danger" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </td>
+                <div id="all-pending-requests-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">
+                                    Date
+                                </th>
+                                <th style="width: 5%;">
+                                    ID
+                                </th>
+                                <th style="width: 20%;">
+                                    Name
+                                </th>
+                                <th style="width: 20%;">
+                                    Email
+                                </th>
+                                <th style="width: 5%;">
+                                    Cost
+                                </th>
+                                <th style="width: 20%;">
+                                    Description
+                                </th>
+                                <th style="width: 10%;">
+                                    Approve
+                                </th>
+                                <th style="width: 10%;">
+                                    Decline
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.PendingRequests.Count; i++)
+                        {
+                                <tr class="@Model.PendingRequests[i].ID">
+                                    <td>
+                                        @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayTextFor(modelItem => Model.PendingRequests[i].UserID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.PendingRequests[i].UserEmail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.PendingRequests[i].Cost)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.PendingRequests[i].Description)
+                                    </td>
+                                    <td>
+                                        <button id="approveButton" type="button" class="btn btn-success" onclick="ApproveRequestAllRequests(@Model.PendingRequests[i].ID)">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button id="declineButton" type="button" class="btn btn-danger" onclick="DeclineRequestAllRequests(@Model.PendingRequests[i].ID)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
                         }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- Displays selected employee's budget and request information -->
             <div id="specific_employee_info_div">
