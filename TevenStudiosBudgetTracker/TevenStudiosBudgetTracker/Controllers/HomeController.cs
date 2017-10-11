@@ -24,12 +24,12 @@ namespace TevenStudiosBudgetTracker.Controllers
         {
             ViewData["Message"] = "Home page.";
 
-            return View();
+            return View("Index");
         }
 
         public IActionResult Error()
         {
-            return View();
+            return View("Error");
         }
 
         /**
