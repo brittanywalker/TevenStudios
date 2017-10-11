@@ -23,6 +23,10 @@
         height: 90vh;
     }
 
+    #specific_employee_info_div {
+        max-height: 75vh;
+    }
+
     #all_employee_pending_requests {
         max-height: 80vh;
     }
@@ -48,7 +52,7 @@
         margin-top: 0px;
     }
 
-    .employeeHeadingContainer{
+    .employeeHeadingContainer {
         padding-left: 0px; 
     }
 
@@ -64,6 +68,11 @@
         border: 2px solid #ddd;
         width: 100%;
         max-height: 70vh;
+        overflow: auto;
+    }
+
+    #pending_request_table_div, #past_request_table_div {
+        max-height: 20vh;
         overflow: auto;
     }
 
@@ -144,6 +153,7 @@
                 </table>
             </div>
         </div>
+
         <!-- The right-hand side panel -->
         <div class="showinfo col-sm-9 col-md-6 col-lg-7">
             <!-- Pending requests table for all employees-->
@@ -225,9 +235,8 @@
                 <div>
                     <h2 id="employee_current_balance" style="text-align:right"></h2>
                 </div>
-                <br />
                 <div id="employee_pending_requests"></div>
-                <br />
+                <div style="height: 5vh;"></div>
                 <!-- Employee past requests table-->
                 <div id="employee_past_requests">
                 </div>
@@ -258,27 +267,28 @@
 
                 // Set the headings of the table
                 var html = '<h3>Pending Requests </h3> \
-                        <table id="pending_request_table" class="table table-hover table-bordered" > \
-                            <thead> \
-                            <tr>\
-                                <th data-field="Date" >\
-                                    Date\
-                                </th>\
-                                <th data-field="Cost">\
-                                    Cost\
-                                </th>\
-                                <th data-field="Description">\
-                                    Description\
-                                </th>\
-                                <th data-field="Approve" >\
-                                    Approve\
-                                </th>\
-                                <th data-field="Decline" >\
-                                    Decline\
-                                </th>\
-                            </tr>\
-                                </thead>\
-                        <tbody>';
+                        <div id="pending_request_table_div"> \
+                            <table id="pending_request_table" class="table table-hover table-bordered" > \
+                                <thead> \
+                                <tr>\
+                                    <th data-field="Date" >\
+                                        Date\
+                                    </th>\
+                                    <th data-field="Cost">\
+                                        Cost\
+                                    </th>\
+                                    <th data-field="Description">\
+                                        Description\
+                                    </th>\
+                                    <th data-field="Approve" >\
+                                        Approve\
+                                    </th>\
+                                    <th data-field="Decline" >\
+                                        Decline\
+                                    </th>\
+                                </tr>\
+                                    </thead>\
+                            <tbody>';
 
                 // add each pending request to the table
                 for (item in returnData["pendingRequests"]) {
@@ -298,7 +308,7 @@
                         + ')"><span class="glyphicon glyphicon-remove"></span></button>'
                         + '</td></tr> ';
                 }
-                html += "</tbody> </table>"
+                html += "</tbody> </table> </div>"
 
                 // update the html of the div to contain the table
                 $('#employee_pending_requests').html(html);
@@ -307,6 +317,7 @@
 
                 // Set the headings of the table
                 var html = '<h3>Past Requests </h3> \
+                        <div id="past_request_table_div"> \
                         <table id="past_request_table" class="table table-hover table-bordered" > \
                             <thead> \
                             <tr>\
@@ -338,7 +349,7 @@
                         + returnData["pastRequests"][item].statusType
                         + '</td></tr>';
                 }
-                html += "</tbody>"
+                html += "</tbody> </table> </div>"
 
                 // update the html of the div to contain the table
                 $('#employee_past_requests').html(html);
