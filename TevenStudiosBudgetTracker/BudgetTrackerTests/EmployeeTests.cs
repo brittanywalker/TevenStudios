@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TevenStudiosBudgetTracker.Controllers;
@@ -19,6 +21,15 @@ namespace BudgetTrackerTests
             StartDate = Convert.ToDateTime("18/02/2017")
 
         };
+
+        [TestMethod]
+        public void IndexViewTest()
+        {
+            var controller = new EmployeeController();
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            Assert.AreEqual(356.16, true);
+        }
 
         [TestMethod]
         public void MaxUserBudgetRequestTest()
