@@ -21,7 +21,7 @@ namespace BudgetTrackerTests
         };
 
         [TestMethod]
-        public void TestMaxUserBudgetRequest()
+        public void MaxUserBudgetRequestTest()
         {            
             var controller = new EmployeeController();
             var result = controller.getUserMaxBudgetRequest(user);

@@ -1,15 +1,14 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TevenStudiosBudgetTracker.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTrackerTests
 {
     [TestClass]
-    class HomeControllerTests
+    public class HomeControllerTests
     {
         [TestMethod]
-        public void TestIndexView()
+        public void IndexViewTest()
         {
             var controller = new HomeController();
             var result = controller.Index() as ViewResult;
@@ -17,7 +16,7 @@ namespace BudgetTrackerTests
         }
 
         [TestMethod]
-        public void TestErrorView()
+        public void ErrorViewTest()
         {
             var controller = new HomeController();
             var result = controller.Error() as ViewResult;
