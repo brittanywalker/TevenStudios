@@ -58,10 +58,6 @@ td {
     overflow: hidden;
 }
 
-
-
-
-
 /* ... the admin table */
 .table-height-employees {
     overflow-y: scroll;
@@ -74,15 +70,15 @@ td {
 /* Sets the width for each column in the ... */
 /* ... pending requests table*/
 .table-pending-date {
-    width: 18%;
+    width: 23%;
 }
 
 .table-pending-cost {
-    width: 10%;
+    width: 15%;
 }
 
 .table-pending-description {
-    width: 72%;
+    width: 62%;
 }
 
 /* ... past requests table*/
@@ -91,7 +87,7 @@ td {
 }
 
 .table-past-status {
-    width: 5%;
+    width: 8%;
 }
 
 .table-past-date {
@@ -103,7 +99,7 @@ td {
 }
 
 .table-past-description {
-    width: 67%;
+    width: 64%;
 }
 
 /* ... admin's employees table*/
@@ -175,8 +171,6 @@ footer {
 .top-view-padding {
     padding-top: 50px;
 }
-
-
 
 /* Padding to center error message */
 .error-page {
