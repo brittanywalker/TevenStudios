@@ -23,7 +23,7 @@ The capabilities of this system depend on whether the user is an Administrator, 
 * Hannah Sampson | hsam938 | @hjadenz
 * Brittany Walker | bwal566 | @brittanywalker
 
-**Customer:** Elliot Whiley | PushPay
+**Customer:** Elliot Whiley
 
 # Installation
 
