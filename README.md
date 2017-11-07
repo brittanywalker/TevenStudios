@@ -81,10 +81,7 @@ You can now login to the application using the email that was provided.
 
 1. Open the solution file in Visual Studio (using instructions above in Section _Open the Solution_)
 2. Right-click the project in Visual Studio and select **Manage User Secrets**. This will open a **secrets.json** file.
-3. Copy and paste the following into the secrets.json file: `{
-   "Authentication:Google:ClientId": "636051315170-4svott714ete1jl8f8vtou7hrf484rdf.apps.googleusercontent.com",
-   "Authentication:Google:ClientSecret": "yAuOm4jx2t1obL-jVodA6-89"
-}`
+3. Contact one of the repository contributors for the secrets to paste into this file.
 
 ## Execution
 
